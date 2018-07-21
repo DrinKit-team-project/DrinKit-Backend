@@ -1,0 +1,14 @@
+language: java
+jdk:
+- openjdk8
+branches:
+  only: "-master"
+cache:
+  directories: "-'$Home/.gradle'"
+script: "./gradlew clean build"
+
+notifications:
+  slack:
+    rooms:
+      - drinkit-members:xX1WpvUAarrwG4DlssELd083#travis
+    secure: YIEmzOkbniFBiKFyfDVoutk+eZQtAyWKwG4cr9uMZScAsNn6jGAztbTQJJbjqZGi5hjakBD22jyyV4YdABPTDSYDVK9rhZi/s8DtmELcmz89FwL4voWrvFQwllod82PxfqTbmGzeY+B2R0N2831zJtvqiK2gWQvgUvM+e5tYie4YuWyQeauXl3UCEUCf+KTOqg4Vx6Vmx5Z+f/JR5/ZrxueK+ZQOSLPPFMVBH8ZNkp5rxe69ZFp7V7yxouL4BADbvCDkaLzkJ2SzshscGChOIuWg7RposWq7lPRuSl3eaSuZS6sIE7m2CA8QFA5aYlpCgTiKWN5UkkRtklT7mm0V5rDt+/1/ij2UnEV9RHaDM2C5riir8ij75bk2HHFB7S7/YrfUGE+QmL8PH6b8q+SJde7dMR2g2/kwT2O6EDCel3EISvCmw6n+oY1j7jNnhHQeNM5PIrJsOt7mAeBcnGza/opUoqyqR9GbVYtaf8xoRkndFu9ZrUdD87tqPv/0eU292wB5/+31XwKaaVA7akx/kPGhdmV6DsW75DEIDoBl4Q+oJ77f50F3Ub6zW6/vloY4XxypnnY765uFmMOUGa3THx1bY7DG/EYPI77xb6ZO9gKu6cyQCIULs3C2qYbYZlMyMMT8cKWdC2hksj8FthGSkNrR8UxOlDJbxis0G5muv/g=
