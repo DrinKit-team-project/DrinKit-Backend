@@ -1,0 +1,29 @@
+spring:
+  profiles:
+    active: develop # 기본 profile 선택
+
+# develop 환경
+---
+spring:
+  profiles: develop
+  jpa:
+    database: mysql
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    properties:
+            hibernate:
+              format_sql: true
+
+  datasource:
+          username: jiwon
+          password: jiwon
+          url: jdbc:mysql://localhost/drinkit
+          driverClassName: com.mysql.jdbc.Driver
+
+# 로그 레벨 설정
+logging:
+  pattern:
+    level: trace
+
