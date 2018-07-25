@@ -21,6 +21,9 @@ spring:
           password: jiwon
           url: jdbc:mysql://localhost/drinkit
           driverClassName: com.mysql.jdbc.Driver
+  security:
+    basic:
+      enabled: false # security 기본 인증 옵션 제거
 
 # 로그 레벨 설정
 logging:
