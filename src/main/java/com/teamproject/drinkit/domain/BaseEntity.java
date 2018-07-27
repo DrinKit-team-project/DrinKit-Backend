@@ -16,9 +16,6 @@ import java.util.Objects;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
-    @Id
-    @GeneratedValue
-    private Long id;
 
     @CreatedDate
     private LocalDateTime createdDate;
