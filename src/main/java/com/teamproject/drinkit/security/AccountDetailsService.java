@@ -20,6 +20,4 @@ public class AccountDetailsService implements UserDetailsService {
         Account account = accountRepository.findByUserId(userId).orElseThrow(() -> new NoSuchAccountException("아이디에 해당하는 계정이 존재하지 않습니다."));
         return AccountDetails.fromAccountDomain(account);
     }
-
-
 }

@@ -22,6 +22,14 @@ spring:
           url: jdbc:mysql://localhost/drinkit
           driverClassName: com.mysql.jdbc.Driver
 
+jwt:
+  signingKey: drinkitjwtsecretkey
+
+
+
+
+
+
 # 로그 레벨 설정
 logging:
   pattern:
