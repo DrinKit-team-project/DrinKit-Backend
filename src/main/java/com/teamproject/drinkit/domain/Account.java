@@ -1,10 +1,12 @@
 package com.teamproject.drinkit.domain;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Objects;
 
+@Getter
 @Entity
 @NoArgsConstructor
 @Table(name = "ACCOUNT")
