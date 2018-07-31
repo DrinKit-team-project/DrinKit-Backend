@@ -16,7 +16,7 @@ public class Review extends BaseEntity {
     private Long id;
 
     @Column(name = "REVIEW_RATINGS")
-    private Long ratings;
+    private double ratings;
 
     @Lob
     @Column(name = "REVIEW_CONTENTS")
@@ -25,16 +25,22 @@ public class Review extends BaseEntity {
     @Column(name = "REVIEW_DRINK_IMG_URL")
     private String drinkImgUrl;
 
+    @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(name = "menu_id"))
+    private Menu menu;
+
+    private boolean deleted = false;
+
     public Review(){}
 
-    private Review(Long id, Long ratings, String contents, String drinkImgUrl){
+    public Review(Long id, double ratings, String contents, String drinkImgUrl){
         this.id = id;
         this.ratings = ratings;
         this.contents = contents;
         this.drinkImgUrl = drinkImgUrl;
     }
 
-    private Review(Long ratings, String contents, String drinkImgUrl){
+    public Review(double ratings, String contents, String drinkImgUrl){
         this(0L, ratings, contents, drinkImgUrl);
     }
 

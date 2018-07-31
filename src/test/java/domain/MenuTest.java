@@ -1,7 +1,9 @@
 package domain;
 
+import com.teamproject.drinkit.domain.Cafe;
 import com.teamproject.drinkit.domain.Menu;
 import com.teamproject.drinkit.domain.Price;
+import com.teamproject.drinkit.domain.Review;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -19,7 +21,43 @@ public class MenuTest {
 
         Price testPrice = new Price("small", 2000);
         newMenu.addPrice(testPrice);
+
         assertEquals(newMenu.getPricePerSize().size(), 1);
         assertEquals(newMenu.getPricePerSize().get(0), testPrice);
     }
+
+    @Test
+    public void calculateTest() {
+        Menu newMenu = makeMenu();
+        Review reviewOne = new Review(4.5, "맛있습니다.", "url1.address.com");
+        Review reviewTwo = new Review(0.5, "맛없습니다.", "url2.address.com");
+        Review reviewThree = new Review(3, "그냥그래요.", "url3.address.com");
+
+        newMenu.addReview(reviewOne);
+        newMenu.addReview(reviewTwo);
+        newMenu.addReview(reviewThree);
+
+        assertEquals(newMenu.getReviews().size(), 3);
+        assertEquals(2.6, newMenu.calculateScore(), 0.1);
+    }
+
+    @Test
+    public void registerCafeTest() {
+        Menu newMenu = makeMenu();
+        Cafe cafe = new Cafe("starbucks");
+
+        newMenu.registerCafe(cafe);
+        assertEquals(newMenu.getCafe(), cafe);
+    }
+
+    @Test
+    public void editDescriptionTest() {
+        Menu newMenu = makeMenu();
+        assertEquals(newMenu.getDescription(), "Not good.");
+
+        newMenu.editDescription("edit");
+
+        assertEquals(newMenu.getDescription(), "edit");
+    }
+
 }

@@ -1,5 +1,8 @@
 package com.teamproject.drinkit.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Where;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +20,17 @@ public class Menu extends BaseEntity {
 
     private String description;
 
-    private double userScore = 0.0;
+    private Long userScore;
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "cafe_id"))
     private Cafe cafe;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL)
+    @Where(clause = "deleted = false")
+    @OrderBy("id ASC")
+    private List<Review> reviews = new ArrayList<>();
 
     @Embedded
     @Column
@@ -54,6 +63,15 @@ public class Menu extends BaseEntity {
     public void addPrice(Price price) {
         this.pricePerSize.add(price);
     }
+    public void addReview(Review review) {this.reviews.add(review);}
+
+    public double calculateScore() {
+        double result = 0.0;
+        for (Review review: this.reviews) {
+            result += review.getRatings();
+        }
+        return result / this.reviews.size();
+    }
 
     public void registerCafe(Cafe cafe) {
         this.cafe = cafe;
@@ -71,7 +89,24 @@ public class Menu extends BaseEntity {
         return this.deleted;
     }
 
+    public void deleteMenu() {
+        this.deleted = true;
+    }
+
+    public Cafe getCafe() {
+        return cafe;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
     public List<Price> getPricePerSize() {
         return pricePerSize;
     }
+
 }
