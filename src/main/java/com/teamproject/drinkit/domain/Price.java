@@ -1,6 +1,9 @@
 package com.teamproject.drinkit.domain;
 
 import javax.persistence.Embeddable;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Embeddable
 public class Price {
@@ -9,7 +12,7 @@ public class Price {
     private int cost;
 
     public Price() {}
-    public Price(size, cost) {
+    public Price(String size, int cost) {
         this.size = size;
         this.cost = cost;
     }
