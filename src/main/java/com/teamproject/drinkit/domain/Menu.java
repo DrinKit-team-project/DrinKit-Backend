@@ -10,9 +10,14 @@ public class Menu extends BaseEntity {
     @GeneratedValue
     private Long id;
 
-    private String name;
+    private String krName;
+    private String enName;
 
     private int calories;
+
+    private String description;
+
+    private double userScore = 0.0;
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "cafe_id"))
@@ -22,14 +27,48 @@ public class Menu extends BaseEntity {
     @Column
     private List<Price> pricePerSize = new ArrayList<>();
 
-    private String description;
+    @Embedded
+    @Column
+    private List<String> tagList = new ArrayList<>();
+
+    @Embedded
+    @Column
+    private List<String> imageURL = new ArrayList<>();
+
 
     private boolean deleted = false;
 
     public Menu() {}
-    public Menu(String name, String description) {
-        this.name = name;
+    public Menu(String krName, String enName, String description) {
+        this.krName = krName;
+        this.enName = enName;
         this.description = description;
+    }
+    public Menu(String krName, String enName, int calories, String description) {
+        this.krName = krName;
+        this.enName = enName;
+        this.calories = calories;
+        this.description = description;
+    }
+
+    public void addPrice(Price price) {
+        this.pricePerSize.add(price);
+    }
+
+    public void registerCafe(Cafe cafe) {
+        this.cafe = cafe;
+    }
+
+    public void addTag(String tag) {
+        this.tagList.add(tag);
+    }
+
+    public void editDescription(String newDescription) {
+        this.description = newDescription;
+    }
+
+    private boolean isDeleted() {
+        return this.deleted;
     }
 
     public List<Price> getPricePerSize() {

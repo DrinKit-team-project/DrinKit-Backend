@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 
 public class MenuTest {
     private Menu makeMenu() {
-        Menu newMenu = new Menu("americano", "Not good.");
+        Menu newMenu = new Menu("아메리카노", "americano", 150, "Not good.");
         return newMenu;
     }
 
@@ -18,7 +18,7 @@ public class MenuTest {
         assertEquals(newMenu.getPricePerSize().size(), 0);
 
         Price testPrice = new Price("small", 2000);
-        newMenu.getPricePerSize().add(testPrice);
+        newMenu.addPrice(testPrice);
         assertEquals(newMenu.getPricePerSize().size(), 1);
         assertEquals(newMenu.getPricePerSize().get(0), testPrice);
     }
