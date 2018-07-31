@@ -16,9 +16,6 @@ import java.util.Objects;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
-    @Id
-    @GeneratedValue
-    private Long id;
 
     @CreatedDate
     private LocalDateTime createdDate;
@@ -27,10 +24,6 @@ public class BaseEntity {
     private LocalDateTime modifiedDate;
 
     public BaseEntity(){}
-
-    public BaseEntity(long id){this.id = id;}
-
-    public long getId(){ return id; }
 
     public String getFormattedCreatedDate(){
         return getFormattedDate(this.createdDate, "yyyy.MM.dd HH:mm:ss");
@@ -50,24 +43,22 @@ public class BaseEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof BaseEntity)) return false;
         BaseEntity that = (BaseEntity) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(createdDate, that.createdDate) &&
+        return Objects.equals(createdDate, that.createdDate) &&
                 Objects.equals(modifiedDate, that.modifiedDate);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, createdDate, modifiedDate);
+        return Objects.hash(createdDate, modifiedDate);
     }
 
     @Override
     public String toString() {
         return "BaseEntity{" +
-                "id=" + id +
-                ", createdDate=" + createdDate +
+                "createdDate=" + createdDate +
                 ", modifiedDate=" + modifiedDate +
                 '}';
     }
