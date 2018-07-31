@@ -1,5 +1,7 @@
 package com.teamproject.drinkit.domain;
 
+import com.teamproject.drinkit.security.AccountDetails;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -32,6 +34,20 @@ public class Account extends BaseEntity {
 
     @Column(name = "ACCOUNT_SOCIAL_PROFILEPIC")
     private String profileHref;
+
+    private Account(Long id, String username, String userId, String password, UserRole userRole, Long socialId, String profileHref){
+        this.id = id;
+        this.username = username;
+        this.userId = userId;
+        this.password = password;
+        this.userRole = userRole;
+        this.socialId = socialId;
+        this.profileHref = profileHref;
+    }
+
+    public Account(String username, String userId, String password, UserRole userRole, Long socialId, String profileHref){
+        this(0L, username, userId, password, userRole, socialId, profileHref);
+    }
 
     @Override
     public boolean equals(Object o) {
