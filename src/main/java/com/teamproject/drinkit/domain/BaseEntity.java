@@ -38,4 +38,5 @@ public class BaseEntity {
         }
         return dateTime.format(DateTimeFormatter.ofPattern(format));
     }
+
 }
