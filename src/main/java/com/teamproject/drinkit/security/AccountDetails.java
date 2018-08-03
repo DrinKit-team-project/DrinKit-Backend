@@ -2,6 +2,7 @@ package com.teamproject.drinkit.security;
 
 import com.teamproject.drinkit.domain.Account;
 import com.teamproject.drinkit.domain.UserRole;
+import com.teamproject.drinkit.security.token.SocialPostAuthorizationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -30,6 +31,8 @@ public class AccountDetails extends User {
     private static List<SimpleGrantedAuthority> parseAuthorities(UserRole userRole){
         return Arrays.asList(userRole).stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
     }
+
+
 
     public Account getAccount() {
         return account;

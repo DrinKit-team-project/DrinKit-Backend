@@ -1,6 +1,7 @@
 package com.teamproject.drinkit.security.jwt;
 
 import com.teamproject.drinkit.domain.Account;
+import com.teamproject.drinkit.domain.SocialProviders;
 import com.teamproject.drinkit.domain.UserRole;
 import com.teamproject.drinkit.security.AccountDetails;
 import org.junit.Before;
@@ -24,7 +25,7 @@ public class JwtFactoryTest {
 
     @Before
     public void setUp() throws Exception {
-        Account account = new Account("username", "jiwon", "1234", UserRole.USER, null, null);
+        Account account = new Account("username", "jiwon", "1234", UserRole.USER, null, SocialProviders.KAKAO, null);
         accountDetails = AccountDetails.fromAccountDomain(account);
     }
 

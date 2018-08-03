@@ -27,26 +27,32 @@ public class Account extends BaseEntity {
     private String password;
 
     @Column(name = "ACCOUNT_USER_ROLE")
+    @Enumerated(value = EnumType.STRING)
     private UserRole userRole;
 
     @Column(name = "ACCOUNT_SOCIAL_ID")
     private Long socialId;
 
+    @Column(name = "ACCOUNT_SOCIAL_PROVIDER")
+    @Enumerated(value = EnumType.STRING)
+    private SocialProviders socialProvider;
+
     @Column(name = "ACCOUNT_SOCIAL_PROFILEPIC")
     private String profileHref;
 
-    private Account(Long id, String username, String userId, String password, UserRole userRole, Long socialId, String profileHref){
+    private Account(Long id, String username, String userId, String password, UserRole userRole, Long socialId, SocialProviders socialProvider, String profileHref){
         this.id = id;
         this.username = username;
         this.userId = userId;
         this.password = password;
         this.userRole = userRole;
         this.socialId = socialId;
+        this.socialProvider = socialProvider;
         this.profileHref = profileHref;
     }
 
-    public Account(String username, String userId, String password, UserRole userRole, Long socialId, String profileHref){
-        this(0L, username, userId, password, userRole, socialId, profileHref);
+    public Account(String username, String userId, String password, UserRole userRole, Long socialId, SocialProviders socialProvider, String profileHref){
+        this(0L, username, userId, password, userRole, socialId, socialProvider, profileHref);
     }
 
     @Override

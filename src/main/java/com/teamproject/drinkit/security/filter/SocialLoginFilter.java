@@ -27,7 +27,6 @@ public class SocialLoginFilter extends AbstractAuthenticationProcessingFilter {
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res) throws AuthenticationException, IOException, ServletException {
-        // TODO : 클라이언트로부터 받은 Provider 정보와 Access Token 을 PreToken 에 담아 Provider 로 전달한다.
         ObjectMapper mapper = new ObjectMapper();
 
         SocialLoginDto socialLoginDto = mapper.readValue(req.getReader(), SocialLoginDto.class);
