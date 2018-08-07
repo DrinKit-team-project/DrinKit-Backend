@@ -7,13 +7,13 @@ import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
 
-public class SocialPostAuthorizationToken extends UsernamePasswordAuthenticationToken {
-    public SocialPostAuthorizationToken(Object principal, Object credentials, Collection<? extends GrantedAuthority> authorities) {
+public class PostAuthorizationToken extends UsernamePasswordAuthenticationToken {
+    public PostAuthorizationToken(Object principal, Object credentials, Collection<? extends GrantedAuthority> authorities) {
         super(principal, credentials, authorities);
     }
 
-    public static SocialPostAuthorizationToken fromAccountDetails(AccountDetails accountDetails){
-        return new SocialPostAuthorizationToken(accountDetails.getAccount(), accountDetails.getPassword(), accountDetails.getAuthorities());
+    public static PostAuthorizationToken fromAccountDetails(AccountDetails accountDetails){
+        return new PostAuthorizationToken(accountDetails.getAccount(), accountDetails.getPassword(), accountDetails.getAuthorities());
     }
 
     public AccountDetails getAccountDetails(){

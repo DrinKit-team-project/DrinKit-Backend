@@ -1,10 +1,9 @@
 package com.teamproject.drinkit.security.provider;
 
-import com.teamproject.drinkit.domain.Account;
 import com.teamproject.drinkit.security.AccountDetails;
-import com.teamproject.drinkit.security.AccountDetailsService;
+import com.teamproject.drinkit.security.jwt.JwtDecoder;
 import com.teamproject.drinkit.security.token.PostAuthorizationToken;
-import com.teamproject.drinkit.security.token.SocialPreAuthorizationToken;
+import com.teamproject.drinkit.security.token.PreAuthenticationJwtToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
@@ -12,20 +11,19 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SocialLoginAuthenticationProvider implements AuthenticationProvider {
+public class JwtAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
-    private AccountDetailsService accountDetailsService;
+    private JwtDecoder jwtDecoder;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        SocialPreAuthorizationToken preToken = (SocialPreAuthorizationToken) authentication;
-        Account account = accountDetailsService.search(preToken.getSocialLoginDto());
-        return PostAuthorizationToken.fromAccountDetails(AccountDetails.fromAccountDomain(account));
+        PreAuthenticationJwtToken preToken = (PreAuthenticationJwtToken)authentication;
+        return PostAuthorizationToken.fromAccountDetails(jwtDecoder.decode(preToken.getToken()));
     }
 
     @Override
     public boolean supports(Class<?> authentication) {
-        return SocialPreAuthorizationToken.class.isAssignableFrom(authentication);
+        return PreAuthenticationJwtToken.class.isAssignableFrom(authentication);
     }
 }

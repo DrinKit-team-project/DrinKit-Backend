@@ -23,7 +23,6 @@ public class JwtFactory {
     private static final String CLAIM_NAME_USERNAME = "USERNAME";
     private static final String CLAIM_NAME_USER_ROLE = "USER_ROLE";
 
-
     public String generateFrom(AccountDetails accountDetails) throws JWTCreationException {
         return JWT.create()
                     .withIssuer(ISSUER)

@@ -1,8 +1,8 @@
 package com.teamproject.drinkit.security;
 
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.teamproject.drinkit.domain.Account;
 import com.teamproject.drinkit.domain.UserRole;
-import com.teamproject.drinkit.security.token.SocialPostAuthorizationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -26,6 +26,11 @@ public class AccountDetails extends User {
 
     public static AccountDetails fromAccountDomain(Account account){
         return new AccountDetails(account, account.getUserId(), account.getPassword(), parseAuthorities(account.getUserRole()));
+    }
+
+    public static AccountDetails fromDecodedJwt(DecodedJWT decodedJWT){
+        return new AccountDetails(decodedJWT.getClaim("USERNAME").asString(), "1234",
+                parseAuthorities(UserRole.getRoleByName(decodedJWT.getClaim("USER_ROLE").asString())));
     }
 
     private static List<SimpleGrantedAuthority> parseAuthorities(UserRole userRole){

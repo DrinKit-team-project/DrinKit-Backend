@@ -1,8 +1,13 @@
 package com.teamproject.drinkit.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.teamproject.drinkit.security.filter.JwtAuthenticationFilter;
 import com.teamproject.drinkit.security.filter.SocialLoginFilter;
+import com.teamproject.drinkit.security.filter.SuitableUrlMatcher;
+import com.teamproject.drinkit.security.handler.JwtAuthenticationFailuerHandler;
+import com.teamproject.drinkit.security.handler.JwtAuthenticationSuccessHandler;
 import com.teamproject.drinkit.security.handler.SocialLoginSuccessHandler;
+import com.teamproject.drinkit.security.provider.JwtAuthenticationProvider;
 import com.teamproject.drinkit.security.provider.SocialLoginAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +21,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.util.Arrays;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -25,7 +32,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private SocialLoginSuccessHandler socialLoginSuccessHandler;
 
     @Autowired
+    private JwtAuthenticationSuccessHandler jwtAuthenticationSuccessHandler;
+
+    @Autowired
+    private JwtAuthenticationFailuerHandler jwtAuthenticationFailuerHandler;
+
+    @Autowired
+    private SuitableUrlMatcher suitableUrlMatcher;
+
+    @Autowired
     private SocialLoginAuthenticationProvider socialProvider;
+
+    @Autowired
+    private JwtAuthenticationProvider jwtProvider;
 
     @Bean
     public ObjectMapper getObjectMapper(){ return new ObjectMapper();}
@@ -36,9 +55,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return filter;
     }
 
+    public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
+        JwtAuthenticationFilter filter = new JwtAuthenticationFilter(suitableUrlMatcher,  jwtAuthenticationSuccessHandler, jwtAuthenticationFailuerHandler);
+        filter.setAuthenticationManager(super.authenticationManagerBean());
+        return filter;
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(socialProvider);
+        auth
+                .authenticationProvider(this.socialProvider)
+                .authenticationProvider(this.jwtProvider);
     }
 
     @Override
@@ -57,6 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/h2-console**").permitAll();
         http
-                .addFilterBefore(socialLoginFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(socialLoginFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }

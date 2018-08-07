@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.teamproject.drinkit.security.AccountDetails;
 import com.teamproject.drinkit.security.dto.JwtDto;
 import com.teamproject.drinkit.security.jwt.JwtFactory;
-import com.teamproject.drinkit.security.token.SocialPostAuthorizationToken;
+import com.teamproject.drinkit.security.token.PostAuthorizationToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,7 +28,7 @@ public class SocialLoginSuccessHandler implements AuthenticationSuccessHandler {
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest req, HttpServletResponse res, Authentication auth) throws IOException, ServletException {
-        AccountDetails accountDetails = ((SocialPostAuthorizationToken)auth).getAccountDetails();
+        AccountDetails accountDetails = ((PostAuthorizationToken)auth).getAccountDetails();
         JwtDto jwtDto = generateJwtDto(accountDetails);
         writeResponseMessage(res, jwtDto);
     }

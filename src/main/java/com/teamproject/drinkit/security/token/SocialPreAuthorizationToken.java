@@ -14,5 +14,4 @@ public class SocialPreAuthorizationToken extends UsernamePasswordAuthenticationT
     public SocialLoginDto getSocialLoginDto(){
         return socialLoginDto;
     }
-
 }
