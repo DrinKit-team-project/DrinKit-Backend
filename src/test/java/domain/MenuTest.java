@@ -1,14 +1,14 @@
 package domain;
 
-import com.teamproject.drinkit.domain.Cafe;
-import com.teamproject.drinkit.domain.Menu;
-import com.teamproject.drinkit.domain.Price;
-import com.teamproject.drinkit.domain.Review;
+import com.teamproject.drinkit.domain.*;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class MenuTest {
+
     private Menu makeMenu() {
         Menu newMenu = new Menu("아메리카노", "americano", 150, "Not good.");
         return newMenu;
@@ -27,7 +27,7 @@ public class MenuTest {
     }
 
     @Test
-    public void calculateTest() {
+    public void calculateTest_menu_exist() {
         Menu newMenu = makeMenu();
         Review reviewOne = new Review(4.5, "맛있습니다.", "url1.address.com");
         Review reviewTwo = new Review(0.5, "맛없습니다.", "url2.address.com");
@@ -39,6 +39,16 @@ public class MenuTest {
 
         assertEquals(newMenu.getReviews().size(), 3);
         assertEquals(2.6, newMenu.calculateScore(), 0.1);
+        assertEquals(2.6, newMenu.getTotalRatings(), 0.1);
+    }
+
+    @Test
+    public void calculateTest_menu_not_exist() {
+        Menu newMenu = makeMenu();
+
+        assertEquals(newMenu.getReviews().size(), 0);
+        assertEquals(0.0, newMenu.calculateScore(), 0.1);
+        assertEquals(0.0, newMenu.getTotalRatings(), 0.1);
     }
 
     @Test

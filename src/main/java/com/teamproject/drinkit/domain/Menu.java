@@ -18,9 +18,9 @@ public class Menu extends BaseEntity {
 
     private int calories;
 
-    private String description;
+    private String category;
 
-    private Long userScore;
+    private String description;
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "cafe_id"))
@@ -40,10 +40,11 @@ public class Menu extends BaseEntity {
     @Column
     private List<String> tagList = new ArrayList<>();
 
-    @Embedded
-    @Column
-    private List<String> imageURL = new ArrayList<>();
-
+    @ElementCollection
+    @CollectionTable(name = "MENU_IMG_URL_LIST",
+            joinColumns = @JoinColumn(name = "MENU_ID", foreignKey = @ForeignKey(name = "MENU_ID")))
+    @Column(name = "MENU_IMG_URL")
+    private List<String> imageURLs = new ArrayList<>();
 
     private boolean deleted = false;
 
@@ -53,11 +54,20 @@ public class Menu extends BaseEntity {
         this.enName = enName;
         this.description = description;
     }
+
     public Menu(String krName, String enName, int calories, String description) {
         this.krName = krName;
         this.enName = enName;
         this.calories = calories;
         this.description = description;
+    }
+
+    public Menu(String krName, String enName, int calories, String description, String category) {
+        this.krName = krName;
+        this.enName = enName;
+        this.calories = calories;
+        this.description = description;
+        this.category = category;
     }
 
     public void addPrice(Price price) {
@@ -67,10 +77,20 @@ public class Menu extends BaseEntity {
 
     public double calculateScore() {
         double result = 0.0;
+        if (!isReviewExist()) {
+            return result;
+        }
         for (Review review: this.reviews) {
             result += review.getRatings();
         }
         return result / this.reviews.size();
+    }
+
+    private boolean isReviewExist() {
+        if (this.reviews.size() > 0) {
+            return true;
+        }
+        return false;
     }
 
     public void registerCafe(Cafe cafe) {
@@ -109,4 +129,7 @@ public class Menu extends BaseEntity {
         return pricePerSize;
     }
 
+    public double getTotalRatings() {
+        return this.calculateScore();
+    }
 }
