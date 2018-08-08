@@ -1,10 +1,9 @@
 package com.teamproject.drinkit.controller;
 
-import com.teamproject.drinkit.domain.Cafe;
-import com.teamproject.drinkit.domain.CafeRepository;
-import com.teamproject.drinkit.domain.Menu;
-import com.teamproject.drinkit.domain.MenuRepository;
+import com.teamproject.drinkit.domain.*;
 import com.teamproject.drinkit.dto.CafeDto;
+import com.teamproject.drinkit.dto.MenuDto;
+import com.teamproject.drinkit.dto.ReviewDto;
 import com.teamproject.drinkit.service.CafeService;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,13 +33,27 @@ public class ApiCafeController {
     }
 
     @GetMapping("?cafeName={cafeName}&menuName={menuName}")
-    public Menu seeMenuDetail(@Valid @PathVariable String cafeName, @Valid @PathVariable String menuName) {
-        return cafeService.findMenu(cafeName, menuName);
+    public MenuDto seeMenuDetail(@Valid @PathVariable String cafeName, @Valid @PathVariable String menuName) {
+        Menu menu = cafeService.findMenu(cafeName, menuName);
+        return cafeService.makeMenuDto(menu);
     }
 
-    @PostMapping("/{cafeName}/menu/{menuName}/addReview")
-    public void addReview(@Valid @PathVariable String cafeName, @Valid @PathVariable String menuName) {
-
+    @PostMapping("/{cafeName}/menu/{menuName}/review")
+    public void addReview(@Valid @PathVariable String cafeName, @Valid @PathVariable String menuName, @RequestBody ReviewDto reviewDto) {
+        Review newReview = Review.from(reviewDto);
+        Menu menu = cafeService.findMenu(cafeName, menuName);
+        cafeService.addReview(newReview, menu);
     }
+
+    @PutMapping("/{cafeName}/menu/{menuName}/review")
+    public void editReview(@Valid @PathVariable String cafeName, @Valid @PathVariable String menuName, @RequestBody ReviewDto reviewDto) {
+        //user 와 review 에 연관관계가 맺어져야 사이에 key를 가지고 수정할 수 있지 않은가.
+    }
+
+    @DeleteMapping("/{cafeName}/menu/{menuName}/review")
+    public void deleteReview(@Valid @PathVariable String cafeName, @Valid @PathVariable String menuName, @RequestBody ReviewDto reviewDto) {
+        //user 와 review 에 연관관계가 맺어져야 사이에 key를 가지고 삭제할 수 있지 않은가.
+    }
+
 
 }

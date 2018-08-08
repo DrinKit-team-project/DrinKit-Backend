@@ -132,4 +132,24 @@ public class Menu extends BaseEntity {
     public double getTotalRatings() {
         return this.calculateScore();
     }
+
+    public String getKrName() {
+        return krName;
+    }
+
+    public String getEnName() {
+        return enName;
+    }
+
+    public int getCalories() {
+        return calories;
+    }
+
+    public List<String> getTagList() {
+        return tagList;
+    }
+
+    public List<String> getImageURLs() {
+        return imageURLs;
+    }
 }

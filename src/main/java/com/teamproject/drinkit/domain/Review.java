@@ -1,9 +1,7 @@
 package com.teamproject.drinkit.domain;
 
 import com.teamproject.drinkit.dto.ReviewDto;
-import lombok.Builder;
 import lombok.Getter;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 
@@ -15,11 +13,11 @@ public class Review extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "REVIEW_RATINGS")
+    @Column(name = "REVIEW_RATINGS", nullable=false)
     private double ratings;
 
     @Lob
-    @Column(name = "REVIEW_CONTENTS")
+    @Column(name = "REVIEW_CONTENTS", nullable=false)
     private String contents;
 
     @Column(name = "REVIEW_DRINK_IMG_URL")
@@ -46,5 +44,9 @@ public class Review extends BaseEntity {
 
     public static Review from(ReviewDto reviewDto){
         return new Review(reviewDto.getRatings(), reviewDto.getContents(), reviewDto.getDrinkImgUrl());
+    }
+
+    public void registerReview(Menu menu) {
+        this.menu = menu;
     }
 }
