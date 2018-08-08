@@ -6,6 +6,7 @@ import com.teamproject.drinkit.domain.UserRole;
 import com.teamproject.drinkit.exception.NoSuchAccountException;
 import com.teamproject.drinkit.security.dto.SocialLoginDto;
 import com.teamproject.drinkit.security.social.UserInfoFromSocial;
+import com.teamproject.drinkit.service.KakaoInfoFetchServiceImp;
 import com.teamproject.drinkit.service.SocialInfoFetchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,7 +24,7 @@ public class AccountDetailsService implements UserDetailsService {
     private SocialInfoFetchService socialInfoFetchService;
 
     public Account search(SocialLoginDto dto){
-        UserInfoFromSocial userInfo = socialInfoFetchService.fromOAuthServer(dto);
+        UserInfoFromSocial userInfo = socialInfoFetchService.fetchFromOAuthServer(dto);
         return accountRepository.findBySocialIdAndSocialProvider(userInfo.getUserId(), dto.getProvider())
                 .orElseGet(() -> accountRepository.save(new Account("jiwon", userInfo.getUsername(), "1234", UserRole.USER, userInfo.getUserId(), dto.getProvider(), userInfo.getProfileHref())));
     }

@@ -13,9 +13,14 @@ public class SocialLoginDto {
     @JsonProperty(value= "token")
     private String token;
 
+    @JsonProperty(value = "id")
+    private String id;
+
     public SocialLoginDto(){}
-    public SocialLoginDto(SocialProviders provider, String token){
+
+    public SocialLoginDto(SocialProviders provider, String token, String id) {
         this.provider = provider;
         this.token = token;
+        this.id = id;
     }
 }

@@ -1,6 +1,5 @@
 package com.teamproject.drinkit.domain;
 
-import com.teamproject.drinkit.service.SocialInfoFetchService;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

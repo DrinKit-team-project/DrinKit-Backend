@@ -8,7 +8,6 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.teamproject.drinkit.domain.AccountRepository;
 import com.teamproject.drinkit.exception.InvalidJwtException;
 import com.teamproject.drinkit.security.AccountDetails;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

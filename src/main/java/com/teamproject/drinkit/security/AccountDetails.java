@@ -37,8 +37,6 @@ public class AccountDetails extends User {
         return Arrays.asList(userRole).stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
     }
 
-
-
     public Account getAccount() {
         return account;
     }

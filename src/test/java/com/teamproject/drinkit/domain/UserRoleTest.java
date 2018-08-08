@@ -12,6 +12,6 @@ public class UserRoleTest {
 
     @Test
     public void GET_ROLE_NAME_TEST() {
-        log.debug("userRole:{}", UserRole.fromRoleName("ROLE_USER"));
+        log.debug("userRole:{}", UserRole.getRoleByName("ROLE_USER"));
     }
 }

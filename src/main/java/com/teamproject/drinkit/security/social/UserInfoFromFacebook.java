@@ -1,6 +1,7 @@
 package com.teamproject.drinkit.security.social;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
+import com.teamproject.drinkit.domain.Picture;
 
 public class UserInfoFromFacebook implements UserInfoFromSocial {
 
@@ -10,11 +11,11 @@ public class UserInfoFromFacebook implements UserInfoFromSocial {
     @JsonProperty(value = "name")
     private String username;
 
-    @JsonProperty(value = "picture")
-    private String profileHref;
-
     @JsonProperty(value = "email")
     private String email;
+
+    @JsonProperty(value = "picture")
+    private Picture picture;
 
     @Override
     public Long getUserId() {
@@ -28,7 +29,7 @@ public class UserInfoFromFacebook implements UserInfoFromSocial {
 
     @Override
     public String getProfileHref() {
-        return profileHref;
+        return picture.getData().getUrl();
     }
 
     @Override

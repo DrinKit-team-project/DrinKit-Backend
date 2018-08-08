@@ -3,10 +3,12 @@ package com.teamproject.drinkit.domain;
 import com.teamproject.drinkit.security.social.UserInfoFromFacebook;
 import com.teamproject.drinkit.security.social.UserInfoFromKakao;
 import com.teamproject.drinkit.security.social.UserInfoFromSocial;
+import org.springframework.stereotype.Component;
 
 public enum SocialProviders {
     KAKAO("https://kapi.kakao.com/v2/user/me", UserInfoFromKakao.class),
-    FACEBOOK("https://graph.facebook.com/v2.11/user-id ", UserInfoFromFacebook.class);
+    FACEBOOK("https://graph.facebook.com/v3.1/{user_id}"
+            , UserInfoFromFacebook.class);
 
     private String userInfoRequestUrl;
     private Class<? extends UserInfoFromSocial> userInfo;
