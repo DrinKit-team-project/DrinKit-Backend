@@ -17,13 +17,13 @@ public class JwtDecoderTest {
 
     @Before
     public void setUp() throws Exception {
-        String signingKey = "drinkitjwtsecretkey";
+        String signingKey = "testkey";
         jwtDecoder = new JwtDecoder(signingKey);
     }
 
     @Test
     public void JWT_TOKEN_DECODE_TEST() {
-        DecodedJWT decodedJWT = jwtDecoder.verify("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJkcmlua2l0IiwiVVNFUk5BTUUiOiJqaXdvbiIsIlVTRVJfUk9MRSI6IlVTRVJfUk9MRSJ9.boYKwoRzHQ4MZf9YXizmVY02Ibo65F-8Von5uPJoO7o");
+        DecodedJWT decodedJWT = jwtDecoder.verify("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJkcmlua2l0IiwiVVNFUk5BTUUiOiJqaXdvbiIsIlVTRVJfUk9MRSI6IlJPTEVfVVNFUiJ9.Juz2LTaWs62aJYOioH4ht-9gqwLhaTiHzNAsnZp7owg");
        log.debug("Username Claim: {}", decodedJWT.getClaim("USERNAME").asString());
        log.debug("UserRole Claim: {}", decodedJWT.getClaim("USER_ROLE").asString());
 
