@@ -6,7 +6,7 @@ import com.teamproject.drinkit.domain.Picture;
 public class UserInfoFromFacebook implements UserInfoFromSocial {
 
     @JsonProperty(value = "id")
-    private Long id;
+    private String id;
 
     @JsonProperty(value = "name")
     private String username;
@@ -18,7 +18,7 @@ public class UserInfoFromFacebook implements UserInfoFromSocial {
     private Picture picture;
 
     @Override
-    public Long getUserId() {
+    public String getUserId() {
         return id;
     }
 

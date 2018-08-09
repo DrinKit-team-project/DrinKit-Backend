@@ -3,8 +3,10 @@ package com.teamproject.drinkit.security.provider;
 import com.teamproject.drinkit.domain.Account;
 import com.teamproject.drinkit.security.AccountDetails;
 import com.teamproject.drinkit.security.AccountDetailsService;
+import com.teamproject.drinkit.security.social.UserInfoFromSocial;
 import com.teamproject.drinkit.security.token.PostAuthorizationToken;
 import com.teamproject.drinkit.security.token.SocialPreAuthorizationToken;
+import com.teamproject.drinkit.service.SocialInfoFetchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
@@ -16,6 +18,7 @@ public class SocialLoginAuthenticationProvider implements AuthenticationProvider
 
     @Autowired
     private AccountDetailsService accountDetailsService;
+
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {

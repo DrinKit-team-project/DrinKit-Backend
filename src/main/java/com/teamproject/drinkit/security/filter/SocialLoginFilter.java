@@ -31,6 +31,7 @@ public class SocialLoginFilter extends AbstractAuthenticationProcessingFilter {
 
         SocialLoginDto socialLoginDto = mapper.readValue(req.getReader(), SocialLoginDto.class);
         SocialPreAuthorizationToken token = new SocialPreAuthorizationToken(socialLoginDto);
+
         return super.getAuthenticationManager().authenticate(token);
     }
 

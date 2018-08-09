@@ -23,4 +23,8 @@ public class SocialLoginDto {
         this.token = token;
         this.id = id;
     }
+
+    public boolean isFromFacebook(){
+        return this.provider.equals(SocialProviders.FACEBOOK);
+    }
 }

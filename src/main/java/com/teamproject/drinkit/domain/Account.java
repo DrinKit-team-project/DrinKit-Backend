@@ -31,7 +31,7 @@ public class Account extends BaseEntity {
     private UserRole userRole;
 
     @Column(name = "ACCOUNT_SOCIAL_ID")
-    private Long socialId;
+    private String socialId;
 
     @Column(name = "ACCOUNT_SOCIAL_PROVIDER")
     @Enumerated(value = EnumType.STRING)
@@ -40,7 +40,7 @@ public class Account extends BaseEntity {
     @Column(name = "ACCOUNT_SOCIAL_PROFILEPIC")
     private String profileHref;
 
-    private Account(Long id, String username, String userId, String password, UserRole userRole, Long socialId, SocialProviders socialProvider, String profileHref){
+    private Account(Long id, String username, String userId, String password, UserRole userRole, String socialId, SocialProviders socialProvider, String profileHref){
         this.id = id;
         this.username = username;
         this.userId = userId;
@@ -51,7 +51,7 @@ public class Account extends BaseEntity {
         this.profileHref = profileHref;
     }
 
-    public Account(String username, String userId, String password, UserRole userRole, Long socialId, SocialProviders socialProvider, String profileHref){
+    public Account(String username, String userId, String password, UserRole userRole, String socialId, SocialProviders socialProvider, String profileHref){
         this(0L, username, userId, password, userRole, socialId, socialProvider, profileHref);
     }
 

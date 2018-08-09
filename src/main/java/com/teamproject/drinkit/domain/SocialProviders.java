@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 public enum SocialProviders {
     KAKAO("https://kapi.kakao.com/v2/user/me", UserInfoFromKakao.class),
-    FACEBOOK("https://graph.facebook.com/v3.1/{user_id}"
+    FACEBOOK("https://graph.facebook.com/v2.11/"
             , UserInfoFromFacebook.class);
 
     private String userInfoRequestUrl;
@@ -23,4 +23,5 @@ public enum SocialProviders {
     }
 
     public Class<? extends UserInfoFromSocial> getUserInfo(){ return userInfo;}
+
 }

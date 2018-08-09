@@ -7,7 +7,7 @@ import java.util.Map;
 public class UserInfoFromKakao implements UserInfoFromSocial {
 
     @JsonProperty(value = "id")
-    private Long id;
+    private String id;
 
     @JsonProperty(value = "properties")
     private Map<String, String> properties;
@@ -16,7 +16,7 @@ public class UserInfoFromKakao implements UserInfoFromSocial {
     private Map<String, String> accountInfo;
 
     @Override
-    public Long getUserId() {
+    public String getUserId() {
         return id;
     }
 

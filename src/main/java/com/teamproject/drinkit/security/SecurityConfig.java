@@ -9,6 +9,8 @@ import com.teamproject.drinkit.security.handler.JwtAuthenticationSuccessHandler;
 import com.teamproject.drinkit.security.handler.SocialLoginSuccessHandler;
 import com.teamproject.drinkit.security.provider.JwtAuthenticationProvider;
 import com.teamproject.drinkit.security.provider.SocialLoginAuthenticationProvider;
+import com.teamproject.drinkit.service.KakaoInfoFetchServiceImp;
+import com.teamproject.drinkit.service.SocialInfoFetchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
