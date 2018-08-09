@@ -27,3 +27,9 @@ logging:
   pattern:
     level: trace
 
+jwt:
+  signingKey: drinkitjwtsecretkey
+
+skipUrls: /social
+noToSkipPath: /api/**
+
