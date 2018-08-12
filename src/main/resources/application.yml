@@ -40,4 +40,15 @@ noToSkipPath: /api/**
 ---
 spring.profiles: real
 spring.profiles.include: real-db
+spring:
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+            hibernate:
+              format_sql: true
+
 ---
