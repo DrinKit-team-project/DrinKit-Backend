@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: develop # 기본 profile 선택
+    active: real # 기본 profile 선택
 
 # develop 환경
 ---
