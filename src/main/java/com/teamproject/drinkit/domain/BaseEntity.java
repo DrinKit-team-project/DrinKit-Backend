@@ -16,7 +16,6 @@ import java.util.Objects;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
-
     @CreatedDate
     private LocalDateTime createdDate;
 
@@ -39,7 +38,6 @@ public class BaseEntity {
         }
         return dateTime.format(DateTimeFormatter.ofPattern(format));
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
