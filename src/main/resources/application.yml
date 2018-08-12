@@ -9,9 +9,9 @@ spring:
   jpa:
     database: mysql
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
     show-sql: true
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database-platform: org.hibernate.dialect.MySQL5Dialect
     properties:
             hibernate:
               format_sql: true
@@ -30,3 +30,14 @@ logging:
   pattern:
     level: trace
 
+jwt:
+  signingKey: drinkitjwtsecretkey
+
+skipUrls: /social
+noToSkipPath: /api/**
+
+# 운영환경
+---
+spring.profiles: real
+spring.profiles.include: real-db
+---

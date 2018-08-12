@@ -1,0 +1,6 @@
+POST http://localhost:8080/social
+Content-Type: application/json;charset=UTF-8
+
+{"provider" : "FACEBOOK", "id" : 704798269891295, "token" : "EAAM7HscfrTwBALJTilxTg6JZC4siXX9fdbQkLqTjNNgtTXp0rB4MStaOe1wc4vVBBrO9ecXsRzLOj0L3f4QdQPZCXZBrx1fnZAKWKhxWS1wG7OqER5URsSOZAptK27JqwSd9PVSPgwHiIHCT1ZAZA0IauNLCPNyZBLAcZAllQuiLdCsYE7ia6BWCNZBDvO98RlNxuFd3RNsPifOAZDZD"}
+
+###
