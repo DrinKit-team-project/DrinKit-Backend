@@ -8,6 +8,11 @@ cache:
   directories:
     - '$Home/.gradle'
 
+before_install:
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS drinkit;'
+  - mysql -u root -e "CREATE USER 'jiwon'@'localhost' IDENTIFIED BY 'drinkitjiwon';"
+  - mysql -u root -e "GRANT ALL ON drinkit.* TO 'jiwon'@'localhost';"
+
 script: "./gradlew clean build"
 
 before_deploy:
