@@ -3,7 +3,7 @@ jdk:
   - openjdk8
 branches:
   only:
-    - develop
+    - master
 cache:
   directories:
     - '$Home/.gradle'
