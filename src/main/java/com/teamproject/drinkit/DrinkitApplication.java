@@ -9,16 +9,15 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
 @EnableJpaAuditing
-@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
 public class DrinkitApplication {
     private static final String APPLICATION_LOCATIONS = "spring.config.location="
             + "classpath:application.yml,"
             + "/app/config/drinkit/real-application.yml";
 
     public static void main(String[] args) {
-
+        String[] appArgs = {"--debug"};
         new SpringApplicationBuilder(DrinkitApplication.class)
                 .properties(APPLICATION_LOCATIONS)
-                .run(args);
+                .run(appArgs);
     }
 }
