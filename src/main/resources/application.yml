@@ -51,4 +51,9 @@ spring:
             hibernate:
               format_sql: true
 
+# 로그 레벨 설정
+logging:
+  pattern:
+    level: info
+
 ---

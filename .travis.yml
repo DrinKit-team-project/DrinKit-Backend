@@ -17,7 +17,9 @@ before_install:
   - mysql -u root -e "CREATE USER 'jiwon'@'localhost' IDENTIFIED BY 'drinkitjiwon';"
   - mysql -u root -e "GRANT ALL ON drinkit.* TO 'jiwon'@'localhost';"
 
-script: "./gradlew clean build"
+script:
+  - java -jar -Dspring.profile.active=real drinkit.jar
+  - ./gradlew clean build
 
 before_deploy:
   - zip -r drinkit *
