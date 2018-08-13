@@ -14,12 +14,12 @@ cache:
 
 before_install:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS drinkit;'
-  - mysql -u root -e "CREATE USER 'jiwon'@'localhost' IDENTIFIED BY 'jiwon';"
+  - mysql -u root -e "CREATE USER 'jiwon'@'localhost' IDENTIFIED BY 'drinkitjiwon';"
   - mysql -u root -e "GRANT ALL ON drinkit.* TO 'jiwon'@'localhost';"
 
 script:
 #  - nohup java -jar -Dspring.profiles.active=real
-  - /gradlew clean build -Pprofile=prod
+  - /gradlew clean build -Pprofile=real
 
 before_deploy:
   - zip -r drinkit *
