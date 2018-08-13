@@ -19,7 +19,7 @@ before_install:
 
 script:
 #  - nohup java -jar -Dspring.profiles.active=real
-  - /gradlew clean build -Pprofile=real
+  - ./gradlew clean build -Pprofile=real
 
 before_deploy:
   - zip -r drinkit *
