@@ -18,7 +18,7 @@ before_install:
   - mysql -u root -e "GRANT ALL ON drinkit.* TO 'jiwon'@'localhost';"
 
 script:
-  - java -jar -Dspring.profile.active=real drinkit.jar
+  - nohup java -jar -Dspring.profiles.active=real
   - ./gradlew clean build
 
 before_deploy:
