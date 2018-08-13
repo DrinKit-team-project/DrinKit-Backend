@@ -38,7 +38,7 @@ noToSkipPath: /api/**
 
 # 운영환경
 ---
-spring.profiles: real
+spring.profiles: prod
 spring.profiles.include: real-db
 
 # 로그 레벨 설정
