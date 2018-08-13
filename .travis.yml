@@ -20,9 +20,6 @@ before_install:
 script:
   - ./gradlew clean build -Pprofile=real
 
-after_failure:
-  - cat MSBuild_*.failure.txt
-
 before_deploy:
   - zip -r drinkit *
   - mkdir -p deploy
