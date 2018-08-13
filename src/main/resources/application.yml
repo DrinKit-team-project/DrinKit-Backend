@@ -41,6 +41,11 @@ noToSkipPath: /api/**
 spring.profiles: real
 spring.profiles.include: real-db
 spring:
+  datasource:
+      url: jdbc:mysql://drinkit.c114gl6uea4l.ap-northeast-2.rds.amazonaws.com:3306/drinkit
+      username: jiwon
+      password: drinkitjiwon
+      driverClassName: com.mysql.jdbc.Driver
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5Dialect
