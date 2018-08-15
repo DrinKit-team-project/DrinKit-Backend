@@ -22,14 +22,20 @@ spring:
    password: jiwon
    driver-class-name: com.mysql.jdbc.Driver
 
-logging:
-  level: trace
+ output:
+  ansi:
+   enabled: ALWAYS
+
 
 jwt:
   signingKey: drinkitjwtsecretkey
 
 skipUrls: /social
 noToSkipPath: /api/**
+
+logging:
+  pattern:
+    level: trace
 
 # 운영환경
 ---
