@@ -1,2 +1,2 @@
 #!/bin/bash
-/home/ubuntu/app/develop/deploy.sh
+/home/ubuntu/app/travis/deploy.sh
