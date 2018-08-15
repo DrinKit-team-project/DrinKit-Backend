@@ -1,35 +1,29 @@
 spring:
-  profiles:
+ profiles:
     active: develop # 기본 profile 선택
 
 # develop 환경
 ---
 spring:
-  profiles: develop
-  jpa:
-    database: mysql
+ profiles: develop
+ jpa:
+   database: mysql
+   database-platform: org.hibernate.dialect.MySQL5Dialect
+   show-sql: true
+   hibernate:
+     ddl-auto: create-drop
+   properties:
     hibernate:
-      ddl-auto: create-drop
-    show-sql: true
-    database-platform: org.hibernate.dialect.MySQL5Dialect
-    properties:
-            hibernate:
-              format_sql: true
+      format_sql: true
 
-  datasource:
-          username: jiwon
-          password: jiwon
-          url: jdbc:mysql://localhost/drinkit
-          driverClassName: com.mysql.jdbc.Driver
+ datasource:
+   url: jdbc:mysql://localhost/drinkit
+   username: jiwon
+   password: jiwon
+   driver-class-name: com.mysql.jdbc.Driver
 
-  security:
-    basic:
-      enabled: false # security 기본 인증 옵션 제거
-
-# 로그 레벨 설정
 logging:
-  pattern:
-    level: trace
+  level: trace
 
 jwt:
   signingKey: drinkitjwtsecretkey
@@ -42,9 +36,3 @@ noToSkipPath: /api/**
 spring.profiles: prod
 spring.profiles.include: real-db
 
-# 로그 레벨 설정
-logging:
-  pattern:
-    level: info
-
----
