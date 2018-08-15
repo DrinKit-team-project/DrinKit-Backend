@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableJpaAuditing
 public class DrinkitApplication {
     private static final String APPLICATION_LOCATIONS = "spring.config.location="
-            + "classpath:application.yml,"
+            + "classpath:application-develop.properties,"
             + "/app/config/drinkit/real-application.yml";
 
     public static void main(String[] args) {
