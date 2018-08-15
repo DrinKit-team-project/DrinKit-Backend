@@ -15,9 +15,8 @@ public class DrinkitApplication {
             + "/app/config/drinkit/real-application.yml";
 
     public static void main(String[] args) {
-        String[] appArgs = {"--debug"};
         new SpringApplicationBuilder(DrinkitApplication.class)
                 .properties(APPLICATION_LOCATIONS)
-                .run(appArgs);
+                .run();
     }
 }
