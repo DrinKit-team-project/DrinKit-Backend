@@ -22,7 +22,9 @@ public class BaseEntity {
     @LastModifiedDate
     private LocalDateTime modifiedDate;
 
-    public BaseEntity(){}
+    public BaseEntity() {
+        this.createdDate = LocalDateTime.now();
+    }
 
     public String getFormattedCreatedDate(){
         return getFormattedDate(this.createdDate, "yyyy.MM.dd HH:mm:ss");
