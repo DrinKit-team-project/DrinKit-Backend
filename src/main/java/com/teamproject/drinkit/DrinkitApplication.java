@@ -18,5 +18,6 @@ public class DrinkitApplication {
         new SpringApplicationBuilder(DrinkitApplication.class)
                 .properties(APPLICATION_LOCATIONS)
                 .run();
+
     }
 }
