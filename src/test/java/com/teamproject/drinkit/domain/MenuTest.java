@@ -1,4 +1,4 @@
-package domain;
+package com.teamproject.drinkit.domain;
 
 import com.teamproject.drinkit.domain.*;
 import org.junit.Test;
