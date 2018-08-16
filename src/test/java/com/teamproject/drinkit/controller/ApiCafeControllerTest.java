@@ -41,7 +41,7 @@ public class ApiCafeControllerTest {
 
     @Test
     public void main() {
-        ResponseEntity<String> response = template.getForEntity("/api/cafes",  String.class);
-        assertThat(response.getStatusCode(), is(HttpStatus.FOUND));
+        ResponseEntity<String> response = template.getForEntity("/cafes",  String.class);
+        assertThat(response.getStatusCode(), is(HttpStatus.OK));
     }
 }

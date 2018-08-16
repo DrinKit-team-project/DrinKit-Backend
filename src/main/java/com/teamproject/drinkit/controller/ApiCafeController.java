@@ -12,7 +12,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/cafes")
+@RequestMapping("/cafes")
 public class ApiCafeController {
     @Resource(name = "cafeService")
     private CafeService cafeService;
