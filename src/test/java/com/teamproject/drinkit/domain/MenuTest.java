@@ -1,6 +1,8 @@
 package com.teamproject.drinkit.domain;
 
 import com.teamproject.drinkit.domain.*;
+import com.teamproject.drinkit.service.CafeService;
+import com.teamproject.drinkit.service.SearchService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
