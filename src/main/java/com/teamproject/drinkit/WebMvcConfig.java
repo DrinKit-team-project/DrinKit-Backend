@@ -9,7 +9,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import javax.sql.DataSource;
 
 @Configuration
-@ComponentScan(basePackages = {"com.teamproject.drinkit"})
 public class WebMvcConfig implements WebMvcConfigurer {
     @Bean
     public DataSource dataSource(){

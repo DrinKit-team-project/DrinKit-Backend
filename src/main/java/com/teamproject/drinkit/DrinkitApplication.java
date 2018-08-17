@@ -9,7 +9,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
-@ComponentScan("com.teamproject.drinkit")
 public class DrinkitApplication {
 
     public static void main(String[] args) {

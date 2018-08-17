@@ -10,7 +10,6 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
-@ComponentScan(basePackages = {"com.teamproject.drinkit.controller"})
 @EnableSwagger2
 public class SwaggerConfig {
     @Bean
