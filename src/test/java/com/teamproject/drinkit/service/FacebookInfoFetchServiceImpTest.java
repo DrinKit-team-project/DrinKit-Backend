@@ -18,7 +18,7 @@ public class FacebookInfoFetchServiceImpTest {
 
     @Before
     public void setUp() throws Exception {
-        String access_token = "EAAM7HscfrTwBAPZBD6fpZCI1D2ZC304wfoPFE7DSeeyqiEWgeuVVRUMW3fSZA309haOSyXIjDdQb9uSLqVkyKZBztidVEDIOCzrZB3yZA25nAz2ZCnd7LQmZBbCIO6XZBfeaPRYP9OZBP9FFYjLNGFPTHbFV9iuq5UJIopF6gma6fB9kHWtJTPVvUPkLs8LpeV32QrfH1oIZCTd7AAZDZD";
+        String access_token = "EAAM7HscfrTwBAE02KrZCh59A1ccYwgAru7BCIRTT4WbU5Umr9zuMyANA7LvDkWehqMsW0fDzfMqpCBDJfkUqRrU3jDNeHKWhNNtjLwvazyPmRiVNCuYzvDjCuZAgDiLjV6vtU9ZAAMhiYadN8AmxbFSWqwEj3QwQCexZAkl9PEI5NJu3LgRAhMjcMhcExdrKny12FYxO1gZDZD";
         String user_id = "704798269891295";
         facebookInfoFetchServiceImp = new FacebookInfoFetchServiceImp();
         dto = new SocialLoginDto(SocialProviders.FACEBOOK, access_token, user_id);
