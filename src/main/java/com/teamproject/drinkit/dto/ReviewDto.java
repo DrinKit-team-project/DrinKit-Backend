@@ -5,11 +5,11 @@ import lombok.Getter;
 
 @Getter
 public class ReviewDto {
-    private Long ratings;
+    private double ratings;
     private String contents;
     private String drinkImgUrl;
 
-    private ReviewDto(Long ratings, String contents, String drinkImgUrl){
+    private ReviewDto(double ratings, String contents, String drinkImgUrl){
         this.ratings = ratings;
         this.contents = contents;
         this.drinkImgUrl = drinkImgUrl;

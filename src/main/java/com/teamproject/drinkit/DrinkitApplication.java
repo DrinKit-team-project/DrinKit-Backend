@@ -5,18 +5,14 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
-@EnableJpaAuditing
+@ComponentScan("com.teamproject.drinkit")
 public class DrinkitApplication {
-    private static final String APPLICATION_LOCATIONS = "spring.config.location="
-            + "classpath:application-develop.properties,"
-            + "/app/config/drinkit/application-realdb.properties";
 
     public static void main(String[] args) {
-        new SpringApplicationBuilder(DrinkitApplication.class)
-                .properties(APPLICATION_LOCATIONS)
-                .run();
+        SpringApplication.run(DrinkitApplication.class, args);
     }
 }
