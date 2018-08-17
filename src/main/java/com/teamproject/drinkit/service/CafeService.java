@@ -2,6 +2,8 @@ package com.teamproject.drinkit.service;
 
 import com.teamproject.drinkit.domain.*;
 import com.teamproject.drinkit.dto.MenuDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +12,9 @@ import java.util.List;
 
 @Service
 public class CafeService {
+
+    private static final Logger log = LoggerFactory.getLogger(CafeService.class);
+
     @Autowired
     private CafeRepository cafeRepository;
 
@@ -18,6 +23,9 @@ public class CafeService {
 
     @Autowired
     private ReviewRepository reviewRepository;
+
+    @Autowired
+    private TagRepository tagRepository;
 
     private Long findCafeId(String cafeName) {
         Cafe cafe = findCafe(cafeName);
@@ -50,5 +58,21 @@ public class CafeService {
         newReview.registerReview(menu);
         menu.addReview(newReview);
         reviewRepository.save(newReview);
+    }
+
+    @Transactional
+    public Tag getTag(String tagName) {
+        Tag targetTag;
+        try {
+            targetTag = tagRepository.findByTagName(tagName);
+        }catch (NullPointerException e) {
+            targetTag = new Tag(tagName);
+        }
+        return targetTag;
+    }
+
+    @Transactional
+    public void addTag(Tag tag, Menu menu) {
+        menu.addTag(tag);
     }
 }

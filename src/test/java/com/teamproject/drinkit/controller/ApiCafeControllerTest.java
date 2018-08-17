@@ -44,4 +44,5 @@ public class ApiCafeControllerTest {
         ResponseEntity<String> response = template.getForEntity("/cafes",  String.class);
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
     }
+
 }

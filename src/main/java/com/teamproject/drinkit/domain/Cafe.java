@@ -28,8 +28,8 @@ public class Cafe extends BaseEntity {
     private List<Menu> menus = new ArrayList<>();
 
     @Embedded
-    @Column
-    private List<String> categoryList = new ArrayList<>();
+//    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL)
+    private List<String> categoryNames = new ArrayList<>();
 
     private boolean deleted = false;
 
@@ -42,15 +42,30 @@ public class Cafe extends BaseEntity {
         this.imageURL = imageURL;
     }
 
-    public void addCategory(String expectedCategoryName) {
-        this.categoryList.add(expectedCategoryName);
+    public void addCategoryName(String expectedCategoryName) {
+        this.categoryNames.add(expectedCategoryName);
     }
 
+    public Cafe addMenu(Menu menu) {
+        this.menus.add(menu);
+        return this;
+    }
     public CafeDto makeToDto() {
         CafeDto cafeDto = new CafeDto(this.name, this.imageURL);
-        for (String category : categoryList) {
-            cafeDto.addCategoty(category);
-        }
+//        for (String category : categoryList) {
+//            cafeDto.addCategoty(category);
+//        }
         return cafeDto;
+    }
+
+    @Override
+    public String toString() {
+        return "Cafe{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", imageURL='" + imageURL + '\'' +
+                ", menus=" + menus +
+                ", deleted=" + deleted +
+                '}';
     }
 }

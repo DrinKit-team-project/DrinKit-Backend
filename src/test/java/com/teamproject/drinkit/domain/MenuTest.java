@@ -1,10 +1,6 @@
 package com.teamproject.drinkit.domain;
 
-import com.teamproject.drinkit.domain.*;
-import com.teamproject.drinkit.service.CafeService;
-import com.teamproject.drinkit.service.SearchService;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -17,15 +13,15 @@ public class MenuTest {
     }
 
     @Test
-    public void priceTest() {
+    public void pricePerSizeTest() {
         Menu newMenu = makeMenu();
-        assertEquals(newMenu.getPricePerSize().size(), 0);
+        assertEquals(newMenu.getPricePerSizePerSizes().size(), 0);
 
-        Price testPrice = new Price("small", 2000);
-        newMenu.addPrice(testPrice);
+        PricePerSize testPricePerSize = new PricePerSize("small", 2000);
+        newMenu.addPricePerSize(testPricePerSize);
 
-        assertEquals(newMenu.getPricePerSize().size(), 1);
-        assertEquals(newMenu.getPricePerSize().get(0), testPrice);
+        assertEquals(newMenu.getPricePerSizePerSizes().size(), 1);
+        assertEquals(newMenu.getPricePerSizePerSizes().get(0), testPricePerSize);
     }
 
     @Test
