@@ -16,7 +16,6 @@ public class JwtFactory {
 
     private String signingKey;
 
-    @Autowired
     public JwtFactory(@Value("${jwt.signingKey}") String signingKey){
         this.signingKey = signingKey;
     }
