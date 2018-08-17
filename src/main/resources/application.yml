@@ -1,11 +1,6 @@
 spring:
   profiles:
     active: develop
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost/drinkit
-    username: jiwon
-    password: jiwon
 
 output:
    ansi:
@@ -31,6 +26,11 @@ spring:
       properties:
         hibernate:
           format_sql: true
+    datasource:
+       driver-class-name: com.mysql.jdbc.Driver
+       url: jdbc:mysql://localhost/drinkit
+       username: jiwon
+       password: jiwon
 
 logging:
   pattern:
@@ -48,6 +48,12 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  datasource:
+     driver-class-name: com.mysql.jdbc.Driver
+     url: jdbc:mysql://localhost/drinkit
+     username: jiwon
+     password: jiwon
+
 
 logging:
   pattern:
