@@ -18,7 +18,7 @@ before_install:
   - mysql -u root -e "GRANT ALL ON drinkit.* TO 'jiwon'@'localhost';"
 
 script:
-  - ./gradlew clean build
+  - travis_wait 30 ./gradlew clean build
 
 before_deploy:
   - zip -r drinkit *
