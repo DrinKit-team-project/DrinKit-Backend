@@ -1,6 +1,7 @@
 package com.teamproject.drinkit.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.teamproject.drinkit.dto.MenuDto;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;

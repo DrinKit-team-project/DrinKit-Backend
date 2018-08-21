@@ -6,7 +6,8 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 public interface MenuRepository extends JpaRepository<Menu, Long> {
-    Iterable<Menu> findByCafeIdAndCategory(Long id, String category);
+    Optional<Iterable<Menu>> findByCafeIdAndCategory(Long id, String category);
+    Optional<Menu> findByCafeIdAndId(Long cafeId, Long id);
     Menu findByCafeIdAndEnName(Long id, String enName);
     Iterable<Menu> findByCreatedDateBetweenOrderByCreatedDateDesc(LocalDateTime start, LocalDateTime end);
     Optional<Iterable<Menu>> findByEnName(String enName);

@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/search")
@@ -26,7 +27,7 @@ public class ApiSearchController {
 //    }
 
     @PostMapping("")
-    public Iterable<Menu> searchMenu(@RequestBody String searchKeyWord) throws NullPointerException, UnsupportedOperationException, NoSuchMenuException{
+    public Iterable<Menu> searchMenu(@Valid @RequestBody String searchKeyWord) throws NullPointerException, UnsupportedOperationException, NoSuchMenuException{
         log.debug("search keyword is : " + searchKeyWord);
 
         Iterable<Menu> menus;
@@ -34,6 +35,8 @@ public class ApiSearchController {
             menus = searchService.checkCharacter(searchKeyWord);
         }catch (NoSuchMenuException e) {
             throw new NoSuchMenuException("그런거 없 뜸.");
+        }catch (NullPointerException e) {
+            throw new NullPointerException("null");
         }
         log.debug("!!! : " + menus.toString());
 
