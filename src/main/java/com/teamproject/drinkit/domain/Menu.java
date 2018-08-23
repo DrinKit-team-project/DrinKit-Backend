@@ -24,11 +24,12 @@ public class Menu extends BaseEntity {
 
     private String description;
 
+    private double totalRatings;
+
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "cafe_id"))
     private Cafe cafe;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL)
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
@@ -72,6 +73,10 @@ public class Menu extends BaseEntity {
         this.calories = calories;
         this.description = description;
         this.category = category;
+    }
+
+    public static Menu from(MenuDto menuDto) {
+        return new Menu(menuDto.getKrName(), menuDto.getEnName(), menuDto.getCalories(), menuDto.getDescription(), menuDto.getCategory());
     }
 
     public void addPricePerSize(PricePerSize pricePerSize) {
@@ -126,11 +131,12 @@ public class Menu extends BaseEntity {
     public List<Review> getReviews() {
         return reviews;
     }
-    public List<PricePerSize> getPricePerSizePerSizes() {
+    public List<PricePerSize> getPricePerSizes() {
         return pricePerSizePerSizes;
     }
     public double getTotalRatings() {
-        return this.calculateScore();
+        totalRatings = this.calculateScore();
+        return totalRatings;
     }
     public String getKrName() {
         return krName;
@@ -166,7 +172,6 @@ public class Menu extends BaseEntity {
                 Objects.equals(category, menu.category) &&
                 Objects.equals(description, menu.description) &&
                 Objects.equals(cafe, menu.cafe) &&
-                Objects.equals(reviews, menu.reviews) &&
                 Objects.equals(pricePerSizePerSizes, menu.pricePerSizePerSizes) &&
                 Objects.equals(tagList, menu.tagList) &&
                 Objects.equals(imageURLs, menu.imageURLs);
@@ -188,11 +193,12 @@ public class Menu extends BaseEntity {
                 ", calories=" + calories +
                 ", category='" + category + '\'' +
                 ", description='" + description + '\'' +
-                ", reviews=" + reviews +
+                ", reviews_size=" + reviews.size() +
                 ", pricePerSizePerSizes=" + pricePerSizePerSizes +
-                ", tagList=" + tagList +
-                ", imageURLs=" + imageURLs +
+                ", tagList_size=" + tagList.size() +
+                ", imageURLs_size=" + imageURLs.size() +
                 ", deleted=" + deleted +
+                ", cafe_id=" + cafe.getId() +
                 '}';
     }
 }

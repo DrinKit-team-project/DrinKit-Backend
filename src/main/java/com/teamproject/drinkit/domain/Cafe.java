@@ -27,7 +27,11 @@ public class Cafe extends BaseEntity {
     @OrderBy("id ASC")
     private List<Menu> menus = new ArrayList<>();
 
-    @Embedded
+    @ElementCollection
+    @CollectionTable(name = "CAFE_CATEGORY_LIST",
+            joinColumns = @JoinColumn(name = "CAFE_ID", foreignKey = @ForeignKey(name = "CAFE_ID")))
+    @Column(name = "CATEGORY_NAME")
+//    @Embedded
 //    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL)
     private List<String> categoryNames = new ArrayList<>();
 
@@ -64,7 +68,6 @@ public class Cafe extends BaseEntity {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", imageURL='" + imageURL + '\'' +
-                ", menus=" + menus +
                 ", deleted=" + deleted +
                 '}';
     }

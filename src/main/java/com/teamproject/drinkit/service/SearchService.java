@@ -1,14 +1,12 @@
 package com.teamproject.drinkit.service;
 
-import com.teamproject.drinkit.domain.CafeRepository;
-import com.teamproject.drinkit.domain.Menu;
-import com.teamproject.drinkit.domain.MenuRepository;
-import com.teamproject.drinkit.domain.ReviewRepository;
+import com.teamproject.drinkit.domain.*;
 import com.teamproject.drinkit.exception.NoSuchMenuException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import java.time.LocalDateTime;
@@ -26,6 +24,9 @@ public class SearchService {
 
     @Autowired
     private MenuRepository menuRepository;
+
+    @Autowired
+    private TagRepository tagRepository;
 
     @Autowired
     private ReviewRepository reviewRepository;
@@ -52,21 +53,20 @@ public class SearchService {
             throw new NullPointerException();
         }
 
-        if (HANGUL_SYLLABLES == checkCode) {
-            return findByKrName(inputString);
-        }else if(BASIC_LATIN == checkCode) {
-            return findByEnName(inputString);
+        if (HANGUL_SYLLABLES == checkCode || BASIC_LATIN == checkCode) {
+            return find(inputString);
         }else {
             throw new UnsupportedOperationException("영어와 한글만 지원되는 서비스 입니닷.");
         }
     }
 
-    private Iterable<Menu> findByEnName(String keyword) {
-        return menuRepository.findByEnName(keyword).orElseThrow(() -> new NoSuchMenuException("메뉴가 없다."));
+    private Iterable<Menu> find(String keyword) {
+        Tag targetTag = getTag(keyword);
+        return menuRepository.findByTagListContaining(targetTag).orElseThrow(() -> new NullPointerException("tag didn't exist."));
     }
 
-    private Iterable<Menu> findByKrName(String keyword) {
-        return menuRepository.findByKrName(keyword).orElseThrow(() -> new NoSuchMenuException("메뉴가 없다."));
+    private Tag getTag(String tagName) {
+        return tagRepository.findByTagName(tagName).orElseThrow(() -> new NoSuchMenuException("no menu exist."));
     }
 
 }

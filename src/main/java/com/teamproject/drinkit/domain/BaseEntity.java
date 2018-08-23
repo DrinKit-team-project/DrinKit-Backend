@@ -26,10 +26,12 @@ public abstract class BaseEntity {
         this.createdDate = LocalDateTime.now();
     }
 
+    @JsonIgnore
     public String getFormattedCreatedDate(){
         return getFormattedDate(this.createdDate, "yyyy.MM.dd HH:mm:ss");
     }
 
+    @JsonIgnore
     public String getFormattedModifiedDate(){
         return getFormattedDate(this.modifiedDate, "yyyy.MM.dd HH:mm:ss");
     }

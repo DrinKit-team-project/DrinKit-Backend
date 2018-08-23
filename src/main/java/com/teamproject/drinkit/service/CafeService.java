@@ -32,6 +32,10 @@ public class CafeService {
         return cafeRepository.findAll();
     }
 
+    public List<Menu> findAllMenu() {
+        return menuRepository.findAll();
+    }
+
     public Cafe findCafe(Long cafeId) {
         return cafeRepository.findById(cafeId).orElseThrow(() -> new NoSuchMenuException("no menu exist."));
     }
@@ -41,6 +45,8 @@ public class CafeService {
     }
 
     public Menu findMenu(Long cafeId, Long menuId) {
+        log.debug("find menu service in.");
+        log.debug("cafeId is " + cafeId + ", menuId is " + menuId);
         return menuRepository.findByCafeIdAndId(cafeId, menuId).orElseThrow(() -> new NoSuchMenuException("no menu exist."));
     }
 
@@ -50,25 +56,33 @@ public class CafeService {
     }
 
     @Transactional
-    public void addReview(Review newReview, Menu menu) {
+    public Menu addReview(Review newReview, Menu menu) {
         newReview.registerReview(menu);
         menu.addReview(newReview);
         reviewRepository.save(newReview);
-    }
-
-    @Transactional
-    public Tag getTag(String tagName) {
-        Tag targetTag;
-        try {
-            targetTag = tagRepository.findByTagName(tagName);
-        }catch (NullPointerException e) {
-            targetTag = new Tag(tagName);
-        }
-        return targetTag;
+        menuRepository.save(menu);
+//        log.debug("service : " + menu.toString());
+        return menu;
     }
 
     @Transactional
     public void addTag(Tag tag, Menu menu) {
         menu.addTag(tag);
+    }
+
+    public Cafe addCafe(String name) {
+        Cafe newCafe = new Cafe(name);
+        return cafeRepository.save(newCafe);
+    }
+
+    @Transactional
+    public Menu addMenu(Long cafeId, MenuDto menuDto) {
+        Cafe targetCafe = cafeRepository.findById(cafeId).orElseThrow(() -> new NullPointerException("cafe didn't exist."));
+        Menu newMenu = Menu.from(menuDto);
+        targetCafe.addMenu(newMenu);
+        newMenu.registerCafe(targetCafe);
+
+        cafeRepository.save(targetCafe);
+        return menuRepository.save(newMenu);
     }
 }

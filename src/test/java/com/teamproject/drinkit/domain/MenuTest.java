@@ -15,13 +15,13 @@ public class MenuTest {
     @Test
     public void pricePerSizeTest() {
         Menu newMenu = makeMenu();
-        assertEquals(newMenu.getPricePerSizePerSizes().size(), 0);
+        assertEquals(newMenu.getPricePerSizes().size(), 0);
 
         PricePerSize testPricePerSize = new PricePerSize("small", 2000);
         newMenu.addPricePerSize(testPricePerSize);
 
-        assertEquals(newMenu.getPricePerSizePerSizes().size(), 1);
-        assertEquals(newMenu.getPricePerSizePerSizes().get(0), testPricePerSize);
+        assertEquals(newMenu.getPricePerSizes().size(), 1);
+        assertEquals(newMenu.getPricePerSizes().get(0), testPricePerSize);
     }
 
     @Test

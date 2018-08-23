@@ -9,6 +9,8 @@ public class ReviewDto {
     private String contents;
     private String drinkImgUrl;
 
+    public ReviewDto() {}
+
     private ReviewDto(double ratings, String contents, String drinkImgUrl){
         this.ratings = ratings;
         this.contents = contents;

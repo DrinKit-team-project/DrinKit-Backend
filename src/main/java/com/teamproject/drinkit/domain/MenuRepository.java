@@ -8,6 +8,7 @@ import java.util.Optional;
 public interface MenuRepository extends JpaRepository<Menu, Long> {
     Optional<Iterable<Menu>> findByCafeIdAndCategory(Long id, String category);
     Optional<Menu> findByCafeIdAndId(Long cafeId, Long id);
+    Optional<Iterable<Menu>> findByTagListContaining(Tag tag);
     Menu findByCafeIdAndEnName(Long id, String enName);
     Iterable<Menu> findByCreatedDateBetweenOrderByCreatedDateDesc(LocalDateTime start, LocalDateTime end);
     Optional<Iterable<Menu>> findByEnName(String enName);
