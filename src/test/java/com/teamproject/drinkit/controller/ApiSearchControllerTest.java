@@ -12,6 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -24,18 +27,15 @@ public class ApiSearchControllerTest {
     @Autowired
     protected TestRestTemplate template;
 
-//    @Test
-//    public void test() {
-//        ResponseEntity<String> response = template.getForEntity("/search", String.class);
-//        assertThat(response.getStatusCode(), is(HttpStatus.OK));
-//    }
-
     @Test
     public void searchTest_success() {
         ResponseEntity<String> response = template.postForEntity("/search","americano" , String.class);
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
         ResponseEntity<String> response2 = template.postForEntity("/search","라떼" , String.class);
         assertThat(response2.getStatusCode(), is(HttpStatus.OK));
+
+        ArrayList<Menu> menus = template.postForObject("/search","라떼" , ArrayList.class);
+        log.debug("menu is : " + menus.get(0));
     }
 
     @Test
@@ -48,15 +48,15 @@ public class ApiSearchControllerTest {
     }
 
     @Test
-    public void searchTest_fail_input_is_null() {
-        ResponseEntity<String> response = template.postForEntity("/search",null , String.class);
+    public void searchTest_fail_input_language_not_supported() {
+        ResponseEntity<String> response = template.postForEntity("/search","ھسدكالېڭسقاڭلدس" , String.class);
         assertThat(response.getStatusCode(), is(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
     @Test
-    public void searchTest_fail_input_language_not_supported() {
-        ResponseEntity<String> response = template.postForEntity("/search","ھسدكالېڭسقاڭلدس" , String.class);
-        assertThat(response.getStatusCode(), is(HttpStatus.INTERNAL_SERVER_ERROR));
+    public void searchTopRatingMenuTest_success() {
+        ResponseEntity<String> response = template.getForEntity("/search", null, String.class);
+        assertThat(response.getStatusCode(), is(HttpStatus.OK));
     }
 
 }

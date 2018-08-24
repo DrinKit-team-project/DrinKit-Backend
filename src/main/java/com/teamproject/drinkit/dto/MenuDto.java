@@ -34,7 +34,7 @@ public class MenuDto {
 
     //for menuDto
     public static MenuDto from(Menu menu) {
-        return new MenuDto(menu.getKrName(), menu.getEnName(), menu.getCalories(), menu.getDescription(), menu.calculateScore(), menu.getCategory());
+        return new MenuDto(menu.getKrName(), menu.getEnName(), menu.getCalories(), menu.getDescription(), menu.getTotalRatings(), menu.getCategory());
     }
     public MenuDto copyReviews(Menu menu) {
         for (Review review : menu.getReviews()) {

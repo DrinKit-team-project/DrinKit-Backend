@@ -24,7 +24,7 @@ public class Menu extends BaseEntity {
 
     private String description;
 
-    private double totalRatings;
+    private double totalRatings = 0.0;
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "cafe_id"))
@@ -37,7 +37,7 @@ public class Menu extends BaseEntity {
 
     @Embedded
 //    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL)
-    private List<PricePerSize> pricePerSizePerSizes = new ArrayList<>();
+    private List<PricePerSize> pricePerSizes = new ArrayList<>();
 
     @Embedded
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -80,30 +80,20 @@ public class Menu extends BaseEntity {
     }
 
     public void addPricePerSize(PricePerSize pricePerSize) {
-        this.pricePerSizePerSizes.add(pricePerSize);
+        this.pricePerSizes.add(pricePerSize);
     }
 
     public void addReview(Review review) {
         this.reviews.add(review);
+        calculateScore(review.getRatings());
         review.registerReview(this);
     }
 
-    public double calculateScore() {
-        double result = 0.0;
-        if (!isReviewExist()) {
-            return result;
-        }
-        for (Review review: this.reviews) {
-            result += review.getRatings();
-        }
-        return result / this.reviews.size();
-    }
+    public double calculateScore(double newRating) {
+        double total = (totalRatings * (reviews.size() - 1)) + newRating;
+        totalRatings = total / reviews.size();
 
-    private boolean isReviewExist() {
-        if (this.reviews.size() > 0) {
-            return true;
-        }
-        return false;
+        return totalRatings;
     }
 
     public void registerCafe(Cafe cafe) {
@@ -137,12 +127,9 @@ public class Menu extends BaseEntity {
         return reviews;
     }
     public List<PricePerSize> getPricePerSizes() {
-        return pricePerSizePerSizes;
+        return pricePerSizes;
     }
-    public double getTotalRatings() {
-        totalRatings = this.calculateScore();
-        return totalRatings;
-    }
+    public double getTotalRatings() { return totalRatings; }
     public String getKrName() {
         return krName;
     }
@@ -170,6 +157,7 @@ public class Menu extends BaseEntity {
         if (!super.equals(o)) return false;
         Menu menu = (Menu) o;
         return calories == menu.calories &&
+                Double.compare(menu.totalRatings, totalRatings) == 0 &&
                 deleted == menu.deleted &&
                 Objects.equals(id, menu.id) &&
                 Objects.equals(krName, menu.krName) &&
@@ -177,18 +165,19 @@ public class Menu extends BaseEntity {
                 Objects.equals(category, menu.category) &&
                 Objects.equals(description, menu.description) &&
                 Objects.equals(cafe, menu.cafe) &&
-                Objects.equals(pricePerSizePerSizes, menu.pricePerSizePerSizes) &&
+                Objects.equals(reviews, menu.reviews) &&
+                Objects.equals(pricePerSizes, menu.pricePerSizes) &&
                 Objects.equals(tagList, menu.tagList) &&
                 Objects.equals(imageURLs, menu.imageURLs);
     }
+
     @Override
     public int hashCode() {
-
-        return Objects.hash(super.hashCode(), id, krName, enName, calories, category, description, cafe, reviews, pricePerSizePerSizes, tagList, imageURLs, deleted);
+        return Objects.hash(super.hashCode(), id, krName, enName, calories, category, description, totalRatings, cafe, reviews, pricePerSizes, tagList, imageURLs, deleted);
     }
 
-    //toString
 
+    //toString
     @Override
     public String toString() {
         return "Menu{" +
@@ -198,12 +187,13 @@ public class Menu extends BaseEntity {
                 ", calories=" + calories +
                 ", category='" + category + '\'' +
                 ", description='" + description + '\'' +
-                ", reviews_size=" + reviews.size() +        //edit
-                ", pricePerSizePerSizes=" + pricePerSizePerSizes +
-                ", tagList_size=" + tagList.size() +
-                ", imageURLs_size=" + imageURLs.size() +
-                ", deleted=" + deleted +
+                ", totalRatings=" + totalRatings +
                 ", cafe_id=" + cafe.getId() +
+                ", reviews_size=" + reviews.size() +
+                ", pricePerSizes=" + pricePerSizes +
+                ", tagList_size=" + tagList.size() +
+                ", imageURLs=" + imageURLs +
+                ", deleted=" + deleted +
                 '}';
     }
 }

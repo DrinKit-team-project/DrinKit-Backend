@@ -36,7 +36,6 @@ public class MenuTest {
         newMenu.addReview(reviewThree);
 
         assertEquals(newMenu.getReviews().size(), 3);
-        assertEquals(2.6, newMenu.calculateScore(), 0.1);
         assertEquals(2.6, newMenu.getTotalRatings(), 0.1);
     }
 
@@ -45,7 +44,6 @@ public class MenuTest {
         Menu newMenu = makeMenu();
 
         assertEquals(newMenu.getReviews().size(), 0);
-        assertEquals(0.0, newMenu.calculateScore(), 0.1);
         assertEquals(0.0, newMenu.getTotalRatings(), 0.1);
     }
 

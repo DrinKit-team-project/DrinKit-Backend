@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
+import java.awt.print.Pageable;
 import java.time.LocalDateTime;
 
 import static java.lang.Character.UnicodeBlock.BASIC_LATIN;
@@ -36,22 +37,13 @@ public class SearchService {
         return menuRepository.findByCreatedDateBetweenOrderByCreatedDateDesc(oneMonthBeforeNow, LocalDateTime.now());
     }
 
-//    public Iterable<Menu> findTopReviewdMenu() {
-//        이 부분 구현 필요. (top rated 메뉴)
+//    public Iterable<Menu> findTop5RatingMenu(Pageable pageable) {
+//        return menuRepository.findTopByReviews();
 //    }
 
     public Iterable<Menu> checkCharacter(String inputString) throws NullPointerException, UnsupportedOperationException {
         log.debug("input is : " + inputString);
-        Character.UnicodeBlock checkCode;
-        try {
-            checkCode = Character.UnicodeBlock.of(inputString.charAt(0));
-        }catch (NullPointerException e) {
-            log.debug("error : null pointer exception occur.");
-            throw new NullPointerException();
-        }catch (StringIndexOutOfBoundsException e) {
-            log.debug("error : null pointer exception occur.");
-            throw new NullPointerException();
-        }
+        Character.UnicodeBlock checkCode = Character.UnicodeBlock.of(inputString.charAt(0));
 
         if (HANGUL_SYLLABLES == checkCode || BASIC_LATIN == checkCode) {
             return find(inputString);
