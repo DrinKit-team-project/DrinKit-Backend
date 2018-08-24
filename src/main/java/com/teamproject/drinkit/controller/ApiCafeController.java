@@ -53,12 +53,10 @@ public class ApiCafeController {
         return menu;
     }
 
-    @PostMapping("/{cafeId}/menus/{menuId}/review")     //return type 등 추가 구현 필요.
+    @PostMapping("/{cafeId}/menus/{menuId}/review")
     public Menu addReview(@Valid @PathVariable Long cafeId, @Valid @PathVariable Long menuId, @RequestBody ReviewDto reviewDto) {
         Review newReview = Review.from(reviewDto);
-        Menu menu = cafeService.findMenu(cafeId, menuId);
-        Menu updatedMenu = cafeService.addReview(newReview, menu);
-        log.debug("controller : " + updatedMenu.toString());
+        Menu updatedMenu = cafeService.addReview(cafeId, menuId, newReview);
         return updatedMenu;
     }
 

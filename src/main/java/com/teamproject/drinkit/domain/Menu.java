@@ -82,7 +82,11 @@ public class Menu extends BaseEntity {
     public void addPricePerSize(PricePerSize pricePerSize) {
         this.pricePerSizePerSizes.add(pricePerSize);
     }
-    public void addReview(Review review) {this.reviews.add(review);}
+
+    public void addReview(Review review) {
+        this.reviews.add(review);
+        review.registerReview(this);
+    }
 
     public double calculateScore() {
         double result = 0.0;
@@ -119,6 +123,7 @@ public class Menu extends BaseEntity {
     }
 
     //getter
+    public Long getId() {return id;}
     public Cafe getCafe() {
         return cafe;
     }
@@ -193,7 +198,7 @@ public class Menu extends BaseEntity {
                 ", calories=" + calories +
                 ", category='" + category + '\'' +
                 ", description='" + description + '\'' +
-                ", reviews_size=" + reviews.size() +
+                ", reviews_size=" + reviews.size() +        //edit
                 ", pricePerSizePerSizes=" + pricePerSizePerSizes +
                 ", tagList_size=" + tagList.size() +
                 ", imageURLs_size=" + imageURLs.size() +

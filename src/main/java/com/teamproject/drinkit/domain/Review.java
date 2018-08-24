@@ -12,7 +12,7 @@ import java.util.Objects;
 //@Table(name = "REVIEW")
 public class Review extends BaseEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
     private Long id;
 
@@ -44,7 +44,9 @@ public class Review extends BaseEntity {
     }
 
     public Review(double ratings, String contents, String drinkImgUrl){
-        this(0L, ratings, contents, drinkImgUrl);
+        this.ratings = ratings;
+        this.contents = contents;
+        this.drinkImgUrl = drinkImgUrl;
     }
 
     public static Review from(ReviewDto reviewDto){
@@ -62,7 +64,7 @@ public class Review extends BaseEntity {
                 ", ratings=" + ratings +
                 ", contents='" + contents + '\'' +
                 ", drinkImgUrl='" + drinkImgUrl + '\'' +
-                ", menu=" + menu +
+                ", menu_id=" + menu.getId() +
                 ", deleted=" + deleted +
                 '}';
     }

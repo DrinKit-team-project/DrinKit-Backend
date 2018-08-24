@@ -80,8 +80,11 @@ public class ApiCafeControllerTest {
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
         Menu updatedMenu = template.postForObject("/cafes/1/menus/2/review", reviewDto, Menu.class);
-        log.debug("test : " + updatedMenu);
         assertThat(updatedMenu.getReviews().size(), is(1));
+
+        assertThat(updatedMenu.getReviews().get(0).getContents(), is(review.getContents()));
+        assertThat(updatedMenu.getReviews().get(0).getRatings(), is(review.getRatings()));
+        assertThat(updatedMenu.getReviews().get(0).getDrinkImgUrl(), is(review.getDrinkImgUrl()));
     }
 
 }

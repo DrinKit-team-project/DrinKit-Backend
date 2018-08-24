@@ -56,12 +56,9 @@ public class CafeService {
     }
 
     @Transactional
-    public Menu addReview(Review newReview, Menu menu) {
-        newReview.registerReview(menu);
+    public Menu addReview(Long cafeId, Long menuId, Review newReview) {
+        Menu menu = menuRepository.findByCafeIdAndId(cafeId, menuId).orElseThrow(() -> new NoSuchMenuException("no menu exist."));
         menu.addReview(newReview);
-        reviewRepository.save(newReview);
-        menuRepository.save(menu);
-//        log.debug("service : " + menu.toString());
         return menu;
     }
 
