@@ -1,0 +1,61 @@
+spring:
+  profiles:
+    active: develop
+
+output:
+   ansi:
+    enabled: ALWAYS
+
+#security
+skipUrls: /social
+noToSkipPath: /api/**
+
+jwt:
+  signingKey: fakesecretkey
+
+---
+spring:
+    profiles: develop
+    jpa:
+      database: mysql
+      hibernate:
+        ddl-auto: create
+      show-sql: true
+      database-platform: org.hibernate.dialect.MySQL5Dialect
+      open-in-view: true
+      properties:
+        hibernate:
+          format_sql: true
+    datasource:
+       driver-class-name: com.mysql.jdbc.Driver
+       url: jdbc:mysql://localhost/drinkit
+       username: jiwon
+       password: jiwon
+
+logging:
+  pattern:
+    level: trace
+---
+spring:
+  profiles: prod
+  jpa:
+    database: mysql
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    open-in-view: true
+    properties:
+      hibernate:
+        format_sql: true
+  datasource:
+     driver-class-name: com.mysql.jdbc.Driver
+     url: jdbc:mysql://localhost/drinkit
+     username: jiwon
+     password: jiwon
+
+
+logging:
+  pattern:
+    level: info
+
