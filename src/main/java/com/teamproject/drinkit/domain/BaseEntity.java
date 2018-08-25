@@ -15,7 +15,7 @@ import java.util.Objects;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class BaseEntity {
+public abstract class BaseEntity {
     @CreatedDate
     private LocalDateTime createdDate;
 
@@ -26,10 +26,12 @@ public class BaseEntity {
         this.createdDate = LocalDateTime.now();
     }
 
+    @JsonIgnore
     public String getFormattedCreatedDate(){
         return getFormattedDate(this.createdDate, "yyyy.MM.dd HH:mm:ss");
     }
 
+    @JsonIgnore
     public String getFormattedModifiedDate(){
         return getFormattedDate(this.modifiedDate, "yyyy.MM.dd HH:mm:ss");
     }

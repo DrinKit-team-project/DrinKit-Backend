@@ -2,7 +2,9 @@ package com.teamproject.drinkit.controller;
 
 import com.teamproject.drinkit.domain.Cafe;
 import com.teamproject.drinkit.domain.CafeRepository;
-import org.junit.Before;
+import com.teamproject.drinkit.domain.Menu;
+import com.teamproject.drinkit.domain.Review;
+import com.teamproject.drinkit.dto.ReviewDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -13,6 +15,8 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
@@ -29,19 +33,66 @@ public class ApiCafeControllerTest {
     @Autowired
     protected TestRestTemplate template;
 
-    @Before
-    public void makeCafes() {
-        Cafe cafe1 = new Cafe("starbucks");
-        Cafe cafe2 = new Cafe("tom&toms");
-        Cafe cafe3 = new Cafe("ediya");
-        cafeRepository.save(cafe1);
-        cafeRepository.save(cafe2);
-        cafeRepository.save(cafe3);
+    @Test
+    public void cafeMainTest() {
+        ResponseEntity<String> response = template.getForEntity("/cafes",  String.class);
+        assertThat(response.getStatusCode(), is(HttpStatus.OK));
+
+        List<Cafe> cafes = template.getForObject("/cafes",  List.class);
+        assertThat(cafes.size(), is(5));        //import.sql 에 5개 들어가 있음.
     }
 
     @Test
-    public void main() {
-        ResponseEntity<String> response = template.getForEntity("/api/cafes",  String.class);
-        assertThat(response.getStatusCode(), is(HttpStatus.FOUND));
+    public void seeCafeDetailTest() {
+        ResponseEntity<String> response = template.getForEntity("/cafes/1",  String.class);
+        assertThat(response.getStatusCode(), is(HttpStatus.OK));
+
+        Cafe cafe = template.getForObject("/cafes/5",  Cafe.class);
+        assertThat(cafe.getName(), is("koo's coffee"));     //id값 5인 카페는 koo's coffee
+
+        log.debug("cafe is : " + cafe);
     }
+
+    @Test
+    public void seeMenuListTest() {
+        ResponseEntity<String> response = template.getForEntity("/cafes/1/menus?category=coffee", String.class);
+        assertThat(response.getStatusCode(), is(HttpStatus.OK));
+
+        List<Menu> menus = template.getForObject("/cafes/1/menus?category=coffee", List.class);
+        assertThat(menus.size(), is(3));       //import.sql 에 3개 들어가 있음.
+    }
+
+    @Test
+    public void seeMenuDetailTest() {
+        ResponseEntity<String> response = template.getForEntity("/cafes/1/menus/1", String.class);
+        assertThat(response.getStatusCode(), is(HttpStatus.OK));
+
+        Menu menu = template.getForObject("/cafes/1/menus/1", Menu.class);
+        assertThat(menu.getEnName(), is("americano"));      //id값 1인 메뉴는 아메리카노.
+        log.debug("menu is : " + menu);
+    }
+
+    @Test
+    public void addReviewTest_success_and_ratings_calculated_well() {
+        Review review = new Review(3.5, "soso", "/test/url");
+        ReviewDto reviewDto = ReviewDto.from(review);
+        ResponseEntity<String> response = template.postForEntity("/cafes/1/menus/1/review", reviewDto, String.class);
+        assertThat(response.getStatusCode(), is(HttpStatus.OK));
+
+        Menu updatedMenu = template.postForObject("/cafes/1/menus/2/review", reviewDto, Menu.class);
+        assertThat(updatedMenu.getReviews().size(), is(1));
+
+        assertThat(updatedMenu.getReviews().get(0).getContents(), is(review.getContents()));
+        assertThat(updatedMenu.getReviews().get(0).getRatings(), is(review.getRatings()));
+        assertThat(updatedMenu.getReviews().get(0).getDrinkImgUrl(), is(review.getDrinkImgUrl()));
+        assertThat(updatedMenu.getTotalRatings(), is(3.5));
+
+        Review review2 = new Review(2.5, "bad", "/test/url2");
+        ReviewDto reviewDto2 = ReviewDto.from(review2);
+
+        updatedMenu = template.postForObject("/cafes/1/menus/2/review", reviewDto2, Menu.class);
+        assertThat(updatedMenu.getReviews().size(), is(2));
+        assertThat(updatedMenu.getTotalRatings(), is(3.0));
+    }
+
 }

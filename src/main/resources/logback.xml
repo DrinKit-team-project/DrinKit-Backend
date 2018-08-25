@@ -7,8 +7,7 @@
         </layout>
     </appender>
 
-    <logger name="jiwon" level="DEBUG"/>
-    d
+    <logger name="com.teamproject.drinkit" level="DEBUG"/>
     <root level="INFO">
         <appender-ref ref="STDOUT"/>
     </root>

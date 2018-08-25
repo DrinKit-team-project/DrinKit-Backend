@@ -1,8 +1,6 @@
 package com.teamproject.drinkit.domain;
 
-import com.teamproject.drinkit.domain.*;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -15,15 +13,15 @@ public class MenuTest {
     }
 
     @Test
-    public void priceTest() {
+    public void pricePerSizeTest() {
         Menu newMenu = makeMenu();
-        assertEquals(newMenu.getPricePerSize().size(), 0);
+        assertEquals(newMenu.getPricePerSizes().size(), 0);
 
-        Price testPrice = new Price("small", 2000);
-        newMenu.addPrice(testPrice);
+        PricePerSize testPricePerSize = new PricePerSize("small", 2000);
+        newMenu.addPricePerSize(testPricePerSize);
 
-        assertEquals(newMenu.getPricePerSize().size(), 1);
-        assertEquals(newMenu.getPricePerSize().get(0), testPrice);
+        assertEquals(newMenu.getPricePerSizes().size(), 1);
+        assertEquals(newMenu.getPricePerSizes().get(0), testPricePerSize);
     }
 
     @Test
@@ -38,7 +36,6 @@ public class MenuTest {
         newMenu.addReview(reviewThree);
 
         assertEquals(newMenu.getReviews().size(), 3);
-        assertEquals(2.6, newMenu.calculateScore(), 0.1);
         assertEquals(2.6, newMenu.getTotalRatings(), 0.1);
     }
 
@@ -47,7 +44,6 @@ public class MenuTest {
         Menu newMenu = makeMenu();
 
         assertEquals(newMenu.getReviews().size(), 0);
-        assertEquals(0.0, newMenu.calculateScore(), 0.1);
         assertEquals(0.0, newMenu.getTotalRatings(), 0.1);
     }
 

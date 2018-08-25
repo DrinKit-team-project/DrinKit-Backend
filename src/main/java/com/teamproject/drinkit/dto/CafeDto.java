@@ -9,14 +9,14 @@ import java.util.List;
 public class CafeDto {
     private String name;
     private String imageURL;
-    private List<String> categoryList = new ArrayList<>();
+//    private List<String> categoryList = new ArrayList<>();
 
     public CafeDto(String name, String imageURL) {
         this.name = name;
         this.imageURL = imageURL;
     }
 
-    public void addCategoty(String expectedCategoryName) {
-        categoryList.add(expectedCategoryName);
-    }
+//    public void addCategoty(String expectedCategoryName) {
+//        categoryList.add(expectedCategoryName);
+//    }
 }

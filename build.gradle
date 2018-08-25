@@ -1,6 +1,7 @@
 buildscript {
     ext {
         springBootVersion = '2.0.3.RELEASE'
+        swaggerVersion = '2.6.1'
     }
     repositories {
         mavenCentral()
@@ -18,6 +19,11 @@ apply plugin: 'io.spring.dependency-management'
 group = 'com.teamproject'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
+
+jar {
+    baseName = 'swagger'
+    version = '0.0.1-SNAPSHOT'
+}
 
 repositories {
     mavenCentral()
@@ -39,4 +45,7 @@ dependencies {
     testCompile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
     compile group: 'org.springframework.security', name: 'spring-security-core', version: '5.0.6.RELEASE'
     compile group: 'com.auth0', name: 'java-jwt', version: '3.4.0'
+    compile group: 'io.springfox', name: 'springfox-core', version: "${swaggerVersion}"
+    compile group: 'io.springfox', name: 'springfox-swagger2', version: "${swaggerVersion}"
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: "${swaggerVersion}"
 }
