@@ -2,6 +2,7 @@ package com.teamproject.drinkit.controller;
 
 import com.teamproject.drinkit.domain.Menu;
 import com.teamproject.drinkit.domain.MenuRepository;
+import com.teamproject.drinkit.domain.NewMenus;
 import com.teamproject.drinkit.exception.NoSuchMenuException;
 import com.teamproject.drinkit.service.SearchService;
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/search")
@@ -33,13 +35,11 @@ public class ApiSearchController {
 //        return model;
 //    }
 
-    @GetMapping("")
-    public Iterable<Menu> searchTopReviewedMenu(@PageableDefault(sort = { "total_ratings" }, direction = Sort.Direction.ASC, size = 5) Pageable pageable) {
-        Iterable<Menu> topMenus = menuRepository.findAll(pageable);
-        for (Menu menu : topMenus) {
-            log.debug("top menu : " + menu);
-        }
-        return topMenus;
+    @GetMapping("/newMenus")
+    public List<Menu> searchNewMenu() {
+        log.debug("search new menu in.");
+        NewMenus newMenus = searchService.findNewMenu();
+        return newMenus.getMenus();
     }
 
     @PostMapping("")

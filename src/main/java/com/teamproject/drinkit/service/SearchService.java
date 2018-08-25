@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 
 import java.awt.print.Pageable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static java.lang.Character.UnicodeBlock.BASIC_LATIN;
 import static java.lang.Character.UnicodeBlock.HANGUL_SYLLABLES;
@@ -32,13 +33,23 @@ public class SearchService {
     @Autowired
     private ReviewRepository reviewRepository;
 
-    public Iterable<Menu> findNewMenu() {
-        LocalDateTime oneMonthBeforeNow = LocalDateTime.now().minusMonths(1);
-        return menuRepository.findByCreatedDateBetweenOrderByCreatedDateDesc(oneMonthBeforeNow, LocalDateTime.now());
+//    public Iterable<Menu> findNewMenu() {
+//        LocalDateTime oneMonthBeforeNow = LocalDateTime.now().minusMonths(1);
+//        return menuRepository.findByCreatedDateBetweenOrderByCreatedDateDesc(oneMonthBeforeNow, LocalDateTime.now());
+//    }
+    public NewMenus findNewMenu() {
+        NewMenus newMenus = new NewMenus();
+        LocalDateTime oneMonthBeforeNow = LocalDateTime.now().minusMonths(1);       //현재로 부터 1달 전 까지의 메뉴를 구하기 위함.
+        List<Menu> sortedMenus = menuRepository.findByCreatedDateBetweenOrderByCreatedDateDesc(oneMonthBeforeNow, LocalDateTime.now());
+
+        for (int i = 0; i < 3; i++) {
+            newMenus.addMenu(sortedMenus.get(i));
+        }
+        return newMenus;
     }
 
-//    public Iterable<Menu> findTop5RatingMenu(Pageable pageable) {
-//        return menuRepository.findTopByReviews();
+//    public Iterable<Menu> findTop5RatingMenu() {
+//        NewMenus newMenus;
 //    }
 
     public Iterable<Menu> checkCharacter(String inputString) throws NullPointerException, UnsupportedOperationException {

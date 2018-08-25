@@ -54,9 +54,14 @@ public class ApiSearchControllerTest {
     }
 
     @Test
-    public void searchTopRatingMenuTest_success() {
-        ResponseEntity<String> response = template.getForEntity("/search", null, String.class);
+    public void searchNewMenuTest_success() {
+        ResponseEntity<String> response = template.getForEntity("/search/newMenus", String.class);
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
+        List<Menu> newMenus = template.getForObject("/search/newMenus", List.class);
+        assertThat(newMenus.size(), is(3));
+//        for (int i = 0; i < newMenus.size(); i++) {
+//            log.debug("newMenu " + i + " : " + newMenus.get(i));
+//        }
     }
 
 }
