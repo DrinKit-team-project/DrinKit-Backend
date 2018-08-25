@@ -3,6 +3,7 @@ package com.teamproject.drinkit.controller;
 import com.teamproject.drinkit.domain.Menu;
 import com.teamproject.drinkit.domain.MenuRepository;
 import com.teamproject.drinkit.domain.NewMenus;
+import com.teamproject.drinkit.domain.TopReviewedMenus;
 import com.teamproject.drinkit.exception.NoSuchMenuException;
 import com.teamproject.drinkit.service.SearchService;
 import org.slf4j.Logger;
@@ -29,17 +30,18 @@ public class ApiSearchController {
     @Autowired
     private MenuRepository menuRepository;
 
-//    @GetMapping("")
-//    public Model searchMain(Model model) {
-//        model.addAttribute("newMenus", searchService.findNewMenu());
-//        return model;
-//    }
-
     @GetMapping("/newMenus")
     public List<Menu> searchNewMenu() {
         log.debug("search new menu in.");
-        NewMenus newMenus = searchService.findNewMenu();
+        NewMenus newMenus = searchService.findNewMenus();
         return newMenus.getMenus();
+    }
+
+    @GetMapping("/topReviewed")
+    public List<Menu> searchTopReviewedMenu() {
+        log.debug("search top reviewed menu in.");
+        TopReviewedMenus topMenus = searchService.findTopReviewedMenus();
+        return topMenus.getMenus();
     }
 
     @PostMapping("")

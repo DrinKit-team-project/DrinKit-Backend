@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 
 import java.awt.print.Pageable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.Character.UnicodeBlock.BASIC_LATIN;
@@ -33,14 +34,14 @@ public class SearchService {
     @Autowired
     private ReviewRepository reviewRepository;
 
-//    public Iterable<Menu> findNewMenu() {
-//        LocalDateTime oneMonthBeforeNow = LocalDateTime.now().minusMonths(1);
-//        return menuRepository.findByCreatedDateBetweenOrderByCreatedDateDesc(oneMonthBeforeNow, LocalDateTime.now());
-//    }
-    public NewMenus findNewMenu() {
+    private List<Menu> findNewMenusByDate(LocalDateTime target) {
+        return menuRepository.findByCreatedDateBetweenOrderByCreatedDateDesc(target, LocalDateTime.now()).orElseGet(() -> new ArrayList<Menu>());
+    }
+
+    public NewMenus findNewMenus() {
         NewMenus newMenus = new NewMenus();
         LocalDateTime oneMonthBeforeNow = LocalDateTime.now().minusMonths(1);       //현재로 부터 1달 전 까지의 메뉴를 구하기 위함.
-        List<Menu> sortedMenus = menuRepository.findByCreatedDateBetweenOrderByCreatedDateDesc(oneMonthBeforeNow, LocalDateTime.now());
+        List<Menu> sortedMenus = findNewMenusByDate(oneMonthBeforeNow);
 
         for (int i = 0; i < 3; i++) {
             newMenus.addMenu(sortedMenus.get(i));
@@ -48,9 +49,15 @@ public class SearchService {
         return newMenus;
     }
 
-//    public Iterable<Menu> findTop5RatingMenu() {
-//        NewMenus newMenus;
-//    }
+    public TopReviewedMenus findTopReviewedMenus() {
+        TopReviewedMenus topMenus = new TopReviewedMenus();
+        List<Menu> target = menuRepository.findTopReviewed();
+
+        for (int i = 0; i < 3; i++) {
+            topMenus.addMenu(target.get(i));
+        }
+        return topMenus;
+    }
 
     public Iterable<Menu> checkCharacter(String inputString) throws NullPointerException, UnsupportedOperationException {
         log.debug("input is : " + inputString);

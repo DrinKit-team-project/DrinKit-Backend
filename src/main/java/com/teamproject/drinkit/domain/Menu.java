@@ -35,6 +35,8 @@ public class Menu extends BaseEntity {
     @OrderBy("id ASC")
     private List<Review> reviews = new ArrayList<>();
 
+    private int reviewCount = 0;
+
     @Embedded
 //    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL)
     private List<PricePerSize> pricePerSizes = new ArrayList<>();
@@ -86,6 +88,7 @@ public class Menu extends BaseEntity {
     public void addReview(Review review) {
         this.reviews.add(review);
         calculateScore(review.getRatings());
+        reviewCount++;
         review.registerReview(this);
     }
 
@@ -148,6 +151,9 @@ public class Menu extends BaseEntity {
     private boolean isDeleted() {
         return this.deleted;
     }
+    public int getReviewCount() {
+        return reviewCount;
+    }
 
     //equals / hashcode
     @Override
@@ -196,4 +202,5 @@ public class Menu extends BaseEntity {
                 ", deleted=" + deleted +
                 '}';
     }
+
 }
