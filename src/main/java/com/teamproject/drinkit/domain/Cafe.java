@@ -19,6 +19,7 @@ public class Cafe extends BaseEntity {
     @Column
     private String name;
 
+    @Lob
     private String imageURL;
 
     @JsonIgnore

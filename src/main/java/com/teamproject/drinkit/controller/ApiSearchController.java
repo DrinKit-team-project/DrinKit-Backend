@@ -10,13 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/search")
+@RequestMapping("/api/search")
+@PreAuthorize("hasRole('ROLE_USER')")
 public class ApiSearchController {
 
     private static final Logger log = LoggerFactory.getLogger(ApiSearchController.class);

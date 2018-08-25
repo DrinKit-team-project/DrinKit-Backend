@@ -9,6 +9,7 @@ import com.teamproject.drinkit.service.CafeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -16,7 +17,8 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/cafes")
+@RequestMapping("/api/cafes")
+@PreAuthorize("hasRole('ROLE_USER')")
 public class ApiCafeController {
 
     private static final Logger log = LoggerFactory.getLogger(ApiCafeController.class);
@@ -39,13 +41,6 @@ public class ApiCafeController {
            return cafeService.findMenuList(cafeId, categoryName);
     }
 
-//    @GetMapping("/{cafeId}/menus/{menuId}")
-//    public MenuDto seeMenuDetail(@Valid @PathVariable Long cafeId, @Valid @PathVariable Long menuId) {
-//        log.debug("see menu Detail controller in.");
-//        log.debug("cafeId is " + cafeId + ", menuId is " + menuId);
-//        Menu menu = cafeService.findMenu(cafeId, menuId);
-//        return cafeService.makeMenuDto(menu);
-//    }
     @GetMapping("/{cafeId}/menus/{menuId}")
     public Menu seeMenuDetail(@Valid @PathVariable Long cafeId, @Valid @PathVariable Long menuId) {
         log.debug("see menu Detail controller in.");
