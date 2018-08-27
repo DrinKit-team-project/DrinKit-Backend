@@ -7,12 +7,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 
-import java.awt.print.Pageable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static java.lang.Character.UnicodeBlock.BASIC_LATIN;
 import static java.lang.Character.UnicodeBlock.HANGUL_SYLLABLES;
@@ -53,17 +52,22 @@ public class SearchService {
         FeaturedMenus topMenus = new FeaturedMenus();
         List<Menu> target = menuRepository.findTopReviewed();
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < target.size(); i++) {
             topMenus.addMenu(target.get(i));
         }
         return topMenus;
     }
 
-    public Iterable<Menu> checkCharacter(String inputString) throws NullPointerException, UnsupportedOperationException {
+    private boolean checkSpellIsPossible(Character.UnicodeBlock checkCode) {
+        return (HANGUL_SYLLABLES == checkCode || BASIC_LATIN == checkCode);
+    }
+
+    @Transactional
+    public Iterable<Menu> findWithKeyword(String inputString) throws NullPointerException, UnsupportedOperationException {
         log.debug("input is : " + inputString);
         Character.UnicodeBlock checkCode = Character.UnicodeBlock.of(inputString.charAt(0));
 
-        if (HANGUL_SYLLABLES == checkCode || BASIC_LATIN == checkCode) {
+        if (checkSpellIsPossible(checkCode)) {
             return find(inputString);
         }else {
             throw new UnsupportedOperationException("영어와 한글만 지원되는 서비스 입니닷.");
@@ -72,6 +76,7 @@ public class SearchService {
 
     private Iterable<Menu> find(String keyword) {
         Tag targetTag = getTag(keyword);
+        targetTag.plusSearchCount();        //tag 검색될 때, 1회 증가시킨다.(태그의 검색횟수를)
         return menuRepository.findByTagListContaining(targetTag).orElseThrow(() -> new NullPointerException("tag didn't exist."));
     }
 
@@ -79,4 +84,12 @@ public class SearchService {
         return tagRepository.findByTagName(tagName).orElseThrow(() -> new NoSuchMenuException("no menu exist."));
     }
 
+    public List<Tag> getSuggestedTags() {
+        return tagRepository.findSuggestedTags();
+    }
+
+    public Tag findTag(Long id) {
+        Tag tag = tagRepository.findById(id).orElseGet(() -> new Tag());
+        return tag;
+    }
 }

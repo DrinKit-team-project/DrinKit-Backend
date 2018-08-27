@@ -1,6 +1,7 @@
 package com.teamproject.drinkit.controller;
 
 import com.teamproject.drinkit.domain.Menu;
+import com.teamproject.drinkit.domain.Tag;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -39,6 +40,19 @@ public class ApiSearchControllerTest {
     }
 
     @Test
+    public void searchTest_PlusTagCount_success() {
+        Tag tag = template.getForObject("/search/tagTest/4", Tag.class);
+        int tagCountNum = tag.getSearchCount();
+        int predictNum = tagCountNum + 1;
+
+        ArrayList<Menu> menus = template.postForObject("/search","라떼" , ArrayList.class);
+        log.debug("menu is : " + menus.get(0));
+
+        tag = template.getForObject("/search/tagTest/4", Tag.class);
+        assertThat(tag.getSearchCount(), is(predictNum));
+    }
+
+    @Test
     public void searchTest_fail_no_such_menu() {
         ResponseEntity<String> response = template.postForEntity("/search","notCoffeeHeHe" , String.class);
         assertThat(response.getStatusCode(), is(HttpStatus.INTERNAL_SERVER_ERROR));
@@ -73,6 +87,17 @@ public class ApiSearchControllerTest {
 //        for (int i = 0; i < topMenus.size(); i++) {
 //            log.debug("topMenus " + i + " : " + topMenus.get(i));
 //        }
+    }
+
+    @Test
+    public void getSuggestedTagsTest_success() {
+        ResponseEntity<String> response = template.getForEntity("/search/suggestedTags", String.class);
+        assertThat(response.getStatusCode(), is(HttpStatus.OK));
+        List<Tag> suggestedTags = template.getForObject("/search/suggestedTags", List.class);
+        assertThat(suggestedTags.size(), is(4));
+        for (int i = 0; i < suggestedTags.size(); i++) {
+            log.debug("suggestedTags " + i + " : " + suggestedTags.get(i));
+        }
     }
 
 }

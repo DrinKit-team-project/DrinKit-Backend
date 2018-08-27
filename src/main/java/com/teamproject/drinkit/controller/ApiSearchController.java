@@ -3,6 +3,7 @@ package com.teamproject.drinkit.controller;
 import com.teamproject.drinkit.domain.FeaturedMenus;
 import com.teamproject.drinkit.domain.Menu;
 import com.teamproject.drinkit.domain.MenuRepository;
+import com.teamproject.drinkit.domain.Tag;
 import com.teamproject.drinkit.exception.NoSuchMenuException;
 import com.teamproject.drinkit.service.SearchService;
 import org.slf4j.Logger;
@@ -26,6 +27,21 @@ public class ApiSearchController {
     @Autowired
     private MenuRepository menuRepository;
 
+    @PostMapping("")
+    public Iterable<Menu> searchMenu(@Valid @RequestBody String searchKeyWord) throws UnsupportedOperationException, NoSuchMenuException{
+        log.debug("search keyword is : " + searchKeyWord);
+
+        Iterable<Menu> menus;
+        try {
+            menus = searchService.findWithKeyword(searchKeyWord);
+        }catch (NoSuchMenuException e) {
+            throw new NoSuchMenuException("그런거 없 뜸.");
+        }
+        log.debug("!!! : " + menus.toString());
+
+        return menus;
+    }
+
     @GetMapping("/newMenus")
     public List<Menu> searchNewMenu() {
         log.debug("search new menu in.");
@@ -40,18 +56,16 @@ public class ApiSearchController {
         return topMenus.getMenus();
     }
 
-    @PostMapping("")
-    public Iterable<Menu> searchMenu(@Valid @RequestBody String searchKeyWord) throws UnsupportedOperationException, NoSuchMenuException{
-        log.debug("search keyword is : " + searchKeyWord);
-
-        Iterable<Menu> menus;
-        try {
-            menus = searchService.checkCharacter(searchKeyWord);
-        }catch (NoSuchMenuException e) {
-            throw new NoSuchMenuException("그런거 없 뜸.");
-        }
-        log.debug("!!! : " + menus.toString());
-
-        return searchService.checkCharacter(searchKeyWord);
+    @GetMapping("/suggestedTags")
+    public List<Tag> getSuggestedTags() {
+        log.debug("get suggested tags in.");
+        return searchService.getSuggestedTags();
     }
+
+    @GetMapping("/tagTest/{id}")
+    public Tag test(@PathVariable Long id) {
+        log.debug("search controller in.");
+        return searchService.findTag(id);
+    }
+
 }

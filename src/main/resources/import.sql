@@ -13,10 +13,10 @@ INSERT INTO menu(id, created_date, modified_date, calories, category, deleted, d
 INSERT INTO cafe_category_list(cafe_id, category_name) values (1, "coffee");
 INSERT INTO cafe_category_list(cafe_id, category_name) values (1, "non-coffee");
 
-INSERT INTO tag(id, tag_name) values (1, "존맛없");
-INSERT INTO tag(id, tag_name) values (2, "개꿀맛");
-INSERT INTO tag(id, tag_name) values (3, "americano");
-INSERT INTO tag(id, tag_name) values (4, "라떼");
+INSERT INTO tag(id, tag_name, search_count) values (1, "존맛없", 1);
+INSERT INTO tag(id, tag_name, search_count) values (2, "개꿀맛", 2);
+INSERT INTO tag(id, tag_name, search_count) values (3, "americano", 3);
+INSERT INTO tag(id, tag_name, search_count) values (4, "라떼", 4);
 
 INSERT INTO menu_and_tag(menu_id, tag_id) values (1, 1);
 INSERT INTO menu_and_tag(menu_id, tag_id) values (1, 2);
