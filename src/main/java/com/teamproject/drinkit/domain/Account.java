@@ -1,11 +1,11 @@
 package com.teamproject.drinkit.domain;
 
-import com.teamproject.drinkit.security.AccountDetails;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -40,7 +40,11 @@ public class Account extends BaseEntity {
     @Column(name = "ACCOUNT_SOCIAL_PROFILEPIC")
     private String profileHref;
 
-    private Account(Long id, String username, String userId, String password, UserRole userRole, String socialId, SocialProviders socialProvider, String profileHref){
+    @Column(name = "ACCOUNT_REVIEWS")
+    @OneToMany(mappedBy = "account")
+    private List<Review> reviews = new ArrayList<>();
+
+    private Account(Long id, String username, String userId, String password, UserRole userRole, String socialId, SocialProviders socialProvider, String profileHref, List<Review> reviews){
         this.id = id;
         this.username = username;
         this.userId = userId;
@@ -49,10 +53,15 @@ public class Account extends BaseEntity {
         this.socialId = socialId;
         this.socialProvider = socialProvider;
         this.profileHref = profileHref;
+        this.reviews = reviews;
     }
 
-    public Account(String username, String userId, String password, UserRole userRole, String socialId, SocialProviders socialProvider, String profileHref){
-        this(0L, username, userId, password, userRole, socialId, socialProvider, profileHref);
+    public Account(String username, String userId, String password, UserRole userRole, String socialId, SocialProviders socialProvider, String profileHref, List<Review> reviews){
+        this(0L, username, userId, password, userRole, socialId, socialProvider, profileHref, reviews);
+    }
+
+    public void writeReview(Review review){
+        reviews.add(review);
     }
 
     @Override

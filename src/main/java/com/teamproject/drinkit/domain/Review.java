@@ -2,6 +2,7 @@ package com.teamproject.drinkit.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teamproject.drinkit.dto.ReviewDto;
+import com.teamproject.drinkit.exception.AuthorizationException;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -9,7 +10,7 @@ import java.util.Objects;
 
 @Getter
 @Entity
-//@Table(name = "REVIEW")
+@Table(name = "REVIEW")
 public class Review extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +26,10 @@ public class Review extends BaseEntity {
 
     @Column(name = "REVIEW_DRINK_IMG_URL")
     private String drinkImgUrl;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_account")
+    private Account writer;
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "menu_id"))
@@ -53,8 +58,25 @@ public class Review extends BaseEntity {
         return new Review(reviewDto.getRatings(), reviewDto.getContents(), reviewDto.getDrinkImgUrl());
     }
 
-    public void registerReview(Menu menu) {
+    public void registerMenu(Menu menu) {
         this.menu = menu;
+        menu.addReview(this);
+    }
+
+    public void registerWriter(Account writer) {
+        this.writer = writer;
+        writer.writeReview(this);
+    }
+
+    public Review edit(Account logined, Review newOne){
+        if(!isSameAccount(logined)){
+            throw new AuthorizationException("로그인 유저와 글쓴이가 다릅니다.");
+        }
+        return null;
+    }
+
+    private boolean isSameAccount(Account logined){
+        return this.writer.equals(logined);
     }
 
     @Override

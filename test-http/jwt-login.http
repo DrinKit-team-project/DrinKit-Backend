@@ -1,3 +1,3 @@
-GET http://localhost:8080/api
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJkcmlua2l0IiwiVVNFUk5BTUUiOiJKaXdvbiBCYWUiLCJVU0VSX1JPTEUiOiJST0xFX1VTRVIifQ.tXNSK6_oihbC5Nk94NQsUenkl-5yowAI5YnyYwl7RK8
+GET http://localhost:8080/api/cafes
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJkcmlua2l0IiwiVVNFUk5BTUUiOiLrsLDsp4Dsm5AiLCJVU0VSX1JPTEUiOiJST0xFX1VTRVIifQ.9EX9azDidL_Tsgk5uafyStemwu1aNhFQ0Uj58jhaJdA
 ###

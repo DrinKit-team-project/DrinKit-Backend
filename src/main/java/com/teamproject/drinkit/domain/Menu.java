@@ -2,6 +2,7 @@ package com.teamproject.drinkit.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teamproject.drinkit.dto.MenuDto;
+import lombok.Getter;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Getter
 @Entity
 public class Menu extends BaseEntity {
     @Id
@@ -86,7 +88,6 @@ public class Menu extends BaseEntity {
     public void addReview(Review review) {
         this.reviews.add(review);
         calculateScore(review.getRatings());
-        review.registerReview(this);
     }
 
     public double calculateScore(double newRating) {
@@ -112,42 +113,6 @@ public class Menu extends BaseEntity {
         this.deleted = true;
     }
 
-    //getter
-    public Long getId() {return id;}
-    public Cafe getCafe() {
-        return cafe;
-    }
-    public String getCategory() {
-        return category;
-    }
-    public String getDescription() {
-        return description;
-    }
-    public List<Review> getReviews() {
-        return reviews;
-    }
-    public List<PricePerSize> getPricePerSizes() {
-        return pricePerSizes;
-    }
-    public double getTotalRatings() { return totalRatings; }
-    public String getKrName() {
-        return krName;
-    }
-    public String getEnName() {
-        return enName;
-    }
-    public int getCalories() {
-        return calories;
-    }
-    public List<Tag> getTagList() {
-        return tagList;
-    }
-    public List<String> getImageURLs() {
-        return imageURLs;
-    }
-    private boolean isDeleted() {
-        return this.deleted;
-    }
 
     //equals / hashcode
     @Override

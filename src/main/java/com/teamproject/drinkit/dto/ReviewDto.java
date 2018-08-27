@@ -1,5 +1,6 @@
 package com.teamproject.drinkit.dto;
 
+import com.teamproject.drinkit.domain.Account;
 import com.teamproject.drinkit.domain.Review;
 import lombok.Getter;
 
@@ -8,6 +9,7 @@ public class ReviewDto {
     private double ratings;
     private String contents;
     private String drinkImgUrl;
+    private Account writer;
 
     public ReviewDto() {}
 

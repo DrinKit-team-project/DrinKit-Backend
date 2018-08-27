@@ -1,11 +1,6 @@
 package com.teamproject.drinkit.controller;
 
-import com.teamproject.drinkit.domain.Cafe;
 import com.teamproject.drinkit.domain.Menu;
-import com.teamproject.drinkit.domain.Review;
-import com.teamproject.drinkit.dto.ReviewDto;
-import com.teamproject.drinkit.security.dto.JwtDto;
-import com.teamproject.drinkit.service.CafeService;
 import com.teamproject.drinkit.support.test.AuthenticationTestSupporter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,44 +10,43 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
-import static com.teamproject.drinkit.support.test.AuthenticationTestSupporter.buildRequestEntity;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ApiCafeControllerTest {
+public class ApiMenuControllerTest {
 
-    private static final Logger log = LoggerFactory.getLogger(ApiCafeControllerTest.class);
+    private static final Logger log = LoggerFactory.getLogger(ApiMenuControllerTest.class);
 
     @Autowired
-    protected TestRestTemplate template;
+    private TestRestTemplate template;
 
     @Test
-    public void cafeMainTest() {
+    public void seeMenuListTest() {
         HttpEntity requestEntity = AuthenticationTestSupporter.buildRequestEntity();
-        ResponseEntity<List<Cafe>> response = template.exchange("/api/cafes", HttpMethod.GET, requestEntity, new ParameterizedTypeReference<List<Cafe>>(){});
+        ResponseEntity<List<Menu>> response = template.exchange("/api/cafes/1/menus?category=coffee", HttpMethod.GET, requestEntity, new ParameterizedTypeReference<List<Menu>>(){});
 
-        assertThat(response.getBody().size(), is(5));
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
+        assertThat(response.getBody().size(), is(3));
     }
 
     @Test
-    public void seeCafeDetailTest() {
+    public void seeMenuDetailTest() {
         HttpEntity requestEntity = AuthenticationTestSupporter.buildRequestEntity();
-        ResponseEntity<Cafe> response = template.exchange("/api/cafes/1", HttpMethod.GET, requestEntity, Cafe.class);
+        ResponseEntity<Menu> response = template.exchange("/api/cafes/1/menus/1", HttpMethod.GET, requestEntity, Menu.class);
+        String menu = response.getBody().getEnName();
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
-
-        String cafeName = response.getBody().getName();
-        assertThat(cafeName, is("starbucks"));     //id값 5인 카페는 koo's coffee
-
-        log.debug("cafe is : " + cafeName);
+        assertThat(menu, is("americano"));
     }
 
 }
