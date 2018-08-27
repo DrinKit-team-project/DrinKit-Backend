@@ -38,8 +38,8 @@ public class SearchService {
         return menuRepository.findByCreatedDateBetweenOrderByCreatedDateDesc(target, LocalDateTime.now()).orElseGet(() -> new ArrayList<Menu>());
     }
 
-    public NewMenus findNewMenus() {
-        NewMenus newMenus = new NewMenus();
+    public FeaturedMenus findNewMenus() {
+        FeaturedMenus newMenus = new FeaturedMenus();
         LocalDateTime oneMonthBeforeNow = LocalDateTime.now().minusMonths(1);       //현재로 부터 1달 전 까지의 메뉴를 구하기 위함.
         List<Menu> sortedMenus = findNewMenusByDate(oneMonthBeforeNow);
 
@@ -49,8 +49,8 @@ public class SearchService {
         return newMenus;
     }
 
-    public TopReviewedMenus findTopReviewedMenus() {
-        TopReviewedMenus topMenus = new TopReviewedMenus();
+    public FeaturedMenus findTopReviewedMenus() {
+        FeaturedMenus topMenus = new FeaturedMenus();
         List<Menu> target = menuRepository.findTopReviewed();
 
         for (int i = 0; i < 3; i++) {
