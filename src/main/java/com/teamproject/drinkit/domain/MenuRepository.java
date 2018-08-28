@@ -1,5 +1,6 @@
 package com.teamproject.drinkit.domain;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -13,10 +14,7 @@ public interface MenuRepository extends JpaRepository<Menu, Long> {
     Optional<Iterable<Menu>> findByTagListContaining(Tag tag);
     Optional<List<Menu>> findByCreatedDateBetweenOrderByCreatedDateDesc(LocalDateTime start, LocalDateTime end);
 
-    @Query(
-            value = "SELECT * from Menu m order by m.review_count desc limit 3",
-            nativeQuery = true
-    )
-    List<Menu> findTopReviewed();
+    @Query("SELECT m FROM Menu m ORDER BY m.reviewCount DESC")
+    List<Menu> findTopReviewed(Pageable pageable);
 
 }

@@ -5,13 +5,13 @@ import com.teamproject.drinkit.exception.NoSuchMenuException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static java.lang.Character.UnicodeBlock.BASIC_LATIN;
 import static java.lang.Character.UnicodeBlock.HANGUL_SYLLABLES;
@@ -50,7 +50,7 @@ public class SearchService {
 
     public FeaturedMenus findTopReviewedMenus() {
         FeaturedMenus topMenus = new FeaturedMenus();
-        List<Menu> target = menuRepository.findTopReviewed();
+        List<Menu> target = menuRepository.findTopReviewed(new PageRequest(0, 3));
 
         for (int i = 0; i < target.size(); i++) {
             topMenus.addMenu(target.get(i));

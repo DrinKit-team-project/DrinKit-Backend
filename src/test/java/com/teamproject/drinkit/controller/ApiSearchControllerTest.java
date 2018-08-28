@@ -83,10 +83,10 @@ public class ApiSearchControllerTest {
         ResponseEntity<String> response = template.getForEntity("/search/topReviewed", String.class);
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
         List<Menu> topMenus = template.getForObject("/search/topReviewed", List.class);
+        for (int i = 0; i < topMenus.size(); i++) {
+            log.debug("topMenus " + i + " : " + topMenus.get(i));
+        }
         assertThat(topMenus.size(), is(3));
-//        for (int i = 0; i < topMenus.size(); i++) {
-//            log.debug("topMenus " + i + " : " + topMenus.get(i));
-//        }
     }
 
     @Test
