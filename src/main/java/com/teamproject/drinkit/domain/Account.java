@@ -1,5 +1,7 @@
 package com.teamproject.drinkit.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.teamproject.drinkit.security.AccountDetails;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -41,10 +43,10 @@ public class Account extends BaseEntity {
     private String profileHref;
 
     @Column(name = "ACCOUNT_REVIEWS")
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL)
     private List<Review> reviews = new ArrayList<>();
 
-    private Account(Long id, String username, String userId, String password, UserRole userRole, String socialId, SocialProviders socialProvider, String profileHref, List<Review> reviews){
+    public Account(Long id, String username, String userId, String password, UserRole userRole, String socialId, SocialProviders socialProvider, String profileHref){
         this.id = id;
         this.username = username;
         this.userId = userId;
@@ -53,15 +55,15 @@ public class Account extends BaseEntity {
         this.socialId = socialId;
         this.socialProvider = socialProvider;
         this.profileHref = profileHref;
-        this.reviews = reviews;
     }
 
-    public Account(String username, String userId, String password, UserRole userRole, String socialId, SocialProviders socialProvider, String profileHref, List<Review> reviews){
-        this(0L, username, userId, password, userRole, socialId, socialProvider, profileHref, reviews);
+    public Account(String username, String userId, String password, UserRole userRole, String socialId, SocialProviders socialProvider, String profileHref){
+        this(0L, username, userId, password, userRole, socialId, socialProvider, profileHref);
     }
 
     public void writeReview(Review review){
         reviews.add(review);
+        review.registerWriter(this);
     }
 
     @Override
@@ -77,4 +79,6 @@ public class Account extends BaseEntity {
     public int hashCode() {
         return Objects.hash(super.hashCode(), id);
     }
+
+
 }

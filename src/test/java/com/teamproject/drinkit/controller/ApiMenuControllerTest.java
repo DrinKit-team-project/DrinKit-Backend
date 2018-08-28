@@ -32,7 +32,7 @@ public class ApiMenuControllerTest {
 
     @Test
     public void seeMenuListTest() {
-        HttpEntity requestEntity = AuthenticationTestSupporter.buildRequestEntity();
+        HttpEntity requestEntity = AuthenticationTestSupporter.buildRequestEntityForGet();
         ResponseEntity<List<Menu>> response = template.exchange("/api/cafes/1/menus?category=coffee", HttpMethod.GET, requestEntity, new ParameterizedTypeReference<List<Menu>>(){});
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
@@ -41,7 +41,7 @@ public class ApiMenuControllerTest {
 
     @Test
     public void seeMenuDetailTest() {
-        HttpEntity requestEntity = AuthenticationTestSupporter.buildRequestEntity();
+        HttpEntity requestEntity = AuthenticationTestSupporter.buildRequestEntityForGet();
         ResponseEntity<Menu> response = template.exchange("/api/cafes/1/menus/1", HttpMethod.GET, requestEntity, Menu.class);
         String menu = response.getBody().getEnName();
 

@@ -11,4 +11,5 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     Optional<Account> findByUserId(String userId);
     Optional<Account> findById(String socialId);
     Optional<Account> findBySocialIdAndSocialProvider(String socialId, SocialProviders socialProviders);
-}
+    Optional<Account> findBySocialId(String socialId);
+ }

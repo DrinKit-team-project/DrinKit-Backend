@@ -3,32 +3,43 @@ package com.teamproject.drinkit.controller;
 import com.teamproject.drinkit.domain.Menu;
 import com.teamproject.drinkit.domain.Review;
 import com.teamproject.drinkit.dto.ReviewDto;
+import com.teamproject.drinkit.security.jwt.JwtDecoder;
 import com.teamproject.drinkit.service.ReviewService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/cafes/{cafeId}/menus/{menuId}/reviews")
 public class ApiReviewController {
+    private static final Logger log = LoggerFactory.getLogger(ApiReviewController.class);
 
     @Resource(name = "reviewService")
     private ReviewService reviewService;
 
     @PostMapping("")
-    public Review addReview(Authentication authentication, @PathVariable Long cafeId, @PathVariable Long menuId, @RequestBody ReviewDto reviewDto) {
-        return reviewService.addReview(authentication, cafeId, menuId, Review.from(reviewDto));
+    public Review addReview(@RequestHeader("Authorization") String header, @PathVariable Long cafeId, @PathVariable Long menuId, @RequestBody ReviewDto reviewDto) {
+        return reviewService.addReview(header, cafeId, menuId, reviewDto);
     }
 
     @PutMapping("/{id}")
-    public void editReview(Authentication authentication, @PathVariable Long cafeId, @PathVariable Long menuId, @PathVariable Long id, @RequestBody ReviewDto reviewDto) {
-        //user 와 review 에 연관관계가 맺어져야 사이에 key를 가지고 수정할 수 있지 않은가.
-
+    public Review editReview(@RequestHeader("Authorization") String header, @PathVariable Long cafeId, @PathVariable Long menuId, @PathVariable Long id, double ratings, String contents) {
+        return reviewService.edit(header, cafeId, menuId, id, ratings, contents);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteReview(Authentication authentication, @PathVariable Long cafeId, @PathVariable Long menuId, @PathVariable Long id, @RequestBody ReviewDto reviewDto) {
-        //user 와 review 에 연관관계가 맺어져야 사이에 key를 가지고 삭제할 수 있지 않은가.
+    public ResponseEntity<String> deleteReview(@RequestHeader("Authorization") String header, @PathVariable Long cafeId, @PathVariable Long menuId, @PathVariable Long id) {
+        reviewService.delete(header, cafeId, menuId, id);
+        return ResponseEntity.ok()
+                .body("delete success");
     }
 }

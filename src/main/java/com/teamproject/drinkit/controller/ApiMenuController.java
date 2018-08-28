@@ -22,18 +22,18 @@ public class ApiMenuController {
     private MenuService menuService;
 
     @GetMapping("")
-    public Iterable<Menu> seeMenuList(@Valid @PathVariable Long cafeId, @RequestParam("category") String categoryName) throws NoSuchMenuException {
+    public Iterable<Menu> seeMenuList(@PathVariable Long cafeId, @RequestParam("category") String categoryName) throws NoSuchMenuException {
         return menuService.findMenuList(cafeId, categoryName);
     }
 
     @PostMapping("")
-    public void addMenu(@Valid @PathVariable Long cafeId, MenuDto menuDto) {
+    public void addMenu(@PathVariable Long cafeId, MenuDto menuDto) {
         Menu newMenu = menuService.addMenu(cafeId, menuDto);
         log.debug(newMenu.toString());
     }
 
     @GetMapping("/{menuId}")
-    public Menu seeMenuDetail(@Valid @PathVariable Long cafeId, @Valid @PathVariable Long menuId) {
+    public Menu seeMenuDetail(@PathVariable Long cafeId, @PathVariable Long menuId) {
         log.debug("cafeId is " + cafeId + ", menuId is " + menuId);
         Menu menu = menuService.findMenu(cafeId, menuId);
         return menu;

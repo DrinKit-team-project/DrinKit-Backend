@@ -1,6 +1,7 @@
 package com.teamproject.drinkit.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.teamproject.drinkit.dto.ReviewDto;
 import com.teamproject.drinkit.exception.AuthorizationException;
 import lombok.Getter;
@@ -12,9 +13,8 @@ import java.util.Objects;
 @Entity
 @Table(name = "REVIEW")
 public class Review extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
+
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "REVIEW_RATINGS", nullable=false)
@@ -29,6 +29,7 @@ public class Review extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "fk_account")
+    @JsonIgnore
     private Account writer;
 
     @ManyToOne
@@ -55,24 +56,31 @@ public class Review extends BaseEntity {
     }
 
     public static Review from(ReviewDto reviewDto){
-        return new Review(reviewDto.getRatings(), reviewDto.getContents(), reviewDto.getDrinkImgUrl());
+        return new Review(0L, reviewDto.getRatings(), reviewDto.getContents(), reviewDto.getDrinkImgUrl());
     }
 
     public void registerMenu(Menu menu) {
         this.menu = menu;
-        menu.addReview(this);
     }
 
     public void registerWriter(Account writer) {
         this.writer = writer;
-        writer.writeReview(this);
     }
 
-    public Review edit(Account logined, Review newOne){
+    public Review edit(Account logined, double ratings, String contents){
         if(!isSameAccount(logined)){
             throw new AuthorizationException("로그인 유저와 글쓴이가 다릅니다.");
         }
-        return null;
+        this.ratings = ratings;
+        this.contents = contents;
+        return this;
+    }
+
+    public void delete(Account logined){
+        if(!isSameAccount(logined)){
+            throw new AuthorizationException("로그인 유저와 글쓴이가 다릅니다.");
+        }
+        this.deleted = true;
     }
 
     private boolean isSameAccount(Account logined){
@@ -86,7 +94,6 @@ public class Review extends BaseEntity {
                 ", ratings=" + ratings +
                 ", contents='" + contents + '\'' +
                 ", drinkImgUrl='" + drinkImgUrl + '\'' +
-                ", menu_id=" + menu.getId() +
                 ", deleted=" + deleted +
                 '}';
     }
@@ -94,20 +101,14 @@ public class Review extends BaseEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Review)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Review review = (Review) o;
-        return Double.compare(review.ratings, ratings) == 0 &&
-                deleted == review.deleted &&
-                Objects.equals(id, review.id) &&
-                Objects.equals(contents, review.contents) &&
-                Objects.equals(drinkImgUrl, review.drinkImgUrl) &&
-                Objects.equals(menu, review.menu);
+        return Objects.equals(id, review.id);
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(super.hashCode(), id, ratings, contents, drinkImgUrl, menu, deleted);
+        return Objects.hash(super.hashCode(), id);
     }
 }

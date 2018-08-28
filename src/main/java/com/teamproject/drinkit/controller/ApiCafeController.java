@@ -29,7 +29,7 @@ public class ApiCafeController {
     }
 
     @GetMapping("/{cafeId}")
-    public CafeDto seeCafeDetail(@Valid @PathVariable Long cafeId) throws NoSuchMenuException {
+    public CafeDto seeCafeDetail(@PathVariable Long cafeId) throws NoSuchMenuException {
         return cafeService.findCafe(cafeId).makeToDto();
     }
 

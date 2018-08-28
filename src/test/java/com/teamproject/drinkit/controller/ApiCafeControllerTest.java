@@ -1,11 +1,6 @@
 package com.teamproject.drinkit.controller;
 
 import com.teamproject.drinkit.domain.Cafe;
-import com.teamproject.drinkit.domain.Menu;
-import com.teamproject.drinkit.domain.Review;
-import com.teamproject.drinkit.dto.ReviewDto;
-import com.teamproject.drinkit.security.dto.JwtDto;
-import com.teamproject.drinkit.service.CafeService;
 import com.teamproject.drinkit.support.test.AuthenticationTestSupporter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
-import static com.teamproject.drinkit.support.test.AuthenticationTestSupporter.buildRequestEntity;
+import static com.teamproject.drinkit.support.test.AuthenticationTestSupporter.buildRequestEntityForGet;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
@@ -35,7 +30,7 @@ public class ApiCafeControllerTest {
 
     @Test
     public void cafeMainTest() {
-        HttpEntity requestEntity = AuthenticationTestSupporter.buildRequestEntity();
+        HttpEntity requestEntity = AuthenticationTestSupporter.buildRequestEntityForGet();
         ResponseEntity<List<Cafe>> response = template.exchange("/api/cafes", HttpMethod.GET, requestEntity, new ParameterizedTypeReference<List<Cafe>>(){});
 
         assertThat(response.getBody().size(), is(5));
@@ -44,7 +39,7 @@ public class ApiCafeControllerTest {
 
     @Test
     public void seeCafeDetailTest() {
-        HttpEntity requestEntity = AuthenticationTestSupporter.buildRequestEntity();
+        HttpEntity requestEntity = AuthenticationTestSupporter.buildRequestEntityForGet();
         ResponseEntity<Cafe> response = template.exchange("/api/cafes/1", HttpMethod.GET, requestEntity, Cafe.class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));

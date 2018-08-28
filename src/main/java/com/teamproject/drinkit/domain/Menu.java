@@ -13,8 +13,8 @@ import java.util.Objects;
 @Getter
 @Entity
 public class Menu extends BaseEntity {
-    @Id
-    @GeneratedValue
+
+    @Id @GeneratedValue
     private Long id;
 
     private String krName;
@@ -87,6 +87,7 @@ public class Menu extends BaseEntity {
 
     public void addReview(Review review) {
         this.reviews.add(review);
+        review.registerMenu(this);
         calculateScore(review.getRatings());
     }
 
