@@ -1,6 +1,7 @@
 package com.teamproject.drinkit.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teamproject.drinkit.security.AccountDetails;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,8 +43,9 @@ public class Account extends BaseEntity {
     @Column(name = "ACCOUNT_SOCIAL_PROFILEPIC")
     private String profileHref;
 
+    @JsonIgnore
     @Column(name = "ACCOUNT_REVIEWS")
-    @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "writer")
     private List<Review> reviews = new ArrayList<>();
 
     public Account(Long id, String username, String userId, String password, UserRole userRole, String socialId, SocialProviders socialProvider, String profileHref){

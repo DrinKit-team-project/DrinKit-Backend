@@ -42,24 +42,26 @@ public class ReviewService {
         return accountRepository.findByUserId(accountDetails.getUsername()).orElseThrow(() -> new NoLoginedUserException("현재 로그인한 유저가 존재하지 않습니다."));
     }
 
-    public Review addReview(String header, Long cafeId, Long menuId, ReviewDto newReviewDto) {
+    public ReviewDto addReview(String header, Long cafeId, Long menuId, ReviewDto newReviewDto) {
         Review newReview = Review.from(newReviewDto);
 
         Account writer = findLoginedUser(header);
         writer.writeReview(newReview);
+        accountRepository.save(writer);
 
         Menu menu = menuRepository.findByCafeIdAndId(cafeId, menuId).orElseThrow(() -> new NoSuchMenuException("no menu exist."));
         menu.addReview(newReview);
-        return newReview;
+        menuRepository.save(menu);
+        return ReviewDto.from(reviewRepository.save(newReview));
     }
 
-    public Review edit(String header, Long cafeId, Long menuId, Long id, double ratings, String contents){
+    public ReviewDto edit(String header, Long cafeId, Long menuId, ReviewDto target){
         Account logined = findLoginedUser(header);
 
         Menu menu = menuRepository.findByCafeIdAndId(cafeId, menuId).orElseThrow(() -> new NoSuchMenuException("no menu exist."));
+        Review original = reviewRepository.findByMenuIdAndId(menu.getId(), target.getId()).orElseThrow(() -> new NoSuchReviewException("찾는 리뷰가 존재하지 않습니다."));
 
-        Review original = reviewRepository.findByMenuIdAndId(menu.getId(), id).orElseThrow(() -> new NoSuchReviewException("찾는 리뷰가 존재하지 않습니다."));
-        return original.edit(logined, ratings, contents);
+        return ReviewDto.from(reviewRepository.save(original.edit(logined, target)));
     }
 
     public void delete(String header, Long cafeId, Long menuId, Long id) {
@@ -68,6 +70,7 @@ public class ReviewService {
         Menu menu = menuRepository.findByCafeIdAndId(cafeId, menuId).orElseThrow(() -> new NoSuchMenuException("no menu exist."));
 
         Review target = reviewRepository.findByMenuIdAndId(menu.getId(), id).orElseThrow(() -> new NoSuchReviewException("찾는 리뷰가 존재하지 않습니다."));
-        target.delete(logined);
+        reviewRepository.save(target.delete(logined));
     }
+
 }

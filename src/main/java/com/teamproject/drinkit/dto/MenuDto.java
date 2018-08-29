@@ -1,5 +1,7 @@
 package com.teamproject.drinkit.dto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teamproject.drinkit.domain.Menu;
 import com.teamproject.drinkit.domain.PricePerSize;
 import com.teamproject.drinkit.domain.Review;
@@ -18,6 +20,7 @@ public class MenuDto {
     private double totalRating;
     private String category;
 
+    @JsonIgnore
     private List<Review> reviews = new ArrayList<>();
     private List<PricePerSize> pricePerSizePerSize = new ArrayList<>();
     private List<Tag> tagList = new ArrayList<>();

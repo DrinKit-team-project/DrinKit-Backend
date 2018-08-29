@@ -1,8 +1,7 @@
 package com.teamproject.drinkit.controller;
 
-import com.teamproject.drinkit.domain.Cafe;
-import com.teamproject.drinkit.domain.Review;
 import com.teamproject.drinkit.dto.ReviewDto;
+import com.teamproject.drinkit.service.ReviewService;
 import com.teamproject.drinkit.support.test.AuthenticationTestSupporter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,11 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import java.util.Arrays;
-
-import static org.junit.Assert.assertNotNull;
-
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -27,6 +22,9 @@ public class ApiReviewControllerTest {
     @Autowired
     private TestRestTemplate template;
 
+    @Autowired
+    private ReviewService reviewService;
+
     private HttpHeaders buildRequestHeader() {
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -35,45 +33,60 @@ public class ApiReviewControllerTest {
         return requestHeaders;
     }
 
-    @Test
-    public void ADD_REVIEW_TEST() {
-        ReviewDto reviewdto = new ReviewDto(3.5, "soso", "/test/url");
-
+    private ResponseEntity<ReviewDto> sendRequestForAdd(ReviewDto reviewdto) {
         HttpHeaders requestHeaders = buildRequestHeader();
         HttpEntity<ReviewDto> requestEntity = new HttpEntity<>(reviewdto, requestHeaders);
-        ResponseEntity<Review> response = template.exchange("/api/cafes/1/menus/1/reviews", HttpMethod.POST, requestEntity, Review.class);
+        return template.exchange("/api/cafes/1/menus/1/reviews", HttpMethod.POST, requestEntity, ReviewDto.class);
+    }
+
+    private ResponseEntity<String> sendRequestForDelete(Long id) {
+        HttpHeaders requestHeadersForDelete = buildRequestHeader();
+        HttpEntity<ReviewDto> requestEntityForDelete = new HttpEntity<>(requestHeadersForDelete);
+        return template.exchange("/api/cafes/1/menus/1/reviews/" + id, HttpMethod.DELETE, requestEntityForDelete, String.class);
+    }
+
+    private ResponseEntity<ReviewDto> sendRequestForEdit(ReviewDto target) {
+        HttpHeaders requestHeadersForPut = buildRequestHeader();
+        HttpEntity requestEntityForPut = new HttpEntity<>(target, requestHeadersForPut);
+        return template.exchange("/api/cafes/1/menus/1/reviews/", HttpMethod.PUT, requestEntityForPut, ReviewDto.class);
+    }
+
+    @Test
+    public void ADD_REVIEW_TEST() {
+        ReviewDto reviewdto = new ReviewDto(1.5, "soso", "/test/url");
+
+        ResponseEntity<ReviewDto> response = sendRequestForAdd(reviewdto);
+        log.debug("is deleted : {}", response.getBody().isDeleted());
         log.debug("response body: {}", response.getBody().toString());
     }
 
     @Test
     public void EDIT_REVIEW_TEST() {
-        ReviewDto reviewdto = new ReviewDto(3.5, "soso", "/test/url");
+        ReviewDto reviewdto = new ReviewDto(2.5, "soso", "/test/url");
 
-        HttpHeaders requestHeadersForPost = buildRequestHeader();
-        HttpEntity<ReviewDto> requestEntityForPost = new HttpEntity<>(reviewdto, requestHeadersForPost);
-        ResponseEntity<Review> responseForPost = template.exchange("/api/cafes/1/menus/1/reviews", HttpMethod.POST, requestEntityForPost, Review.class);
+        ResponseEntity<ReviewDto> responseForPost = sendRequestForAdd(reviewdto);
 
-        HttpHeaders requestHeadersForPut = buildRequestHeader();
-        HttpEntity<ReviewDto> requestEntityForPut = new HttpEntity<>(reviewdto, requestHeadersForPut);
-        ResponseEntity<Review> responseForPut = template.exchange("/api/cafes/1/menus/1/reviews/1", HttpMethod.PUT, requestEntityForPut, Review.class);
+        Long id = responseForPost.getBody().getId();
+        boolean deleted = responseForPost.getBody().isDeleted();
+        ReviewDto target = new ReviewDto(id, 3.0, "changed", "url", deleted);
+
+        ResponseEntity<ReviewDto> responseForPut = sendRequestForEdit(target);
         log.debug("response body: {}", responseForPut.getBody().toString());
     }
 
     @Test
     public void DELETE_REVIEW_TEST() {
-        ReviewDto reviewdto = new ReviewDto(3.5, "soso", "/test/url");
+        ReviewDto reviewdto = new ReviewDto(5.5, "soso", "/test/url");
 
-        HttpHeaders requestHeadersForPost = buildRequestHeader();
-        HttpEntity<ReviewDto> requestEntityForPost = new HttpEntity<>(reviewdto, requestHeadersForPost);
-        ResponseEntity<Review> responseForPost = template.exchange("/api/cafes/1/menus/1/reviews", HttpMethod.POST, requestEntityForPost, Review.class);
+        ResponseEntity<ReviewDto> responseForPost = sendRequestForAdd(reviewdto);
 
-        HttpHeaders requestHeadersForDelete = buildRequestHeader();
-        HttpEntity<ReviewDto> requestEntityForPut = new HttpEntity<>(reviewdto, requestHeadersForDelete);
-        ResponseEntity<Review> responseForDelete = template.exchange("/api/cafes/1/menus/1/reviews/1", HttpMethod.DELETE, requestEntityForPut, Review.class);
-        log.debug("response body: {}", responseForDelete.getBody().toString());
+        Long id = responseForPost.getBody().getId();
 
-
+        ResponseEntity<String> responseForDelete = sendRequestForDelete(id);
+        log.debug("status code : {}", responseForDelete.getStatusCode());
     }
+
+
 
     //    @Test
 //    public void addReviewTest_success_and_ratings_calculated_well() {

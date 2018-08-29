@@ -32,7 +32,7 @@ public class Menu extends BaseEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "cafe_id"))
     private Cafe cafe;
 
-    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "menu")
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
     private List<Review> reviews = new ArrayList<>();

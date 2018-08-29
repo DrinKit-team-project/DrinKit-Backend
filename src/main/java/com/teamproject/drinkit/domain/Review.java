@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.teamproject.drinkit.dto.ReviewDto;
 import com.teamproject.drinkit.exception.AuthorizationException;
+import com.teamproject.drinkit.support.BooleanToYNConverter;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -14,7 +15,7 @@ import java.util.Objects;
 @Table(name = "REVIEW")
 public class Review extends BaseEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue
     private Long id;
 
     @Column(name = "REVIEW_RATINGS", nullable=false)
@@ -29,16 +30,14 @@ public class Review extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "fk_account")
-    @JsonIgnore
     private Account writer;
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "menu_id"))
-    @JsonIgnore
     private Menu menu;
 
-    @JsonIgnore
-    private boolean deleted = false;
+    @Convert(converter = BooleanToYNConverter.class)
+    private boolean deleted;
 
     public Review(){}
 
@@ -47,16 +46,19 @@ public class Review extends BaseEntity {
         this.ratings = ratings;
         this.contents = contents;
         this.drinkImgUrl = drinkImgUrl;
+        this.deleted = false;
     }
 
     public Review(double ratings, String contents, String drinkImgUrl){
         this.ratings = ratings;
         this.contents = contents;
         this.drinkImgUrl = drinkImgUrl;
+        this.deleted = false;
     }
 
+
     public static Review from(ReviewDto reviewDto){
-        return new Review(0L, reviewDto.getRatings(), reviewDto.getContents(), reviewDto.getDrinkImgUrl());
+        return new Review(reviewDto.getRatings(), reviewDto.getContents(), reviewDto.getDrinkImgUrl());
     }
 
     public void registerMenu(Menu menu) {
@@ -67,20 +69,22 @@ public class Review extends BaseEntity {
         this.writer = writer;
     }
 
-    public Review edit(Account logined, double ratings, String contents){
+    public Review edit(Account logined, ReviewDto target){
         if(!isSameAccount(logined)){
             throw new AuthorizationException("로그인 유저와 글쓴이가 다릅니다.");
         }
-        this.ratings = ratings;
-        this.contents = contents;
+        this.ratings = target.getRatings();
+        this.contents = target.getContents();
+        this.drinkImgUrl = target.getDrinkImgUrl();
         return this;
     }
 
-    public void delete(Account logined){
+    public Review delete(Account logined){
         if(!isSameAccount(logined)){
             throw new AuthorizationException("로그인 유저와 글쓴이가 다릅니다.");
         }
         this.deleted = true;
+        return this;
     }
 
     private boolean isSameAccount(Account logined){

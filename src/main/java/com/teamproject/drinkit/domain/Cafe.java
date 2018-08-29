@@ -12,8 +12,7 @@ import java.util.List;
 @Entity
 @Getter
 public class Cafe extends BaseEntity {
-    @Id
-    @GeneratedValue
+    @Id @GeneratedValue
     private Long id;
 
     @Column
