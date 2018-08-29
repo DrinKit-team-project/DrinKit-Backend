@@ -38,6 +38,8 @@ public class Menu extends BaseEntity {
     @JsonIgnore
     private List<Review> reviews = new ArrayList<>();
 
+    private int reviewCount = 0;
+
     @Embedded
 //    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL)
     private List<PricePerSize> pricePerSizes = new ArrayList<>();
@@ -115,7 +117,6 @@ public class Menu extends BaseEntity {
         this.deleted = true;
     }
 
-
     //equals / hashcode
     @Override
     public boolean equals(Object o) {
@@ -163,4 +164,5 @@ public class Menu extends BaseEntity {
                 ", deleted=" + deleted +
                 '}';
     }
+
 }

@@ -6,8 +6,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -42,6 +40,12 @@ public abstract class BaseEntity {
         }
         return dateTime.format(DateTimeFormatter.ofPattern(format));
     }
+
+    @JsonIgnore
+    public LocalDateTime getCreatedDate() {
+        return this.createdDate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
