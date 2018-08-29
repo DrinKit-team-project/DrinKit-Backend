@@ -48,4 +48,5 @@ dependencies {
     compile group: 'io.springfox', name: 'springfox-core', version: "${swaggerVersion}"
     compile group: 'io.springfox', name: 'springfox-swagger2', version: "${swaggerVersion}"
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: "${swaggerVersion}"
+    compile 'pl.allegro.tech.boot:handlebars-spring-boot-starter:0.3.0'
 }

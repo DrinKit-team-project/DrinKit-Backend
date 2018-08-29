@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Page</title>
+    <link rel="stylesheet" href="/css/adminPage.css">
+</head>
+<body>
+
+<div class="titleBar">Admin Page</div>
+<div class="body-wrapper">
+    <div class="content-body">
+        <div class="cafe-add-form">
+
+            <div class="add-form-title">add cafe</div>
+            <form class="add-cafe-form">
+                <input class="add-text-area" id="cafeName" type="text" placeholder="cafe name (ex) koo's coffee">
+                <input class="add-text-area" id="cafeImgUrl" type="text" placeholder="logo image url (ex) www.test.com">
+                <input class="add-text-area" id="cafeCategory" type="text" placeholder="cafe categories (ex) coffee/non-coffee/desert">
+                <button class="registerButton cafe-register-button" type="submit" value="/admin/cafes">register</button>
+            </form>
+            <div class="exist-cafe-list">
+                <div class="exist-cafe-list-title">Cafe List</div>
+                {{#cafes}}
+                <div class="exist-cafe-list-contents">
+                    <div class="exist-cafe-list-content-name">{{name}}</div>
+                    <div class="exist-cafe-list-content-imageURL">logo url : {{imageURL}}</div>
+                    <div class="exist-cafe-list-content-category">
+                        {{#categoryNames}}
+                        <div class="exist-cafe-list-content-category-list">{{this}}</div>
+                        {{/categoryNames}}
+                    </div>
+                </div>
+                {{/cafes}}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/js/jquery.js"></script>
+<script type="text/javascript" src="/js/adminPage.js"></script>
+
+</body>
+
+</html>

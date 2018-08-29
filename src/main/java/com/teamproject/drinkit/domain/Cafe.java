@@ -16,7 +16,7 @@ public class Cafe extends BaseEntity {
     @GeneratedValue
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String name;
 
     private String imageURL;
@@ -41,6 +41,10 @@ public class Cafe extends BaseEntity {
     public Cafe(String name) {
         this.name = name;
     }
+    public Cafe(String name, String logoImgUrl) {
+        this.name = name;
+        this.imageURL = logoImgUrl;
+    }
 
     public void registerImageURL(String imageURL) {
         this.imageURL = imageURL;
@@ -49,6 +53,10 @@ public class Cafe extends BaseEntity {
     public void addCategoryName(String expectedCategoryName) {
         this.categoryNames.add(expectedCategoryName);
     }
+
+//    public boolean getIsUrlExist() {
+//        return !this.imageURL.equals(null);
+//    }
 
     public Cafe addMenu(Menu menu) {
         this.menus.add(menu);
