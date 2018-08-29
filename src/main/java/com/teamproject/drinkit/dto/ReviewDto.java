@@ -36,12 +36,14 @@ public class ReviewDto {
 
     public ReviewDto() {}
 
-    public ReviewDto(Long id, double ratings, String contents, String drinkImgUrl, boolean deleted) {
+    public ReviewDto(Long id, double ratings, String contents, String drinkImgUrl, Account writer, boolean deleted, Menu menu) {
         this.id = id;
         this.ratings = ratings;
         this.contents = contents;
         this.drinkImgUrl = drinkImgUrl;
+        this.writer = writer;
         this.deleted = deleted;
+        this.menu = menu;
     }
 
     public ReviewDto(double ratings, String contents, String drinkImgUrl) {
@@ -52,7 +54,7 @@ public class ReviewDto {
     }
 
     public static ReviewDto from(Review review){
-        return new ReviewDto(review.getId(), review.getRatings(), review.getContents(), review.getDrinkImgUrl(), review.isDeleted());
+        return new ReviewDto(review.getId(), review.getRatings(), review.getContents(), review.getDrinkImgUrl(), review.getWriter(), review.isDeleted(), review.getMenu());
     }
 
 }

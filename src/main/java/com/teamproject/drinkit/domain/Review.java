@@ -29,7 +29,7 @@ public class Review extends BaseEntity {
     private String drinkImgUrl;
 
     @ManyToOne
-    @JoinColumn(name = "fk_account")
+    @JoinColumn(name = "account_id")
     private Account writer;
 
     @ManyToOne

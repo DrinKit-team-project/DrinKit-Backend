@@ -35,6 +35,7 @@ public class Menu extends BaseEntity {
     @OneToMany(mappedBy = "menu")
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
+    @JsonIgnore
     private List<Review> reviews = new ArrayList<>();
 
     @Embedded

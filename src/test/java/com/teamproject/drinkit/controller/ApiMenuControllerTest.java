@@ -1,7 +1,10 @@
 package com.teamproject.drinkit.controller;
 
 import com.teamproject.drinkit.domain.Menu;
+import com.teamproject.drinkit.domain.Review;
+import com.teamproject.drinkit.dto.ReviewDto;
 import com.teamproject.drinkit.support.test.AuthenticationTestSupporter;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -48,5 +51,4 @@ public class ApiMenuControllerTest {
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
         assertThat(menu, is("americano"));
     }
-
 }

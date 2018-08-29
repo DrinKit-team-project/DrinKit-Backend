@@ -73,4 +73,14 @@ public class ReviewService {
         reviewRepository.save(target.delete(logined));
     }
 
+    public Iterable<Review> findAllByWriter(Long writerId){
+        return reviewRepository.findAllByWriterId(writerId);
+    }
+
+    public Iterable<Review> findAllByMenu(Long cafeId, Long menuId){
+        Menu menu = menuRepository.findByCafeIdAndId(cafeId, menuId).orElseThrow(() -> new NoSuchMenuException("no menu exist."));
+
+        return reviewRepository.findAllByMenuId(menuId);
+    }
+
 }

@@ -1,5 +1,7 @@
 package com.teamproject.drinkit.controller;
 
+import com.teamproject.drinkit.domain.Account;
+import com.teamproject.drinkit.domain.Menu;
 import com.teamproject.drinkit.dto.ReviewDto;
 import com.teamproject.drinkit.service.ReviewService;
 import com.teamproject.drinkit.support.test.AuthenticationTestSupporter;
@@ -22,9 +24,6 @@ public class ApiReviewControllerTest {
     @Autowired
     private TestRestTemplate template;
 
-    @Autowired
-    private ReviewService reviewService;
-
     private HttpHeaders buildRequestHeader() {
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -33,7 +32,7 @@ public class ApiReviewControllerTest {
         return requestHeaders;
     }
 
-    private ResponseEntity<ReviewDto> sendRequestForAdd(ReviewDto reviewdto) {
+    public ResponseEntity<ReviewDto> sendRequestForAdd(ReviewDto reviewdto, TestRestTemplate template) {
         HttpHeaders requestHeaders = buildRequestHeader();
         HttpEntity<ReviewDto> requestEntity = new HttpEntity<>(reviewdto, requestHeaders);
         return template.exchange("/api/cafes/1/menus/1/reviews", HttpMethod.POST, requestEntity, ReviewDto.class);
@@ -55,20 +54,19 @@ public class ApiReviewControllerTest {
     public void ADD_REVIEW_TEST() {
         ReviewDto reviewdto = new ReviewDto(1.5, "soso", "/test/url");
 
-        ResponseEntity<ReviewDto> response = sendRequestForAdd(reviewdto);
-        log.debug("is deleted : {}", response.getBody().isDeleted());
+        ResponseEntity<ReviewDto> response = sendRequestForAdd(reviewdto, template);
         log.debug("response body: {}", response.getBody().toString());
+        log.debug("account id : {}", response.getBody().getWriter().getId());
     }
 
     @Test
     public void EDIT_REVIEW_TEST() {
         ReviewDto reviewdto = new ReviewDto(2.5, "soso", "/test/url");
 
-        ResponseEntity<ReviewDto> responseForPost = sendRequestForAdd(reviewdto);
+        ResponseEntity<ReviewDto> responseForPost = sendRequestForAdd(reviewdto, template);
 
-        Long id = responseForPost.getBody().getId();
-        boolean deleted = responseForPost.getBody().isDeleted();
-        ReviewDto target = new ReviewDto(id, 3.0, "changed", "url", deleted);
+        ReviewDto original = responseForPost.getBody();
+        ReviewDto target = new ReviewDto(original.getId(), 3.0, "changed", "url", original.getWriter(), original.isDeleted(), original.getMenu());
 
         ResponseEntity<ReviewDto> responseForPut = sendRequestForEdit(target);
         log.debug("response body: {}", responseForPut.getBody().toString());
@@ -78,7 +76,7 @@ public class ApiReviewControllerTest {
     public void DELETE_REVIEW_TEST() {
         ReviewDto reviewdto = new ReviewDto(5.5, "soso", "/test/url");
 
-        ResponseEntity<ReviewDto> responseForPost = sendRequestForAdd(reviewdto);
+        ResponseEntity<ReviewDto> responseForPost = sendRequestForAdd(reviewdto, template);
 
         Long id = responseForPost.getBody().getId();
 
