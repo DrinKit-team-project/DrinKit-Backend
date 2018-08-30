@@ -1,10 +1,11 @@
 'use strict';
 
 $(".cafe-register-button").on("click", registerCafe);
+$(".menu-register-button").on("click", registerMenu);
 
 function registerCafe(e) {
     e.preventDefault();
-    console.log("hihi");
+    console.log("registerCafe in.");
 
     var url = $(e.target).val();
     var cafeName = $("#cafeName").val();
@@ -25,4 +26,32 @@ function registerCafe(e) {
         console.log("fail...");
         alert("fail to make cafe.");
     });
+}
+
+function registerMenu(e) {
+    e.preventDefault();
+    console.log("register Menu in.");
+
+    var url = $(e.target).val();
+    var krName = $("#menuKrName").val();
+    var enName = $("#menuEnName").val();
+    var calories = $("#menuCalories").val();
+    var category = $("#menuCategory").val();
+    var description = $("#menuDescription").val();
+    var cafeName = $("#parent-cafe").val();
+
+    var menuInfo = krName + "&" + enName + "&" + calories + "&" + category + "&" +description + "&" + cafeName;
+
+    $.ajax({
+        type: 'post',
+        url: url,
+        contentType: 'text/html; charset=utf-8',
+        data: menuInfo,
+        dataType: 'json'}).done(function addMenuSuccess(data) {
+            console.log("success.");
+            window.location.reload();
+    }).fail(function addMenuFail(data) {
+        console.log("fail..");
+        alert("add menu fail....");
+    })
 }

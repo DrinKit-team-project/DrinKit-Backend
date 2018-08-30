@@ -2,7 +2,9 @@ package com.teamproject.drinkit.service;
 
 import com.teamproject.drinkit.domain.Cafe;
 import com.teamproject.drinkit.domain.CafeRepository;
+import com.teamproject.drinkit.domain.Menu;
 import com.teamproject.drinkit.domain.MenuRepository;
+import com.teamproject.drinkit.exception.NoSuchCategoryException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,4 +49,25 @@ public class AdminService {
     private String[] splitCategories(String categories) {
         return categories.split("/");
     }
+
+    public Menu createMenu(String krName, String enName, int calories, String category, String description, String cafeName) {
+        Menu newMenu = new Menu(krName, enName, calories, description, category);
+        menuRepository.save(newMenu);
+        Cafe targetCafe = cafeRepository.findByName(cafeName);
+        checkCategory(targetCafe, category);
+        return registerMenu(targetCafe, newMenu);
+    }
+
+    private void checkCategory(Cafe cafe, String categoryName) {
+        if (!cafe.getCategoryNames().contains(categoryName)) {
+            throw new NoSuchCategoryException("no such category exist.");
+        }
+    }
+
+    private Menu registerMenu(Cafe cafe, Menu newMenu) {
+        cafe.addMenu(newMenu);
+        newMenu.registerCafe(cafe);
+        return newMenu;
+    }
+
 }

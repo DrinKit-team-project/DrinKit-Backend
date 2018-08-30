@@ -3,43 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin Page</title>
-    <link rel="stylesheet" href="/adminPage.css">
+    <link rel="stylesheet" href="/css/adminPage.css">
 </head>
 <body>
 
-<div class="titleBar">Admin Page</div>
+<div class="menuTitleBar">Admin Page - Menu</div>
 <div class="body-wrapper">
     <div class="content-body">
         <div class="menu-add-form">
 
             <div class="add-form-title">add menu</div>
-            <form>
-                <input class="add-text-area" id="menuName" type="text" placeholder="kr name">
-                <input class="add-text-area" id="menuName" type="text" placeholder="en name">
-                <input class="add-text-area" id="menuCalories" type="text" placeholder="menu calories">
+            <form class="add-menu-form">
+                <input class="add-text-area" id="menuKrName" type="text" placeholder="kr name">
+                <input class="add-text-area" id="menuEnName" type="text" placeholder="en name">
+                <input class="add-text-area" id="menuCalories" type="text" placeholder="calories">
 
-                <form action="test">
-                    <input list="categories" name="categories">
-                    <datalist id="categories">
-
-                        <option value="Internet Explorer">
-                        <option value="Firefox">
-                        <option value="Chrome">
-                        <option value="Opera">
-                        <option value="Safari">
-                    </datalist>
-                    <input type="submit">
-                </form>
+                <select id="parent-cafe">
+                    {{#cafes}}
+                    <option id="{{id}}">{{name}}</option>
+                    {{/cafes}}
+                </select>
 
                 <input class="add-text-area" id="menuCategory" type="text" placeholder="menu category">
                 <input class="add-text-area" id="menuDescription" type="text" placeholder="menu description">
-                <button class="registerButton">register</button>
+                <button class="registerButton menu-register-button" type="submit" value="/admin/menus">register</button>
             </form>
+
+            <div class="exist-menu-list">
+                <div class="exist-menu-list-title">Menu List</div>
+                {{#menus}}
+                <div class="exist-menu-list-contents">
+                    <div class="exist-menu-list-content-info">{{krName}}</div>
+                    <div class="exist-menu-list-content-info">{{enName}}</div>
+                    <div class="exist-menu-list-content-info">{{calories}} kcal</div>
+                    <div class="exist-menu-list-content-info">{{category}}</div>
+                    <div class="exist-menu-list-content-info-description">{{description}}</div>
+                    {{#tagList}}
+                    <div class="exist-menu-list-content-info-tags">{{tagName}}</div>
+                    {{/tagList}}
+                    <div class="tag-text-area">
+                        <input class="add-text-area tag-text" id="tag" type="text" placeholder="tag name">
+                        <button class="addTagBtn" type="submit" value="/admin/menus/{id}">add tag</button>
+                    </div>
+                </div>
+                {{/menus}}
+            </div>
 
         </div>
     </div>
 </div>
-
+<script type="text/javascript" src="/js/jquery.js"></script>
+<script type="text/javascript" src="/js/adminPage.js"></script>
 </body>
 
 </html>

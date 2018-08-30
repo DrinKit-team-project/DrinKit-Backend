@@ -38,7 +38,6 @@ public class Menu extends BaseEntity {
     private int reviewCount = 0;
 
     @Embedded
-//    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL)
     private List<PricePerSize> pricePerSizes = new ArrayList<>();
 
     @Embedded
