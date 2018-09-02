@@ -17,7 +17,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/search")
+@RequestMapping("/search")
 public class ApiSearchController {
 
     private static final Logger log = LoggerFactory.getLogger(ApiSearchController.class);
@@ -61,12 +61,6 @@ public class ApiSearchController {
     public List<Tag> getSuggestedTags() {
         log.debug("get suggested tags in.");
         return searchService.getSuggestedTags();
-    }
-
-    @GetMapping("/tagTest/{id}")
-    public Tag test(@PathVariable Long id) {
-        log.debug("search controller in.");
-        return searchService.findTag(id);
     }
 
 }

@@ -27,9 +27,9 @@ public class MenuTest {
     @Test
     public void calculateTest_menu_exist() {
         Menu newMenu = makeMenu();
-        Review reviewOne = new Review(4.5, "맛있습니다.", "url1.address.com");
-        Review reviewTwo = new Review(0.5, "맛없습니다.", "url2.address.com");
-        Review reviewThree = new Review(3, "그냥그래요.", "url3.address.com");
+        Review reviewOne = new Review(4.5, "맛있습니다.");
+        Review reviewTwo = new Review(0.5, "맛없습니다.");
+        Review reviewThree = new Review(3, "그냥그래요.");
 
         newMenu.addReview(reviewOne);
         newMenu.addReview(reviewTwo);

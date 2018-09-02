@@ -32,10 +32,4 @@ public class ApiCafeController {
     public CafeDto seeCafeDetail(@PathVariable Long cafeId) throws NoSuchMenuException {
         return cafeService.findCafe(cafeId).makeToDto();
     }
-
-    @PostMapping("")
-    public void addCafe(String name) {
-        Cafe newCafe = cafeService.addCafe(name);
-        log.debug(newCafe.toString());
-    }
 }

@@ -6,6 +6,9 @@ import com.teamproject.drinkit.dto.ReviewDto;
 import com.teamproject.drinkit.exception.AuthorizationException;
 import com.teamproject.drinkit.support.BooleanToYNConverter;
 import lombok.Getter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -14,6 +17,8 @@ import java.util.Objects;
 @Entity
 @Table(name = "REVIEW")
 public class Review extends BaseEntity {
+    private static final Logger log = LoggerFactory.getLogger(Review.class);
+
 
     @Id @GeneratedValue
     private Long id;
@@ -22,11 +27,8 @@ public class Review extends BaseEntity {
     private double ratings;
 
     @Lob
-    @Column(name = "REVIEW_CONTENTS", nullable=false)
+    @Column(name = "REVIEW_CONTENTS")
     private String contents;
-
-    @Column(name = "REVIEW_DRINK_IMG_URL")
-    private String drinkImgUrl;
 
     @ManyToOne
     @JoinColumn(name = "account_id")
@@ -39,26 +41,37 @@ public class Review extends BaseEntity {
     @Convert(converter = BooleanToYNConverter.class)
     private boolean deleted;
 
+    @Embedded
+    private UploadFileResponse uploadFileResponse;
+
     public Review(){}
 
-    public Review(Long id, double ratings, String contents, String drinkImgUrl){
+    public Review(Long id, double ratings, String contents, UploadFileResponse uploadFileResponse){
+        this(id, ratings, contents);
+        this.uploadFileResponse = uploadFileResponse;
+    }
+
+    public Review(Long id, double ratings, String contents){
         this.id = id;
         this.ratings = ratings;
         this.contents = contents;
-        this.drinkImgUrl = drinkImgUrl;
         this.deleted = false;
     }
 
-    public Review(double ratings, String contents, String drinkImgUrl){
+    public Review(double ratings, String contents){
         this.ratings = ratings;
         this.contents = contents;
-        this.drinkImgUrl = drinkImgUrl;
         this.deleted = false;
     }
 
+    public Review(double ratings, String contents, UploadFileResponse uploadFileResponse){
+        this(ratings, contents);
+        this.uploadFileResponse = uploadFileResponse;
+    }
 
     public static Review from(ReviewDto reviewDto){
-        return new Review(reviewDto.getRatings(), reviewDto.getContents(), reviewDto.getDrinkImgUrl());
+        log.debug("uploadFileResponse null check :{}" ,reviewDto.toString());
+        return new Review(reviewDto.getRatings(), reviewDto.getContents(), reviewDto.getUploadFileResponse());
     }
 
     public void registerMenu(Menu menu) {
@@ -69,13 +82,17 @@ public class Review extends BaseEntity {
         this.writer = writer;
     }
 
+    public void registerFileUploadInfo(UploadFileResponse uploadFileResponse){
+        this.uploadFileResponse = uploadFileResponse;
+    }
+
     public Review edit(Account logined, ReviewDto target){
         if(!isSameAccount(logined)){
             throw new AuthorizationException("로그인 유저와 글쓴이가 다릅니다.");
         }
         this.ratings = target.getRatings();
         this.contents = target.getContents();
-        this.drinkImgUrl = target.getDrinkImgUrl();
+        this.uploadFileResponse = target.getUploadFileResponse();
         return this;
     }
 
@@ -97,8 +114,10 @@ public class Review extends BaseEntity {
                 "id=" + id +
                 ", ratings=" + ratings +
                 ", contents='" + contents + '\'' +
-                ", drinkImgUrl='" + drinkImgUrl + '\'' +
+                ", writer=" + writer +
+                ", menu=" + menu +
                 ", deleted=" + deleted +
+                ", uploadFileResponse=" + uploadFileResponse +
                 '}';
     }
 

@@ -20,8 +20,8 @@ public class ReviewTest {
 
     @Before
     public void setUp() throws Exception {
-        original = new Review(1L, 3.5, "original", "url");
-        newOne = new ReviewDto(original.getId(), 3.0, "hi", "url", null, false, null);
+        original = new Review(1L, 3.5, "original");
+        newOne = new ReviewDto(original.getId(), 3.0, "hi");
         writer = new Account("jiwon", "password", "1234", UserRole.USER, "12345", SocialProviders.KAKAO, "testurl");
         original.registerWriter(writer);
     }

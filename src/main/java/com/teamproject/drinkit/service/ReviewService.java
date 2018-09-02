@@ -36,38 +36,32 @@ public class ReviewService {
     @Autowired
     private JwtDecoder decoder;
 
-    private Account findLoginedUser(String header) {
-        AccountDetails accountDetails = decoder.decode(JwtExtractor.extractJwtToken(header));
-        log.debug("유저이름 : {}", accountDetails.getUsername());
-        return accountRepository.findByUserId(accountDetails.getUsername()).orElseThrow(() -> new NoLoginedUserException("현재 로그인한 유저가 존재하지 않습니다."));
-    }
-
-    public ReviewDto addReview(String header, Long cafeId, Long menuId, ReviewDto newReviewDto) {
+    public ReviewDto addReview(String header, Long menuId, ReviewDto newReviewDto) {
         Review newReview = Review.from(newReviewDto);
 
-        Account writer = findLoginedUser(header);
+        Account writer = decoder.findLoginedUser(header);
         writer.writeReview(newReview);
         accountRepository.save(writer);
 
-        Menu menu = menuRepository.findByCafeIdAndId(cafeId, menuId).orElseThrow(() -> new NoSuchMenuException("no menu exist."));
+        Menu menu = menuRepository.findById(menuId).orElseThrow(() -> new NoSuchMenuException("no menu exist."));
         menu.addReview(newReview);
         menuRepository.save(menu);
         return ReviewDto.from(reviewRepository.save(newReview));
     }
 
-    public ReviewDto edit(String header, Long cafeId, Long menuId, ReviewDto target){
-        Account logined = findLoginedUser(header);
+    public ReviewDto edit(String header, Long menuId, ReviewDto target){
+        Account logined = decoder.findLoginedUser(header);
 
-        Menu menu = menuRepository.findByCafeIdAndId(cafeId, menuId).orElseThrow(() -> new NoSuchMenuException("no menu exist."));
+        Menu menu = menuRepository.findById(menuId).orElseThrow(() -> new NoSuchMenuException("no menu exist."));
         Review original = reviewRepository.findByMenuIdAndId(menu.getId(), target.getId()).orElseThrow(() -> new NoSuchReviewException("찾는 리뷰가 존재하지 않습니다."));
 
         return ReviewDto.from(reviewRepository.save(original.edit(logined, target)));
     }
 
-    public void delete(String header, Long cafeId, Long menuId, Long id) {
-        Account logined = findLoginedUser(header);
+    public void delete(String header, Long menuId, Long id) {
+        Account logined = decoder.findLoginedUser(header);
 
-        Menu menu = menuRepository.findByCafeIdAndId(cafeId, menuId).orElseThrow(() -> new NoSuchMenuException("no menu exist."));
+        Menu menu = menuRepository.findById( menuId).orElseThrow(() -> new NoSuchMenuException("no menu exist."));
 
         Review target = reviewRepository.findByMenuIdAndId(menu.getId(), id).orElseThrow(() -> new NoSuchReviewException("찾는 리뷰가 존재하지 않습니다."));
         reviewRepository.save(target.delete(logined));
@@ -77,9 +71,7 @@ public class ReviewService {
         return reviewRepository.findAllByWriterId(writerId);
     }
 
-    public Iterable<Review> findAllByMenu(Long cafeId, Long menuId){
-        Menu menu = menuRepository.findByCafeIdAndId(cafeId, menuId).orElseThrow(() -> new NoSuchMenuException("no menu exist."));
-
+    public Iterable<Review> findAllByMenu(Long menuId){
         return reviewRepository.findAllByMenuId(menuId);
     }
 

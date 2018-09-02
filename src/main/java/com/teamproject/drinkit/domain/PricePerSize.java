@@ -11,10 +11,6 @@ public class PricePerSize {
     private String size;
     private int cost;
 
-//    @ManyToOne
-//    @JoinColumn(foreignKey = @ForeignKey(name = "menu_id"))
-//    private Menu menu;
-
     public PricePerSize() {}
     public PricePerSize(String size, int cost) {
         this.size = size;

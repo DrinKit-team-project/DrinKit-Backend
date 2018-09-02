@@ -2,6 +2,9 @@ package com.teamproject.drinkit.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.teamproject.drinkit.dto.ReviewDto;
+import com.teamproject.drinkit.exception.AuthorizationException;
 import com.teamproject.drinkit.security.AccountDetails;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,11 +19,11 @@ import java.util.Objects;
 @NoArgsConstructor
 @Table(name = "ACCOUNT")
 public class Account extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name="ACCOUNT_USERNAME")
+    @JsonProperty("nickname")
     private String username;
 
     @Column(name = "ACCOUNT_LOGINID")
@@ -66,6 +69,18 @@ public class Account extends BaseEntity {
     public void writeReview(Review review){
         reviews.add(review);
         review.registerWriter(this);
+    }
+
+    public Account editNickname(Account logined, String newNickname){
+        if(!isSameAccount(logined)){
+            throw new AuthorizationException("로그인 유저와 글쓴이가 다릅니다.");
+        }
+        this.username = newNickname;
+        return this;
+    }
+
+    private boolean isSameAccount(Account logined) {
+        return this.equals(logined);
     }
 
     @Override

@@ -31,8 +31,6 @@ public class Cafe extends BaseEntity {
     @CollectionTable(name = "CAFE_CATEGORY_LIST",
             joinColumns = @JoinColumn(name = "CAFE_ID", foreignKey = @ForeignKey(name = "CAFE_ID")))
     @Column(name = "CATEGORY_NAME")
-//    @Embedded
-//    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL)
     private List<String> categoryNames = new ArrayList<>();
 
     private boolean deleted = false;

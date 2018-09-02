@@ -34,13 +34,9 @@ public class ApiAccountControllerTest {
 
     @Test
     public void SHOW_ALL_REVIEWS_TEST() {
-        ReviewDto one = new ReviewDto(1.5, "soso", "/test/url");
-        ReviewDto two = new ReviewDto(2.5, "good", "/test/url");
-        ReviewDto three = new ReviewDto(3.5, "bad", "/test/url");
-
-        apiReviewControllerTest.sendRequestForAdd(one, template);
-        apiReviewControllerTest.sendRequestForAdd(two, template);
-        ResponseEntity<ReviewDto> response =  apiReviewControllerTest.sendRequestForAdd(three, template);
+        apiReviewControllerTest.sendRequestForAdd(1.5, "soso", template);
+        apiReviewControllerTest.sendRequestForAdd(2.5, "good", template);
+        ResponseEntity<ReviewDto> response =  apiReviewControllerTest.sendRequestForAdd(3.5, "bad", template);
 
         Long userid = response.getBody().getWriter().getId();
 

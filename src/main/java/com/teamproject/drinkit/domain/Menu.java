@@ -44,7 +44,6 @@ public class Menu extends BaseEntity {
 //    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL)
     private List<PricePerSize> pricePerSizes = new ArrayList<>();
 
-    @Embedded
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "menu_and_tag", joinColumns = @JoinColumn(name = "menu_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
