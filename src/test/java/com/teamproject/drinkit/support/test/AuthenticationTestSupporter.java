@@ -7,10 +7,12 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.web.client.RestTemplate;
 
+@TestPropertySource(locations = "classpath:/test.properties")
 public class AuthenticationTestSupporter {
-    private static final String JWT_TOKEN_REQUEST_JSON_STRING = "{\"provider\":\"KAKAO\",\"id\":\"889316482\", \"token\":\"FdjxVzQPCuOXghJXNaI8B-IQ9iOftrjfHSBToAopdeIAAAFlmT6byw\"}";
+    private static final String JWT_TOKEN_REQUEST_JSON_STRING = "{\"provider\":\"KAKAO\",\"id\":\"889316482\", \"token\":\"dPMT59pHqIxKCZ5lkbuFwinZPNceqmxoO4fiEQoqAq8AAAFlmr1JrQ\"}";
     private static final String JWT_TOKEN_REQUEST_URL = "http://localhost:8080/social";
 
     private static final Logger log = LoggerFactory.getLogger(AuthenticationTestSupporter.class);

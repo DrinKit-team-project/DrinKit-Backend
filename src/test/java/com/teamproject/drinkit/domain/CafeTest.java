@@ -3,6 +3,7 @@ package com.teamproject.drinkit.domain;
 import com.teamproject.drinkit.dto.CafeDto;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.test.context.TestPropertySource;
 
 import static org.junit.Assert.*;
 

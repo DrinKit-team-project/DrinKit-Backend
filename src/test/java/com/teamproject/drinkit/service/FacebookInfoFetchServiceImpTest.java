@@ -7,10 +7,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.test.context.TestPropertySource;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
+@TestPropertySource(locations = "classpath:/test.properties")
 public class FacebookInfoFetchServiceImpTest {
     private FacebookInfoFetchServiceImp facebookInfoFetchServiceImp;
     private SocialLoginDto dto;
@@ -18,11 +20,8 @@ public class FacebookInfoFetchServiceImpTest {
 
     @Before
     public void setUp() throws Exception {
-<<<<<<< HEAD
-        String access_token = "EAAM7HscfrTwBAGJfGaBj0iqsIMlpAjjMUA6DdQtVZCT2mb9TY4vAg1YWXegarFZApj83enYGoNSVuwIdGC3ZAVaAaxFb5sXmNV4rnj1lw8kCGkXGzqbiv6ogLDSZAtziT8sgEJR5EBWn3hEN2NlL7cGe8cAWpyh5yGeyk04SqvUWtfQJCMqImZAQfDBYz9ZBKmOlZBObxwemgZDZD";
-=======
-        String access_token = "EAAM7HscfrTwBAE02KrZCh59A1ccYwgAru7BCIRTT4WbU5Umr9zuMyANA7LvDkWehqMsW0fDzfMqpCBDJfkUqRrU3jDNeHKWhNNtjLwvazyPmRiVNCuYzvDjCuZAgDiLjV6vtU9ZAAMhiYadN8AmxbFSWqwEj3QwQCexZAkl9PEI5NJu3LgRAhMjcMhcExdrKny12FYxO1gZDZD";
->>>>>>> 18dfa423579d2be433f3a56e1936ab5f1b101559
+
+        String access_token = "EAAM7HscfrTwBAKzxTYqPnZCoOQVd5pDXp1WtxGZCmo3uX6KYmZAj23dyO52oSUjyT9cMYEFG4P7mfyQyjigH7jsSwmKSMsaXz8RZC4YsZAYoN80KUMYijN0ZB2w5QvlgGO4Ds0vbqMQwNEnVvjTwTJB4OYkN1ZBdu5j8ZCLhD0ZB8kHWcSlMqGT5zmfg8namrWZCSZBoacJqt4ihAZDZD";
         String user_id = "704798269891295";
         facebookInfoFetchServiceImp = new FacebookInfoFetchServiceImp();
         dto = new SocialLoginDto(SocialProviders.FACEBOOK, access_token, user_id);

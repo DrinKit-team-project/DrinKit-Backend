@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
@@ -21,6 +20,9 @@ public class DrinkitApplication {
             + "/app/config/drinkit/application-realdb.properties";
 
     public static void main(String[] args) {
-        SpringApplication.run(DrinkitApplication.class, args);
+        new SpringApplicationBuilder(DrinkitApplication.class)
+                .properties(APPLICATION_LOCATIONS)
+                .run();
+
     }
 }
