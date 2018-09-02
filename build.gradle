@@ -49,5 +49,4 @@ dependencies {
     compile group: 'io.springfox', name: 'springfox-swagger2', version: "${swaggerVersion}"
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: "${swaggerVersion}"
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
-
 }
