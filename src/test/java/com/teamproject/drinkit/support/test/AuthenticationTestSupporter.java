@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 public class AuthenticationTestSupporter {
-    private static final String JWT_TOKEN_REQUEST_JSON_STRING = "{\"provider\":\"KAKAO\",\"id\":\"889316482\", \"token\":\"THnBxDH9RKJELGZOoC54BYK0E5RS7o8N9QvhFwoqAuYAAAFlmH2cbw\"}";
+    private static final String JWT_TOKEN_REQUEST_JSON_STRING = "{\"provider\":\"KAKAO\",\"id\":\"889316482\", \"token\":\"FdjxVzQPCuOXghJXNaI8B-IQ9iOftrjfHSBToAopdeIAAAFlmT6byw\"}";
     private static final String JWT_TOKEN_REQUEST_URL = "http://localhost:8080/social";
 
     private static final Logger log = LoggerFactory.getLogger(AuthenticationTestSupporter.class);
