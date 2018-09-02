@@ -13,7 +13,7 @@ public class ReviewDtoTest {
 
     @Before
     public void setUp() throws Exception {
-        review = new Review(1L, 3.5, "soso", "url");
+        review = new Review(1L, 3.5, "soso");
     }
 
     @Test

@@ -34,9 +34,9 @@ public class ApiAccountControllerTest {
 
     @Test
     public void SHOW_ALL_REVIEWS_TEST() {
-        ReviewDto one = new ReviewDto(1.5, "soso", "/test/url");
-        ReviewDto two = new ReviewDto(2.5, "good", "/test/url");
-        ReviewDto three = new ReviewDto(3.5, "bad", "/test/url");
+        ReviewDto one = new ReviewDto(1.5, "soso");
+        ReviewDto two = new ReviewDto(2.5, "good");
+        ReviewDto three = new ReviewDto(3.5, "bad");
 
         apiReviewControllerTest.sendRequestForAdd(one, template);
         apiReviewControllerTest.sendRequestForAdd(two, template);

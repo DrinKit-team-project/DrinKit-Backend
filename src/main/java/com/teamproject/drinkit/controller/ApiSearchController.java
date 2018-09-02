@@ -62,11 +62,5 @@ public class ApiSearchController {
         log.debug("get suggested tags in.");
         return searchService.getSuggestedTags();
     }
-//
-//    @GetMapping("/tagTest/{id}")
-//    public Tag test(@PathVariable Long id) {
-//        log.debug("search controller in.");
-//        return searchService.findTag(id);
-//    }
-//
+
 }

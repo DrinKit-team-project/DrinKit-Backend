@@ -46,8 +46,8 @@ public class ApiMenuController {
     }
 
     @GetMapping("/{menuId}/reviews")
-    public Iterable<Review> showReviews(@PathVariable Long cafeId, @PathVariable Long menuId){
-        return reviewService.findAllByMenu(cafeId, menuId);
+    public Iterable<Review> showReviews(@PathVariable Long menuId){
+        return reviewService.findAllByMenu(menuId);
     }
 
 }

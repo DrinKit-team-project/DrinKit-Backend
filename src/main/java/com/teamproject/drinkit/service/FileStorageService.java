@@ -1,5 +1,7 @@
 package com.teamproject.drinkit.service;
 
+import com.teamproject.drinkit.domain.FileRepository;
+import com.teamproject.drinkit.domain.MyFile;
 import com.teamproject.drinkit.exception.FileStorageException;
 import com.teamproject.drinkit.exception.MyFileNotFoundException;
 import com.teamproject.drinkit.property.FileStorageProperties;
@@ -45,9 +47,10 @@ public class FileStorageService {
             }
 
             // Copy file to target directory
+            // path = fileStorageLocation/fileName
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
+            // 이름 겹치면 overwrite 되는 옵션.
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-
             return fileName;
         } catch (IOException e) {
             throw new FileStorageException(String.format("파일을 저장할 수 없습니다. 파일 이름 : %s", fileName), e);
