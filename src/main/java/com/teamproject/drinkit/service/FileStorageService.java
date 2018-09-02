@@ -1,7 +1,5 @@
 package com.teamproject.drinkit.service;
 
-import com.teamproject.drinkit.domain.FileRepository;
-import com.teamproject.drinkit.domain.MyFile;
 import com.teamproject.drinkit.exception.FileStorageException;
 import com.teamproject.drinkit.exception.MyFileNotFoundException;
 import com.teamproject.drinkit.property.FileStorageProperties;

@@ -11,7 +11,6 @@ import lombok.Getter;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
 public class MenuDto {
     private String krName;
     private String enName;
@@ -62,5 +61,45 @@ public class MenuDto {
             this.imageURLs.add(url);
         }
         return this;
+    }
+
+    public String getKrName() {
+        return krName;
+    }
+
+    public String getEnName() {
+        return enName;
+    }
+
+    public int getCalories() {
+        return calories;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public double getTotalRating() {
+        return totalRating;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public List<PricePerSize> getPricePerSizePerSize() {
+        return pricePerSizePerSize;
+    }
+
+    public List<Tag> getTagList() {
+        return tagList;
+    }
+
+    public List<String> getImageURLs() {
+        return imageURLs;
     }
 }

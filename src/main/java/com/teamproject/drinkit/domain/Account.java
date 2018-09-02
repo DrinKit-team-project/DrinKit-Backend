@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Getter
 @Entity
 @NoArgsConstructor
 @Table(name = "ACCOUNT")
@@ -83,6 +82,42 @@ public class Account extends BaseEntity {
         return this.equals(logined);
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public String getSocialId() {
+        return socialId;
+    }
+
+    public SocialProviders getSocialProvider() {
+        return socialProvider;
+    }
+
+    public String getProfileHref() {
+        return profileHref;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -96,6 +131,7 @@ public class Account extends BaseEntity {
     public int hashCode() {
         return Objects.hash(super.hashCode(), id);
     }
+
 
 
 }

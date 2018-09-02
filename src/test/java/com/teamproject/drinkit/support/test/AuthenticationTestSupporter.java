@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
 
 @TestPropertySource(locations = "classpath:/test.properties")
 public class AuthenticationTestSupporter {
-    private static final String JWT_TOKEN_REQUEST_JSON_STRING = "{\"provider\":\"KAKAO\",\"id\":\"889316482\", \"token\":\"dPMT59pHqIxKCZ5lkbuFwinZPNceqmxoO4fiEQoqAq8AAAFlmr1JrQ\"}";
+    private static final String JWT_TOKEN_REQUEST_JSON_STRING = "{\"provider\":\"KAKAO\",\"id\":\"889316482\", \"token\":\"OkBIjHuT8ZTMi0Yom5u1LXLFrpQxeej4pUMUfAo8BRIAAAFlmxFJ2g\"}";
     private static final String JWT_TOKEN_REQUEST_URL = "http://localhost:8080/social";
 
     private static final Logger log = LoggerFactory.getLogger(AuthenticationTestSupporter.class);

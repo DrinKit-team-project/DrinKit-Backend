@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Getter
 @Entity
 public class Menu extends BaseEntity {
 
@@ -116,33 +115,76 @@ public class Menu extends BaseEntity {
         this.deleted = true;
     }
 
-    //equals / hashcode
+    public Long getId() {
+        return id;
+    }
+
+    public String getKrName() {
+        return krName;
+    }
+
+    public String getEnName() {
+        return enName;
+    }
+
+    public int getCalories() {
+        return calories;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public double getTotalRatings() {
+        return totalRatings;
+    }
+
+    public Cafe getCafe() {
+        return cafe;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public int getReviewCount() {
+        return reviewCount;
+    }
+
+    public List<PricePerSize> getPricePerSizes() {
+        return pricePerSizes;
+    }
+
+    public List<Tag> getTagList() {
+        return tagList;
+    }
+
+    public List<String> getImageURLs() {
+        return imageURLs;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Menu)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Menu menu = (Menu) o;
-        return calories == menu.calories &&
-                Double.compare(menu.totalRatings, totalRatings) == 0 &&
-                deleted == menu.deleted &&
-                Objects.equals(id, menu.id) &&
-                Objects.equals(krName, menu.krName) &&
-                Objects.equals(enName, menu.enName) &&
-                Objects.equals(category, menu.category) &&
-                Objects.equals(description, menu.description) &&
-                Objects.equals(cafe, menu.cafe) &&
-                Objects.equals(reviews, menu.reviews) &&
-                Objects.equals(pricePerSizes, menu.pricePerSizes) &&
-                Objects.equals(tagList, menu.tagList) &&
-                Objects.equals(imageURLs, menu.imageURLs);
+        return Objects.equals(id, menu.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), id, krName, enName, calories, category, description, totalRatings, cafe, reviews, pricePerSizes, tagList, imageURLs, deleted);
-    }
 
+        return Objects.hash(super.hashCode(), id);
+    }
 
     //toString
     @Override
@@ -163,5 +205,7 @@ public class Menu extends BaseEntity {
                 ", deleted=" + deleted +
                 '}';
     }
+
+
 
 }
