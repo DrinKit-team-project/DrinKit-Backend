@@ -12,13 +12,13 @@ import java.util.List;
 @Entity
 @Getter
 public class Cafe extends BaseEntity {
-    @Id
-    @GeneratedValue
+    @Id @GeneratedValue
     private Long id;
 
     @Column
     private String name;
 
+    @Lob
     private String imageURL;
 
     @JsonIgnore
@@ -27,9 +27,11 @@ public class Cafe extends BaseEntity {
     @OrderBy("id ASC")
     private List<Menu> menus = new ArrayList<>();
 
-    @Embedded
-    @Column
-    private List<String> categoryList = new ArrayList<>();
+    @ElementCollection
+    @CollectionTable(name = "CAFE_CATEGORY_LIST",
+            joinColumns = @JoinColumn(name = "CAFE_ID", foreignKey = @ForeignKey(name = "CAFE_ID")))
+    @Column(name = "CATEGORY_NAME")
+    private List<String> categoryNames = new ArrayList<>();
 
     private boolean deleted = false;
 
@@ -42,15 +44,29 @@ public class Cafe extends BaseEntity {
         this.imageURL = imageURL;
     }
 
-    public void addCategory(String expectedCategoryName) {
-        this.categoryList.add(expectedCategoryName);
+    public void addCategoryName(String expectedCategoryName) {
+        this.categoryNames.add(expectedCategoryName);
     }
 
+    public Cafe addMenu(Menu menu) {
+        this.menus.add(menu);
+        return this;
+    }
     public CafeDto makeToDto() {
         CafeDto cafeDto = new CafeDto(this.name, this.imageURL);
-        for (String category : categoryList) {
-            cafeDto.addCategoty(category);
-        }
+//        for (String category : categoryList) {
+//            cafeDto.addCategoty(category);
+//        }
         return cafeDto;
+    }
+
+    @Override
+    public String toString() {
+        return "Cafe{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", imageURL='" + imageURL + '\'' +
+                ", deleted=" + deleted +
+                '}';
     }
 }

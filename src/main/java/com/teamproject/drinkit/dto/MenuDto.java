@@ -1,8 +1,11 @@
 package com.teamproject.drinkit.dto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teamproject.drinkit.domain.Menu;
-import com.teamproject.drinkit.domain.Price;
+import com.teamproject.drinkit.domain.PricePerSize;
 import com.teamproject.drinkit.domain.Review;
+import com.teamproject.drinkit.domain.Tag;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -15,45 +18,45 @@ public class MenuDto {
     private int calories;
     private String description;
     private double totalRating;
+    private String category;
 
+    @JsonIgnore
     private List<Review> reviews = new ArrayList<>();
-    private List<Price> pricePerSize = new ArrayList<>();
-    private List<String> tagList = new ArrayList<>();
+    private List<PricePerSize> pricePerSizePerSize = new ArrayList<>();
+    private List<Tag> tagList = new ArrayList<>();
     private List<String> imageURLs = new ArrayList<>();
 
-    private MenuDto(String krName, String enName, int calories, String description, double totalRating) {
+    private MenuDto(String krName, String enName, int calories, String description, double totalRating, String category) {
         this.krName = krName;
         this.enName = enName;
         this.calories = calories;
         this.description = description;
         this.totalRating = totalRating;
+        this.category = category;
     }
 
+    //for menuDto
     public static MenuDto from(Menu menu) {
-        return new MenuDto(menu.getKrName(), menu.getEnName(), menu.getCalories(), menu.getDescription(), menu.calculateScore());
+        return new MenuDto(menu.getKrName(), menu.getEnName(), menu.getCalories(), menu.getDescription(), menu.getTotalRatings(), menu.getCategory());
     }
-
     public MenuDto copyReviews(Menu menu) {
         for (Review review : menu.getReviews()) {
             this.reviews.add(review);
         }
         return this;
     }
-
     public MenuDto copyPricePerSize(Menu menu) {
-        for (Price price : menu.getPricePerSize()) {
-            this.pricePerSize.add(price);
+        for (PricePerSize pricePerSize : menu.getPricePerSizes()) {
+            this.pricePerSizePerSize.add(pricePerSize);
         }
         return this;
     }
-
     public MenuDto copyTagList(Menu menu) {
-        for (String tag : menu.getTagList()) {
+        for (Tag tag : menu.getTagList()) {
             this.tagList.add(tag);
         }
         return this;
     }
-
     public MenuDto copyImageURLs(Menu menu) {
         for (String url : menu.getImageURLs()) {
             this.imageURLs.add(url);

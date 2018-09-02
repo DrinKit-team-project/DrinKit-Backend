@@ -6,14 +6,22 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Embeddable
-public class Price {
+public class PricePerSize {
 
     private String size;
     private int cost;
 
-    public Price() {}
-    public Price(String size, int cost) {
+    public PricePerSize() {}
+    public PricePerSize(String size, int cost) {
         this.size = size;
         this.cost = cost;
+    }
+
+    //getter
+    public String getSize() {
+        return size;
+    }
+    public int getCost() {
+        return cost;
     }
 }

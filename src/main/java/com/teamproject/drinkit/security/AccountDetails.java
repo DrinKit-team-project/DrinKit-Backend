@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class AccountDetails extends User {
-    private Account account;
+    private  Account account;
 
     private AccountDetails(Account account, String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
@@ -39,5 +39,12 @@ public class AccountDetails extends User {
 
     public Account getAccount() {
         return account;
+    }
+
+    @Override
+    public String toString() {
+        return "AccountDetails{" +
+                "account=" + account +
+                '}';
     }
 }

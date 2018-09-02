@@ -1,0 +1,4 @@
+PUT http://localhost:8080/api/accounts?nickname=newone
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJkcmlua2l0IiwiVVNFUk5BTUUiOiLrsLDsp4Dsm5AiLCJVU0VSX1JPTEUiOiJST0xFX1VTRVIifQ.9EX9azDidL_Tsgk5uafyStemwu1aNhFQ0Uj58jhaJdA
+
+###

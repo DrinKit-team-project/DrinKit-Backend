@@ -1,16 +1,20 @@
 package com.teamproject.drinkit.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.teamproject.drinkit.dto.MenuDto;
+import lombok.Getter;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+@Getter
 @Entity
 public class Menu extends BaseEntity {
-    @Id
-    @GeneratedValue
+
+    @Id @GeneratedValue
     private Long id;
 
     private String krName;
@@ -22,23 +26,28 @@ public class Menu extends BaseEntity {
 
     private String description;
 
+    private double totalRatings = 0.0;
+
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "cafe_id"))
     private Cafe cafe;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "menu")
     @Where(clause = "deleted = false")
     @OrderBy("id ASC")
+    @JsonIgnore
     private List<Review> reviews = new ArrayList<>();
 
-    @Embedded
-    @Column
-    private List<Price> pricePerSize = new ArrayList<>();
+    private int reviewCount = 0;
 
     @Embedded
-    @Column
-    private List<String> tagList = new ArrayList<>();
+//    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL)
+    private List<PricePerSize> pricePerSizes = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "menu_and_tag", joinColumns = @JoinColumn(name = "menu_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    private List<Tag> tagList = new ArrayList<>();
 
     @ElementCollection
     @CollectionTable(name = "MENU_IMG_URL_LIST",
@@ -70,34 +79,32 @@ public class Menu extends BaseEntity {
         this.category = category;
     }
 
-    public void addPrice(Price price) {
-        this.pricePerSize.add(price);
-    }
-    public void addReview(Review review) {this.reviews.add(review);}
-
-    public double calculateScore() {
-        double result = 0.0;
-        if (!isReviewExist()) {
-            return result;
-        }
-        for (Review review: this.reviews) {
-            result += review.getRatings();
-        }
-        return result / this.reviews.size();
+    public static Menu from(MenuDto menuDto) {
+        return new Menu(menuDto.getKrName(), menuDto.getEnName(), menuDto.getCalories(), menuDto.getDescription(), menuDto.getCategory());
     }
 
-    private boolean isReviewExist() {
-        if (this.reviews.size() > 0) {
-            return true;
-        }
-        return false;
+    public void addPricePerSize(PricePerSize pricePerSize) {
+        this.pricePerSizes.add(pricePerSize);
+    }
+
+    public void addReview(Review review) {
+        this.reviews.add(review);
+        review.registerMenu(this);
+        calculateScore(review.getRatings());
+    }
+
+    public double calculateScore(double newRating) {
+        double total = (totalRatings * (reviews.size() - 1)) + newRating;
+        totalRatings = total / reviews.size();
+
+        return totalRatings;
     }
 
     public void registerCafe(Cafe cafe) {
         this.cafe = cafe;
     }
 
-    public void addTag(String tag) {
+    public void addTag(Tag tag) {
         this.tagList.add(tag);
     }
 
@@ -105,51 +112,56 @@ public class Menu extends BaseEntity {
         this.description = newDescription;
     }
 
-    private boolean isDeleted() {
-        return this.deleted;
-    }
-
     public void deleteMenu() {
         this.deleted = true;
     }
 
-    public Cafe getCafe() {
-        return cafe;
+    //equals / hashcode
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Menu)) return false;
+        if (!super.equals(o)) return false;
+        Menu menu = (Menu) o;
+        return calories == menu.calories &&
+                Double.compare(menu.totalRatings, totalRatings) == 0 &&
+                deleted == menu.deleted &&
+                Objects.equals(id, menu.id) &&
+                Objects.equals(krName, menu.krName) &&
+                Objects.equals(enName, menu.enName) &&
+                Objects.equals(category, menu.category) &&
+                Objects.equals(description, menu.description) &&
+                Objects.equals(cafe, menu.cafe) &&
+                Objects.equals(reviews, menu.reviews) &&
+                Objects.equals(pricePerSizes, menu.pricePerSizes) &&
+                Objects.equals(tagList, menu.tagList) &&
+                Objects.equals(imageURLs, menu.imageURLs);
     }
 
-    public String getDescription() {
-        return description;
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), id, krName, enName, calories, category, description, totalRatings, cafe, reviews, pricePerSizes, tagList, imageURLs, deleted);
     }
 
-    public List<Review> getReviews() {
-        return reviews;
+
+    //toString
+    @Override
+    public String toString() {
+        return "Menu{" +
+                "id=" + id +
+                ", krName='" + krName + '\'' +
+                ", enName='" + enName + '\'' +
+                ", calories=" + calories +
+                ", category='" + category + '\'' +
+                ", description='" + description + '\'' +
+                ", totalRatings=" + totalRatings +
+                ", cafe_id=" + cafe.getId() +
+                ", reviews_size=" + reviews.size() +
+                ", pricePerSizes=" + pricePerSizes +
+                ", tagList_size=" + tagList.size() +
+                ", imageURLs=" + imageURLs +
+                ", deleted=" + deleted +
+                '}';
     }
 
-    public List<Price> getPricePerSize() {
-        return pricePerSize;
-    }
-
-    public double getTotalRatings() {
-        return this.calculateScore();
-    }
-
-    public String getKrName() {
-        return krName;
-    }
-
-    public String getEnName() {
-        return enName;
-    }
-
-    public int getCalories() {
-        return calories;
-    }
-
-    public List<String> getTagList() {
-        return tagList;
-    }
-
-    public List<String> getImageURLs() {
-        return imageURLs;
-    }
 }

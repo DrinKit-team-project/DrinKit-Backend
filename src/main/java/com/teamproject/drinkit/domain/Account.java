@@ -1,11 +1,17 @@
 package com.teamproject.drinkit.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.teamproject.drinkit.dto.ReviewDto;
+import com.teamproject.drinkit.exception.AuthorizationException;
 import com.teamproject.drinkit.security.AccountDetails;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -13,11 +19,11 @@ import java.util.Objects;
 @NoArgsConstructor
 @Table(name = "ACCOUNT")
 public class Account extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name="ACCOUNT_USERNAME")
+    @JsonProperty("nickname")
     private String username;
 
     @Column(name = "ACCOUNT_LOGINID")
@@ -40,7 +46,12 @@ public class Account extends BaseEntity {
     @Column(name = "ACCOUNT_SOCIAL_PROFILEPIC")
     private String profileHref;
 
-    private Account(Long id, String username, String userId, String password, UserRole userRole, String socialId, SocialProviders socialProvider, String profileHref){
+    @JsonIgnore
+    @Column(name = "ACCOUNT_REVIEWS")
+    @OneToMany(mappedBy = "writer")
+    private List<Review> reviews = new ArrayList<>();
+
+    public Account(Long id, String username, String userId, String password, UserRole userRole, String socialId, SocialProviders socialProvider, String profileHref){
         this.id = id;
         this.username = username;
         this.userId = userId;
@@ -53,6 +64,23 @@ public class Account extends BaseEntity {
 
     public Account(String username, String userId, String password, UserRole userRole, String socialId, SocialProviders socialProvider, String profileHref){
         this(0L, username, userId, password, userRole, socialId, socialProvider, profileHref);
+    }
+
+    public void writeReview(Review review){
+        reviews.add(review);
+        review.registerWriter(this);
+    }
+
+    public Account editNickname(Account logined, String newNickname){
+        if(!isSameAccount(logined)){
+            throw new AuthorizationException("로그인 유저와 글쓴이가 다릅니다.");
+        }
+        this.username = newNickname;
+        return this;
+    }
+
+    private boolean isSameAccount(Account logined) {
+        return this.equals(logined);
     }
 
     @Override
@@ -68,4 +96,6 @@ public class Account extends BaseEntity {
     public int hashCode() {
         return Objects.hash(super.hashCode(), id);
     }
+
+
 }
