@@ -41,10 +41,10 @@
                     {{#tagList}}
                     <div class="exist-menu-list-content-info-tags">{{tagName}}</div>
                     {{/tagList}}
-                    <div class="tag-text-area">
-                        <input class="add-text-area tag-text" id="tag" type="text" placeholder="tag name">
-                        <button class="addTagBtn" type="submit" value="/admin/menus/{id}">add tag</button>
-                    </div>
+                    <form class="tag-text-area">
+                        <input class="add-text-area tag-text" id="tagName" type="text" placeholder="tag name">
+                        <button class="addTagBtn" type="submit" value="/admin/menus/{{id}}">add tag</button>
+                    </form>
                 </div>
                 {{/menus}}
             </div>

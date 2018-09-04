@@ -2,6 +2,7 @@
 
 $(".cafe-register-button").on("click", registerCafe);
 $(".menu-register-button").on("click", registerMenu);
+$(".addTagBtn").on("click", addTag);
 
 function registerCafe(e) {
     e.preventDefault();
@@ -53,5 +54,30 @@ function registerMenu(e) {
     }).fail(function addMenuFail(data) {
         console.log("fail..");
         alert("add menu fail....");
+    })
+}
+
+function addTag(e) {
+    e.preventDefault();
+    console.log("add Tag in.");
+
+    var url = $(e.target).val();
+    console.log(url);
+
+    var tagName = $("#tagName").val();
+    console.log(tagName);
+
+    $.ajax({
+        type: 'post',
+        url: url,
+        contentType: 'text/html; charset=utf-8',
+        data: tagName,
+        dataType: 'json'}).done(function addTagSuccess(data) {
+        console.log("success.");
+        window.location.reload();
+    }).fail(function addTagFail(data) {
+        console.log("fail..");
+        console.log(data);
+        // alert("add tag fail....");
     })
 }

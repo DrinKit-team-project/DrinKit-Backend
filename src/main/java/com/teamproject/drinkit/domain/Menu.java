@@ -1,7 +1,7 @@
 package com.teamproject.drinkit.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teamproject.drinkit.dto.MenuDto;
+import lombok.Getter;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Getter
 public class Menu extends BaseEntity {
     @Id
     @GeneratedValue
@@ -40,7 +41,6 @@ public class Menu extends BaseEntity {
     @Embedded
     private List<PricePerSize> pricePerSizes = new ArrayList<>();
 
-    @Embedded
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "menu_and_tag", joinColumns = @JoinColumn(name = "menu_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
@@ -114,47 +114,8 @@ public class Menu extends BaseEntity {
         this.deleted = true;
     }
 
-    //getter
-    public Long getId() {return id;}
-    public Cafe getCafe() {
-        return cafe;
-    }
-    public String getCategory() {
-        return category;
-    }
-    public String getDescription() {
-        return description;
-    }
-    public List<Review> getReviews() {
-        return reviews;
-    }
-    public List<PricePerSize> getPricePerSizes() {
-        return pricePerSizes;
-    }
-    public double getTotalRatings() { return totalRatings; }
-    public String getKrName() {
-        return krName;
-    }
-    public String getEnName() {
-        return enName;
-    }
-    public int getCalories() {
-        return calories;
-    }
-    public List<Tag> getTagList() {
-        return tagList;
-    }
-    public List<String> getImageURLs() {
-        return imageURLs;
-    }
-    private boolean isDeleted() {
-        return this.deleted;
-    }
-    public int getReviewCount() {
-        return reviewCount;
-    }
-
     //equals / hashcode
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -163,6 +124,7 @@ public class Menu extends BaseEntity {
         Menu menu = (Menu) o;
         return calories == menu.calories &&
                 Double.compare(menu.totalRatings, totalRatings) == 0 &&
+                reviewCount == menu.reviewCount &&
                 deleted == menu.deleted &&
                 Objects.equals(id, menu.id) &&
                 Objects.equals(krName, menu.krName) &&
@@ -178,9 +140,9 @@ public class Menu extends BaseEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), id, krName, enName, calories, category, description, totalRatings, cafe, reviews, pricePerSizes, tagList, imageURLs, deleted);
-    }
 
+        return Objects.hash(super.hashCode(), id, krName, enName, calories, category, description, totalRatings, cafe, reviews, reviewCount, pricePerSizes, tagList, imageURLs, deleted);
+    }
 
     //toString
     @Override
@@ -193,13 +155,13 @@ public class Menu extends BaseEntity {
                 ", category='" + category + '\'' +
                 ", description='" + description + '\'' +
                 ", totalRatings=" + totalRatings +
-                ", cafe_id=" + cafe.getId() +
-                ", reviews_size=" + reviews.size() +
+                ", cafe=" + cafe +
+                ", reviews=" + reviews +
+                ", reviewCount=" + reviewCount +
                 ", pricePerSizes=" + pricePerSizes +
-                ", tagList_size=" + tagList.size() +
+                ", tagList=" + tagList +
                 ", imageURLs=" + imageURLs +
                 ", deleted=" + deleted +
                 '}';
     }
-
 }

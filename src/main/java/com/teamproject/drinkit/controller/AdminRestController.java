@@ -45,4 +45,10 @@ public class AdminRestController {
         return adminService.createMenu(krName, enName, calories, category, description, cafeName);
     }
 
+    @PostMapping("/menus/{menuId}")
+    public Menu addTag(@PathVariable Long menuId, @RequestBody String tagName) {
+        log.debug("admin rest addtag in.");
+        return adminService.addTag(menuId, tagName);
+    }
+
 }

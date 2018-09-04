@@ -1,9 +1,6 @@
 package com.teamproject.drinkit.service;
 
-import com.teamproject.drinkit.domain.Cafe;
-import com.teamproject.drinkit.domain.CafeRepository;
-import com.teamproject.drinkit.domain.Menu;
-import com.teamproject.drinkit.domain.MenuRepository;
+import com.teamproject.drinkit.domain.*;
 import com.teamproject.drinkit.exception.NoSuchCategoryException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +18,9 @@ public class AdminService {
 
     @Autowired
     private MenuRepository menuRepository;
+
+    @Autowired
+    private TagRepository tagRepository;
 
     public Cafe createCafe(String cafeName, String url, String categories) {
         log.debug("createCafe service in.");
@@ -70,4 +70,17 @@ public class AdminService {
         return newMenu;
     }
 
+    public Menu addTag(Long menuId, String tagName) {
+        Menu targetMenu = menuRepository.getOne(menuId);
+        Tag newTag = makeTag(tagName);
+        tagRepository.save(newTag);
+        targetMenu.addTag(newTag);
+        newTag.registerMenu(targetMenu);
+        return targetMenu;
+    }
+
+    private Tag makeTag(String tagName) {
+        Tag newTag = new Tag(tagName);
+        return tagRepository.save(newTag);
+    }
 }
