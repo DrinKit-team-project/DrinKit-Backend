@@ -51,6 +51,9 @@ public class Account extends BaseEntity {
     @OneToMany(mappedBy = "writer")
     private List<Review> reviews = new ArrayList<>();
 
+
+//    private List<Menu> favMenus = new ArrayList<>();
+
     public Account(Long id, String username, String userId, String password, UserRole userRole, String socialId, SocialProviders socialProvider, String profileHref){
         this.id = id;
         this.username = username;
