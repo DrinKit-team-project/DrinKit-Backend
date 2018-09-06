@@ -17,4 +17,6 @@ public interface MenuRepository extends JpaRepository<Menu, Long> {
     @Query("SELECT m FROM Menu m ORDER BY m.reviewCount DESC")
     List<Menu> findTopReviewed(Pageable pageable);
 
+    Optional<Iterable<Menu>> findByAccountsContaining(Account account);
+
 }

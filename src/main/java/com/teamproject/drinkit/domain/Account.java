@@ -10,9 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Getter
 @Entity
@@ -51,6 +49,16 @@ public class Account extends BaseEntity {
     @OneToMany(mappedBy = "writer")
     private List<Review> reviews = new ArrayList<>();
 
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(name = "account_menu",
+        joinColumns = @JoinColumn(name = "account_id"),
+            inverseJoinColumns = @JoinColumn(name = "menu_id")
+    )
+    private Set<Menu> favoriteMenus = new HashSet<>();
+
     public Account(Long id, String username, String userId, String password, UserRole userRole, String socialId, SocialProviders socialProvider, String profileHref){
         this.id = id;
         this.username = username;
@@ -79,6 +87,18 @@ public class Account extends BaseEntity {
         return this;
     }
 
+    public Account addFavoriteMenu(Menu favoriteMenu) {
+        this.favoriteMenus.add(favoriteMenu);
+        favoriteMenu.registerAccount(this);
+        return this;
+    }
+
+    public Account removeFavoriteMenu(Menu favoriteMenu) {
+        this.favoriteMenus.remove(favoriteMenu);
+        favoriteMenu.removeAccount(this);
+        return this;
+    }
+
     private boolean isSameAccount(Account logined) {
         return this.equals(logined);
     }
@@ -96,6 +116,5 @@ public class Account extends BaseEntity {
     public int hashCode() {
         return Objects.hash(super.hashCode(), id);
     }
-
 
 }

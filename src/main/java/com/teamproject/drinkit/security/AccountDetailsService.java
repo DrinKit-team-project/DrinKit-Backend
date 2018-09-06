@@ -1,10 +1,9 @@
 package com.teamproject.drinkit.security;
 
-import com.teamproject.drinkit.domain.Account;
-import com.teamproject.drinkit.domain.AccountRepository;
-import com.teamproject.drinkit.domain.UserRole;
+import com.teamproject.drinkit.domain.*;
 import com.teamproject.drinkit.exception.NoLoginedUserException;
 import com.teamproject.drinkit.exception.NoSuchAccountException;
+import com.teamproject.drinkit.exception.NoSuchMenuException;
 import com.teamproject.drinkit.security.dto.SocialLoginDto;
 import com.teamproject.drinkit.security.jwt.JwtDecoder;
 import com.teamproject.drinkit.security.jwt.JwtExtractor;
@@ -30,6 +29,9 @@ public class AccountDetailsService implements UserDetailsService {
     private SocialFetchServiceFactory socialFetchServiceFactory;
 
     @Autowired
+    private MenuRepository menuRepository;
+
+    @Autowired
     private JwtDecoder decoder;
 
     public Account search(SocialLoginDto dto){
@@ -40,6 +42,23 @@ public class AccountDetailsService implements UserDetailsService {
     public Account editNickname(String header, String newNickname){
         Account logined = decoder.findLoginedUser(header);
         return accountRepository.save(logined.editNickname(logined, newNickname));
+    }
+
+    public Account addFavoriteMenu(Long id, Long menuId) {
+        Account logined = accountRepository.findById(id).orElseThrow(() -> new NoSuchAccountException("아이디에 해당하는 계정이 존재하지 않습니다."));
+        Menu favoriteMenu = menuRepository.findById(menuId).orElseThrow(() -> new NoSuchMenuException("해당하는 메뉴가 없습니다."));
+        return accountRepository.save(logined.addFavoriteMenu(favoriteMenu));
+    }
+
+    public Account removeFavoriteMenu(Long id, Long menuId) {
+        Account logined = accountRepository.findById(id).orElseThrow(() -> new NoSuchAccountException("아이디에 해당하는 계정이 존재하지 않습니다."));
+        Menu favoriteMenu = menuRepository.findById(menuId).orElseThrow(() -> new NoSuchMenuException("해당하는 메뉴가 없습니다."));
+        return accountRepository.save(logined.removeFavoriteMenu(favoriteMenu));
+    }
+
+    public Iterable<Menu> findFavoriteMenus(Long id) {
+        Account logined = accountRepository.findById(id).orElseThrow(() -> new NoSuchAccountException("아이디에 해당하는 계정이 존재하지 않습니다."));
+        return menuRepository.findByAccountsContaining(logined).orElseThrow(() -> new NoSuchMenuException("사용자에 등록된 메뉴들이 존재하지 않습니다."));
     }
 
     @Override
