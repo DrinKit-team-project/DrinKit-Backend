@@ -6,9 +6,7 @@ import lombok.Getter;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Getter
 @Entity
@@ -57,6 +55,10 @@ public class Menu extends BaseEntity {
 
     private boolean deleted = false;
 
+    @JsonIgnore
+    @ManyToMany(mappedBy = "favoriteMenus")
+    private Set<Account> accounts = new HashSet<>();
+
     public Menu() {}
     public Menu(String krName, String enName, String description) {
         this.krName = krName;
@@ -91,6 +93,14 @@ public class Menu extends BaseEntity {
         this.reviews.add(review);
         review.registerMenu(this);
         calculateScore(review.getRatings());
+    }
+
+    public void registerAccount(Account logined){
+        this.accounts.add(logined);
+    }
+
+    public void removeAccount(Account logined){
+        this.accounts.remove(logined);
     }
 
     public double calculateScore(double newRating) {
