@@ -19,7 +19,6 @@ import java.util.Objects;
 public class Review extends BaseEntity {
     private static final Logger log = LoggerFactory.getLogger(Review.class);
 
-
     @Id @GeneratedValue
     private Long id;
 
@@ -80,10 +79,6 @@ public class Review extends BaseEntity {
 
     public void registerWriter(Account writer) {
         this.writer = writer;
-    }
-
-    public void registerFileUploadInfo(UploadFileResponse uploadFileResponse){
-        this.uploadFileResponse = uploadFileResponse;
     }
 
     public Review edit(Account logined, ReviewDto target){
