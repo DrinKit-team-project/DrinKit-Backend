@@ -11,6 +11,10 @@ public class FeaturedMenus {
         this.menuList = new ArrayList<>();
     }
 
+    public FeaturedMenus(List<Menu> menuList){
+        this.menuList = menuList;
+    }
+
     public List<Menu> addMenu(Menu menu) {
         this.menuList.add(menu);
         return menuList;

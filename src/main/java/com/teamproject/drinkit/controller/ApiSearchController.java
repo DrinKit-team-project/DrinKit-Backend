@@ -5,6 +5,7 @@ import com.teamproject.drinkit.domain.Menu;
 import com.teamproject.drinkit.domain.MenuRepository;
 import com.teamproject.drinkit.domain.Tag;
 import com.teamproject.drinkit.exception.NoSuchMenuException;
+import com.teamproject.drinkit.service.MenuService;
 import com.teamproject.drinkit.service.SearchService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,16 +18,13 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/search")
+@RequestMapping("/api/search")
 public class ApiSearchController {
 
     private static final Logger log = LoggerFactory.getLogger(ApiSearchController.class);
 
     @Resource(name="searchService")
     private SearchService searchService;
-
-    @Autowired
-    private MenuRepository menuRepository;
 
     @PostMapping("")
     public Iterable<Menu> searchMenu(@Valid @RequestBody String searchKeyWord) throws UnsupportedOperationException, NoSuchMenuException{
@@ -38,28 +36,21 @@ public class ApiSearchController {
         }catch (NoSuchMenuException e) {
             throw new NoSuchMenuException("그런거 없 뜸.");
         }
-        log.debug("!!! : " + menus.toString());
-
         return menus;
     }
 
     @GetMapping("/newMenus")
     public List<Menu> searchNewMenu() {
-        log.debug("search new menu in.");
-        FeaturedMenus newMenus = searchService.findNewMenus();
-        return newMenus.getMenus();
+        return searchService.findNewMenus();
     }
 
     @GetMapping("/topReviewed")
     public List<Menu> searchTopReviewedMenu() {
-        log.debug("search top reviewed menu in.");
-        FeaturedMenus topMenus = searchService.findTopReviewedMenus();
-        return topMenus.getMenus();
+        return searchService.findTopReviewedMenus();
     }
 
     @GetMapping("/suggestedTags")
     public List<Tag> getSuggestedTags() {
-        log.debug("get suggested tags in.");
         return searchService.getSuggestedTags();
     }
 

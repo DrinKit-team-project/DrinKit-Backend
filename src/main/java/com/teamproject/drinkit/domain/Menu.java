@@ -36,10 +36,9 @@ public class Menu extends BaseEntity {
     @JsonIgnore
     private List<Review> reviews = new ArrayList<>();
 
-    private int reviewCount = 0;
+    private int reviewCount;
 
     @Embedded
-//    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL)
     private List<PricePerSize> pricePerSizes = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -92,7 +91,8 @@ public class Menu extends BaseEntity {
     public void addReview(Review review) {
         this.reviews.add(review);
         review.registerMenu(this);
-        calculateScore(review.getRatings());
+        this.totalRatings = calculateScore(review.getRatings());
+        this.reviewCount +=1;
     }
 
     public void registerAccount(Account logined){
@@ -103,9 +103,9 @@ public class Menu extends BaseEntity {
         this.accounts.remove(logined);
     }
 
-    public double calculateScore(double newRating) {
+    private double calculateScore(double newRating) {
         double total = (totalRatings * (reviews.size() - 1)) + newRating;
-        totalRatings = total / reviews.size();
+        totalRatings = total / this.reviews.size();
 
         return totalRatings;
     }
