@@ -13,10 +13,15 @@ public interface MenuRepository extends JpaRepository<Menu, Long> {
     Optional<Menu> findByCafeIdAndId(Long cafeId, Long id);
     Optional<Iterable<Menu>> findByTagListContaining(Tag tag);
     Optional<List<Menu>> findByCreatedDateBetweenOrderByCreatedDateDesc(LocalDateTime start, LocalDateTime end);
+    Optional<List<Menu>> findTop3ByCreatedDateBetweenOrderByCreatedDateDesc(LocalDateTime start, LocalDateTime end);
 
     @Query("SELECT m FROM Menu m ORDER BY m.reviewCount DESC")
-    List<Menu> findTopReviewed(Pageable pageable);
+    List<Menu> findTopReviewed(List<Menu> menuList);
+
+
+    List<Menu> findTop3ByOrderByReviewCountDesc();
 
     Optional<Iterable<Menu>> findByAccountsContaining(Account account);
 
 }
+
