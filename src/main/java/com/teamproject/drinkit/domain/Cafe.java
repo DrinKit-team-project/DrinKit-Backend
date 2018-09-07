@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 public class Cafe extends BaseEntity {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column

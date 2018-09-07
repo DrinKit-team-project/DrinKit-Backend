@@ -15,7 +15,7 @@ import java.util.*;
 @Entity
 @Table(name = "ACCOUNT")
 public class Account extends BaseEntity {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name="ACCOUNT_USERNAME")

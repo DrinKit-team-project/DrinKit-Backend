@@ -11,8 +11,7 @@ import java.util.Objects;
 @Embeddable
 @Entity
 public class Tag {
-    @Id
-    @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true)

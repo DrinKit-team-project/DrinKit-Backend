@@ -11,7 +11,7 @@ import java.util.*;
 @Entity
 public class Menu extends BaseEntity {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String krName;
