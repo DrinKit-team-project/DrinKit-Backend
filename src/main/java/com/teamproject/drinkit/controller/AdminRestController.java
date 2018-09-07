@@ -44,8 +44,9 @@ public class AdminRestController {
         String cafeName = menuInfoList[5];
         String tagListString = menuInfoList[6];
         String pricePerSizeString = menuInfoList[7];
+        String imageUrls = menuInfoList[8];
 
-        Menu menu = adminService.createMenu(krName, enName, calories, category, description, cafeName, tagListString, pricePerSizeString);
+        Menu menu = adminService.createMenu(krName, enName, calories, category, description, cafeName, tagListString, pricePerSizeString, imageUrls);
         MenuDto menuDto = MenuDto.from(menu);
         return menuDto;
     }

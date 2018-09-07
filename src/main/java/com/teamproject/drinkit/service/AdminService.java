@@ -53,9 +53,10 @@ public class AdminService {
         return categories.split("/");
     }
 
-    public Menu createMenu(String krName, String enName, int calories, String category, String description, String cafeName, String tagListString, String pricePerSizeString) {
+    public Menu createMenu(String krName, String enName, int calories, String category, String description, String cafeName, String tagListString, String pricePerSizeString, String imageUrls) {
         Menu newMenu = new Menu(krName, enName, calories, description, category);
         addTag(newMenu, tagListString);
+        addImgUrls(newMenu, imageUrls);
         addPricePerSize(newMenu, pricePerSizeString);
         menuRepository.save(newMenu);
         Cafe targetCafe = cafeRepository.findByName(cafeName);
@@ -102,5 +103,13 @@ public class AdminService {
             menu.addPricePerSize(newPricePerSize);
         }
         return MenuDto.from(menu);
+    }
+
+    private Menu addImgUrls(Menu menu, String imageUrls) {
+        String[] imageUrlList = imageUrls.split(",");
+        for (String imageUrl : imageUrlList) {
+            menu.addImageUrl(imageUrl);
+        }
+        return menu;
     }
 }

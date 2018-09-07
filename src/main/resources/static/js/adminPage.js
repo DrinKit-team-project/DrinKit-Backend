@@ -40,11 +40,12 @@ function registerMenu(e) {
     var category = $("#menuCategory").val();
     var description = $("#menuDescription").val();
     var cafeName = $("#parent-cafe").val();
-
     var tagList = $("#menuAddTag").val();
     var pricePerSize = $("#menuPricePerSize").val();
+    var imageUrls = $("#menuImageUrls").val();
+    console.log(imageUrls);
 
-    var menuInfo = krName + "&" + enName + "&" + calories + "&" + category + "&" +description + "&" + cafeName + "&" + tagList + "&" + pricePerSize;
+    var menuInfo = krName + "&" + enName + "&" + calories + "&" + category + "&" +description + "&" + cafeName + "&" + tagList + "&" + pricePerSize + "&" + imageUrls;
 
     $.ajax({
         type: 'post',

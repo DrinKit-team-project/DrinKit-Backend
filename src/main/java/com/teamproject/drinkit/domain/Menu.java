@@ -45,9 +45,9 @@ public class Menu extends BaseEntity {
     private List<Tag> tagList = new ArrayList<>();
 
     @ElementCollection
-    @CollectionTable(name = "MENU_IMG_URL_LIST",
-            joinColumns = @JoinColumn(name = "MENU_ID", foreignKey = @ForeignKey(name = "MENU_ID")))
-    @Column(name = "MENU_IMG_URL")
+//    @CollectionTable(name = "MENU_IMG_URL_LIST",
+//            joinColumns = @JoinColumn(name = "MENU_ID", foreignKey = @ForeignKey(name = "MENU_ID")))
+//    @Column(name = "MENU_IMG_URL")
     private List<String> imageURLs = new ArrayList<>();
 
     private boolean deleted = false;
@@ -87,6 +87,10 @@ public class Menu extends BaseEntity {
         calculateScore(review.getRatings());
         reviewCount++;
         review.registerReview(this);
+    }
+
+    public void addImageUrl(String imageUrl) {
+        this.imageURLs.add(imageUrl);
     }
 
     public double calculateScore(double newRating) {

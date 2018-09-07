@@ -28,6 +28,7 @@
                 <input class="add-text-area" id="menuDescription" type="text" placeholder="menu description">
                 <input class="add-text-area" id="menuAddTag" type="text" placeholder="menu Add Tags (ex) delicious/cold/bittersweet">
                 <input class="add-text-area" id="menuPricePerSize" type="text" placeholder="menu Price per size (ex) small:3500/tall:4000/large:5000">
+                <input class="add-text-area" id="menuImageUrls" type="text" placeholder="menu Image URLs. Use ',' to devide urls. (ex) www.test.com,www.test2.com">
                 <button class="registerButton menu-register-button" type="submit" value="/admin/menus">register</button>
             </form>
 
@@ -47,6 +48,9 @@
                     {{#pricePerSizes}}
                     <div class="exist-menu-list-content-info-pricePerSizes">{{size}} : {{cost}}</div>
                     {{/pricePerSizes}}
+                    {{#imageURLs}}
+                    <div class="exist-menu-list-content-info-imageURLS">{{this}}</div>
+                    {{/imageURLs}}
                 </div>
                 {{/menus}}
             </div>
