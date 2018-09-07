@@ -2,6 +2,7 @@ package com.teamproject.drinkit.controller;
 
 import com.teamproject.drinkit.domain.Cafe;
 import com.teamproject.drinkit.domain.Menu;
+import com.teamproject.drinkit.dto.MenuDto;
 import com.teamproject.drinkit.service.AdminService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +33,7 @@ public class AdminRestController {
     }
 
     @PostMapping("/menus")
-    public Menu createMenu(@RequestBody String menuTotalInfo) {
+    public MenuDto createMenu(@RequestBody String menuTotalInfo) {
         log.debug("admin rest create menu in.");
         String[] menuInfoList = menuTotalInfo.split("&");
         String krName = menuInfoList[0];
@@ -41,14 +42,18 @@ public class AdminRestController {
         String category = menuInfoList[3];
         String description = menuInfoList[4];
         String cafeName = menuInfoList[5];
+        String tagListString = menuInfoList[6];
+        String pricePerSizeString = menuInfoList[7];
 
-        return adminService.createMenu(krName, enName, calories, category, description, cafeName);
+        Menu menu = adminService.createMenu(krName, enName, calories, category, description, cafeName, tagListString, pricePerSizeString);
+        MenuDto menuDto = MenuDto.from(menu);
+        return menuDto;
     }
 
-    @PostMapping("/menus/{menuId}")
-    public Menu addTag(@PathVariable Long menuId, @RequestBody String tagName) {
-        log.debug("admin rest addtag in.");
-        return adminService.addTag(menuId, tagName);
-    }
+//    @PostMapping("/menus/{menuId}")
+//    public Menu addTag(@PathVariable Long menuId, @RequestBody String tagName) {
+//        log.debug("admin rest addtag in.");
+//        return adminService.addTag(menuId, tagName);
+//    }
 
 }

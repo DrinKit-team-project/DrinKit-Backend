@@ -41,7 +41,10 @@ function registerMenu(e) {
     var description = $("#menuDescription").val();
     var cafeName = $("#parent-cafe").val();
 
-    var menuInfo = krName + "&" + enName + "&" + calories + "&" + category + "&" +description + "&" + cafeName;
+    var tagList = $("#menuAddTag").val();
+    var pricePerSize = $("#menuPricePerSize").val();
+
+    var menuInfo = krName + "&" + enName + "&" + calories + "&" + category + "&" +description + "&" + cafeName + "&" + tagList + "&" + pricePerSize;
 
     $.ajax({
         type: 'post',

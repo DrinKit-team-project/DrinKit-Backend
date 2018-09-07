@@ -1,5 +1,6 @@
 package com.teamproject.drinkit.dto;
 
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.teamproject.drinkit.domain.Menu;
 import com.teamproject.drinkit.domain.PricePerSize;
 import com.teamproject.drinkit.domain.Review;
@@ -19,7 +20,8 @@ public class MenuDto {
     private String category;
 
     private List<Review> reviews = new ArrayList<>();
-    private List<PricePerSize> pricePerSizePerSize = new ArrayList<>();
+
+    private List<PricePerSize> pricePerSize = new ArrayList<>();
     private List<Tag> tagList = new ArrayList<>();
     private List<String> imageURLs = new ArrayList<>();
 
@@ -32,9 +34,20 @@ public class MenuDto {
         this.category = category;
     }
 
+    private MenuDto(String krName, String enName, int calories, String description, double totalRating, String category, List<Tag> tagList, List<PricePerSize> pricePerSize) {
+        this.krName = krName;
+        this.enName = enName;
+        this.calories = calories;
+        this.description = description;
+        this.totalRating = totalRating;
+        this.category = category;
+        this.tagList = tagList;
+        this.pricePerSize = pricePerSize;
+    }
+
     //for menuDto
     public static MenuDto from(Menu menu) {
-        return new MenuDto(menu.getKrName(), menu.getEnName(), menu.getCalories(), menu.getDescription(), menu.getTotalRatings(), menu.getCategory());
+        return new MenuDto(menu.getKrName(), menu.getEnName(), menu.getCalories(), menu.getDescription(), menu.getTotalRatings(), menu.getCategory(), menu.getTagList(), menu.getPricePerSizes());
     }
     public MenuDto copyReviews(Menu menu) {
         for (Review review : menu.getReviews()) {
@@ -44,7 +57,7 @@ public class MenuDto {
     }
     public MenuDto copyPricePerSize(Menu menu) {
         for (PricePerSize pricePerSize : menu.getPricePerSizes()) {
-            this.pricePerSizePerSize.add(pricePerSize);
+            this.pricePerSize.add(pricePerSize);
         }
         return this;
     }
@@ -59,5 +72,21 @@ public class MenuDto {
             this.imageURLs.add(url);
         }
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "MenuDto{" +
+                "krName='" + krName + '\'' +
+                ", enName='" + enName + '\'' +
+                ", calories=" + calories +
+                ", description='" + description + '\'' +
+                ", totalRating=" + totalRating +
+                ", category='" + category + '\'' +
+                ", reviews=" + reviews +
+                ", pricePerSize=" + pricePerSize.toString() +
+                ", tagList=" + tagList +
+                ", imageURLs=" + imageURLs +
+                '}';
     }
 }

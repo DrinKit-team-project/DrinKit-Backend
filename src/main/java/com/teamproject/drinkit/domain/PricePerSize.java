@@ -28,4 +28,12 @@ public class PricePerSize {
     public int getCost() {
         return cost;
     }
+
+    @Override
+    public String toString() {
+        return "PricePerSize{" +
+                "size='" + size + '\'' +
+                ", cost=" + cost +
+                '}';
+    }
 }

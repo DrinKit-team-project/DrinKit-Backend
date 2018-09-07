@@ -1,12 +1,15 @@
 package com.teamproject.drinkit.service;
 
 import com.teamproject.drinkit.domain.*;
+import com.teamproject.drinkit.dto.MenuDto;
 import com.teamproject.drinkit.exception.NoSuchCategoryException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.InputMismatchException;
 
 @Service
 @Transactional
@@ -50,8 +53,10 @@ public class AdminService {
         return categories.split("/");
     }
 
-    public Menu createMenu(String krName, String enName, int calories, String category, String description, String cafeName) {
+    public Menu createMenu(String krName, String enName, int calories, String category, String description, String cafeName, String tagListString, String pricePerSizeString) {
         Menu newMenu = new Menu(krName, enName, calories, description, category);
+        addTag(newMenu, tagListString);
+        addPricePerSize(newMenu, pricePerSizeString);
         menuRepository.save(newMenu);
         Cafe targetCafe = cafeRepository.findByName(cafeName);
         checkCategory(targetCafe, category);
@@ -70,17 +75,32 @@ public class AdminService {
         return newMenu;
     }
 
-    public Menu addTag(Long menuId, String tagName) {
-        Menu targetMenu = menuRepository.getOne(menuId);
-        Tag newTag = makeTag(tagName);
-        tagRepository.save(newTag);
-        targetMenu.addTag(newTag);
-        newTag.registerMenu(targetMenu);
-        return targetMenu;
+    private Tag checkTagRepo(String newTagName) {
+        return tagRepository.findByTagName(newTagName).orElseGet(() -> new Tag(newTagName));
     }
 
-    private Tag makeTag(String tagName) {
-        Tag newTag = new Tag(tagName);
-        return tagRepository.save(newTag);
+    private Menu addTag(Menu menu, String tagNameList) {
+        String[] tags = tagNameList.split("/");
+        for (String tagName : tags) {
+            Tag newTag = checkTagRepo(tagName);
+            tagRepository.save(newTag);
+            menu.addTag(newTag);
+        }
+        return menu;
+    }
+
+    private MenuDto addPricePerSize(Menu menu, String pricePerSizeString) {
+        String[] pricePerSizeUnits = pricePerSizeString.split("/");
+        for (String pricePerSizeUnit: pricePerSizeUnits) {
+            String[] sizeAndPrice;
+            try {
+                sizeAndPrice = pricePerSizeUnit.split(":");
+            }catch (ArrayIndexOutOfBoundsException e) {
+                throw new InputMismatchException();
+            }
+            PricePerSize newPricePerSize = new PricePerSize(sizeAndPrice[0], Integer.parseInt(sizeAndPrice[1]));
+            menu.addPricePerSize(newPricePerSize);
+        }
+        return MenuDto.from(menu);
     }
 }

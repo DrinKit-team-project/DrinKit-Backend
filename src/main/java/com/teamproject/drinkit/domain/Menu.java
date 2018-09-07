@@ -1,7 +1,6 @@
 package com.teamproject.drinkit.domain;
 
 import com.teamproject.drinkit.dto.MenuDto;
-import lombok.Getter;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -10,10 +9,9 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Getter
 public class Menu extends BaseEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String krName;
@@ -38,7 +36,7 @@ public class Menu extends BaseEntity {
 
     private int reviewCount = 0;
 
-    @Embedded
+    @ElementCollection
     private List<PricePerSize> pricePerSizes = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -114,8 +112,65 @@ public class Menu extends BaseEntity {
         this.deleted = true;
     }
 
-    //equals / hashcode
+    //getter
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getKrName() {
+        return krName;
+    }
+
+    public String getEnName() {
+        return enName;
+    }
+
+    public int getCalories() {
+        return calories;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public double getTotalRatings() {
+        return totalRatings;
+    }
+
+    public Cafe getCafe() {
+        return cafe;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public int getReviewCount() {
+        return reviewCount;
+    }
+
+    public List<PricePerSize> getPricePerSizes() {
+        return pricePerSizes;
+    }
+
+    public List<Tag> getTagList() {
+        return tagList;
+    }
+
+    public List<String> getImageURLs() {
+        return imageURLs;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    //equals / hashcode
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

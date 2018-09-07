@@ -26,6 +26,8 @@
 
                 <input class="add-text-area" id="menuCategory" type="text" placeholder="menu category">
                 <input class="add-text-area" id="menuDescription" type="text" placeholder="menu description">
+                <input class="add-text-area" id="menuAddTag" type="text" placeholder="menu Add Tags (ex) delicious/cold/bittersweet">
+                <input class="add-text-area" id="menuPricePerSize" type="text" placeholder="menu Price per size (ex) small:3500/tall:4000/large:5000">
                 <button class="registerButton menu-register-button" type="submit" value="/admin/menus">register</button>
             </form>
 
@@ -33,18 +35,18 @@
                 <div class="exist-menu-list-title">Menu List</div>
                 {{#menus}}
                 <div class="exist-menu-list-contents">
-                    <div class="exist-menu-list-content-info">{{krName}}</div>
-                    <div class="exist-menu-list-content-info">{{enName}}</div>
+                    <div class="exist-menu-list-content-info">Long id : {{id}}</div>
+                    <div class="exist-menu-list-content-info">kr name : {{krName}}</div>
+                    <div class="exist-menu-list-content-info">en name : {{enName}}</div>
                     <div class="exist-menu-list-content-info">{{calories}} kcal</div>
-                    <div class="exist-menu-list-content-info">{{category}}</div>
-                    <div class="exist-menu-list-content-info-description">{{description}}</div>
+                    <div class="exist-menu-list-content-info">category : {{category}}</div>
+                    <div class="exist-menu-list-content-info-description">desc : {{description}}</div>
                     {{#tagList}}
                     <div class="exist-menu-list-content-info-tags">{{tagName}}</div>
                     {{/tagList}}
-                    <form class="tag-text-area">
-                        <input class="add-text-area tag-text" id="tagName" type="text" placeholder="tag name">
-                        <button class="addTagBtn" type="submit" value="/admin/menus/{{id}}">add tag</button>
-                    </form>
+                    {{#pricePerSizes}}
+                    <div class="exist-menu-list-content-info-pricePerSizes">{{size}} : {{cost}}</div>
+                    {{/pricePerSizes}}
                 </div>
                 {{/menus}}
             </div>

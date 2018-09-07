@@ -99,6 +99,18 @@
     height: 30px;
     font-size: 20px;
 }
+#menuAddTag {
+    text-align: center;
+    width: 80%;
+    height: 30px;
+    font-size: 20px;
+}
+#menuPricePerSize {
+    text-align: center;
+    width: 80%;
+    height: 30px;
+    font-size: 20px;
+}
 
 .registerButton {
     display: inline-block;
@@ -232,6 +244,18 @@
     text-align: center;
     font-size: 20px;
     background-color: #f39540;
+}
+
+.exist-menu-list-content-info-pricePerSizes {
+    margin-left: 1%;
+    margin-top: 1%;
+    border-radius: 8px;
+    display: inline-block;
+    float: left;
+    width: 15%;
+    text-align: center;
+    font-size: 20px;
+    background-color: #88d6f3;
 }
 
 .tag-text {
