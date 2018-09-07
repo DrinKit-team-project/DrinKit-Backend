@@ -18,7 +18,7 @@ import java.util.Objects;
 public class Review extends BaseEntity {
     private static final Logger log = LoggerFactory.getLogger(Review.class);
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "REVIEW_RATINGS", nullable=false)
