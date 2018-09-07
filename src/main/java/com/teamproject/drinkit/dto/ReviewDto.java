@@ -76,11 +76,6 @@ public class ReviewDto {
         this.uploadFileResponse = uploadFileResponse;
     }
 
-    public ReviewDto register(UploadFileResponse uploadFileResponse){
-        this.uploadFileResponse = uploadFileResponse;
-        return this;
-    }
-
     public static ReviewDto from(Review review){
         return new ReviewDto(review.getId(), review.getRatings(), review.getContents(), review.getWriter(), review.isDeleted(), review.getMenu(), review.getUploadFileResponse());
     }

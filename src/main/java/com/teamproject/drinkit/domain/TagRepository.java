@@ -15,4 +15,7 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
             nativeQuery = true
     )
     List<Tag> findSuggestedTags();
+
+    Optional<List<Tag>> findTop4ByOrderBySearchCountDesc();
+
 }

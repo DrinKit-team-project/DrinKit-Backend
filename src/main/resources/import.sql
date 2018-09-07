@@ -17,6 +17,10 @@ INSERT INTO tag(id, tag_name, search_count) values (1, "존맛없", 1);
 INSERT INTO tag(id, tag_name, search_count) values (2, "개꿀맛", 2);
 INSERT INTO tag(id, tag_name, search_count) values (3, "americano", 3);
 INSERT INTO tag(id, tag_name, search_count) values (4, "라떼", 4);
+INSERT INTO tag(id, tag_name, search_count) values (5, "태그", 10);
+INSERT INTO tag(id, tag_name, search_count) values (6, "태그2", 20);
+
+
 
 INSERT INTO menu_and_tag(menu_id, tag_id) values (1, 1);
 INSERT INTO menu_and_tag(menu_id, tag_id) values (1, 2);

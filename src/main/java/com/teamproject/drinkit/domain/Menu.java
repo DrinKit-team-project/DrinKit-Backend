@@ -6,9 +6,7 @@ import lombok.Getter;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 public class Menu extends BaseEntity {
@@ -37,10 +35,9 @@ public class Menu extends BaseEntity {
     @JsonIgnore
     private List<Review> reviews = new ArrayList<>();
 
-    private int reviewCount = 0;
+    private int reviewCount;
 
     @Embedded
-//    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL)
     private List<PricePerSize> pricePerSizes = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -55,6 +52,10 @@ public class Menu extends BaseEntity {
     private List<String> imageURLs = new ArrayList<>();
 
     private boolean deleted = false;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "favoriteMenus")
+    private Set<Account> accounts = new HashSet<>();
 
     public Menu() {}
     public Menu(String krName, String enName, String description) {
@@ -89,12 +90,21 @@ public class Menu extends BaseEntity {
     public void addReview(Review review) {
         this.reviews.add(review);
         review.registerMenu(this);
-        calculateScore(review.getRatings());
+        this.totalRatings = calculateScore(review.getRatings());
+        this.reviewCount +=1;
     }
 
-    public double calculateScore(double newRating) {
+    public void registerAccount(Account logined){
+        this.accounts.add(logined);
+    }
+
+    public void removeAccount(Account logined){
+        this.accounts.remove(logined);
+    }
+
+    private double calculateScore(double newRating) {
         double total = (totalRatings * (reviews.size() - 1)) + newRating;
-        totalRatings = total / reviews.size();
+        totalRatings = total / this.reviews.size();
 
         return totalRatings;
     }
