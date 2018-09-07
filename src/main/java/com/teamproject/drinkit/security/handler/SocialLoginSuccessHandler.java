@@ -1,6 +1,7 @@
 package com.teamproject.drinkit.security.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.teamproject.drinkit.security.AccountDetails;
 import com.teamproject.drinkit.security.dto.JwtDto;
 import com.teamproject.drinkit.security.jwt.JwtFactory;
@@ -35,12 +36,13 @@ public class SocialLoginSuccessHandler implements AuthenticationSuccessHandler {
 
     private JwtDto generateJwtDto(AccountDetails accountDetails) {
         String jwt = factory.generateFrom(accountDetails);
-        return new JwtDto(jwt);
+        return new JwtDto(accountDetails.getAccount().getId(), jwt);
     }
 
     private void writeResponseMessage(HttpServletResponse res, JwtDto jwtDto) throws IOException {
         res.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         res.setStatus(HttpStatus.OK.value());
+
         res.getWriter().write(objectMapper.writeValueAsString(jwtDto));
     }
 

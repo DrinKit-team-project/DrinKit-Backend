@@ -13,7 +13,6 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
-@NoArgsConstructor
 @Table(name = "ACCOUNT")
 public class Account extends BaseEntity {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -58,6 +57,7 @@ public class Account extends BaseEntity {
     )
     private Set<Menu> favoriteMenus = new HashSet<>();
 
+    public Account(){}
     public Account(Long id, String username, String userId, String password, UserRole userRole, String socialId, SocialProviders socialProvider, String profileHref){
         this.id = id;
         this.username = username;

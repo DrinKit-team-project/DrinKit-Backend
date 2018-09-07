@@ -32,9 +32,6 @@ public class SearchService {
     @Autowired
     private TagRepository tagRepository;
 
-    private List<Menu> findNewMenusByDate(LocalDateTime target) {
-        return menuRepository.findByCreatedDateBetweenOrderByCreatedDateDesc(target, LocalDateTime.now()).orElseGet(() -> new ArrayList<Menu>());
-    }
 
     public List<Menu> findNewMenus() {
         LocalDateTime oneMonthBeforeNow = LocalDateTime.now().minusMonths(1);       //현재로 부터 1달 전 까지의 메뉴를 구하기 위함.
