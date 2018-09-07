@@ -7,10 +7,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.test.context.TestPropertySource;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
+@TestPropertySource(locations = "classpath:/test.properties")
 public class FacebookInfoFetchServiceImpTest {
     private FacebookInfoFetchServiceImp facebookInfoFetchServiceImp;
     private SocialLoginDto dto;
@@ -18,7 +20,8 @@ public class FacebookInfoFetchServiceImpTest {
 
     @Before
     public void setUp() throws Exception {
-        String access_token = "EAAM7HscfrTwBAGJfGaBj0iqsIMlpAjjMUA6DdQtVZCT2mb9TY4vAg1YWXegarFZApj83enYGoNSVuwIdGC3ZAVaAaxFb5sXmNV4rnj1lw8kCGkXGzqbiv6ogLDSZAtziT8sgEJR5EBWn3hEN2NlL7cGe8cAWpyh5yGeyk04SqvUWtfQJCMqImZAQfDBYz9ZBKmOlZBObxwemgZDZD";
+
+        String access_token = "EAAM7HscfrTwBAIBzWrbGqFUSc552ejVzVPSj52iVfeew2HZAU5ZBZBUoyz3gYEE5koBmXKYXNcKzD8xOGXDDL3Hm3UZBBxMWuseFcxexEZCdXUxdw2M8T1fuwsZCZBSpbtaz8FiuJjZBT48thaXmza6jWrPGoWX7hS9qVk6dgeW04UYBDRlm259yclqDcS5LmSjDAf6pzNhsugZDZD";
         String user_id = "704798269891295";
         facebookInfoFetchServiceImp = new FacebookInfoFetchServiceImp();
         dto = new SocialLoginDto(SocialProviders.FACEBOOK, access_token, user_id);

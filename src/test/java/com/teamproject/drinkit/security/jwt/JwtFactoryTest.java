@@ -15,9 +15,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
-@ActiveProfiles("develop")
+@TestPropertySource(locations = "classpath:/test.properties")
 public class JwtFactoryTest {
     private static final Logger log = LoggerFactory.getLogger(JwtFactoryTest.class);
     private AccountDetails accountDetails;

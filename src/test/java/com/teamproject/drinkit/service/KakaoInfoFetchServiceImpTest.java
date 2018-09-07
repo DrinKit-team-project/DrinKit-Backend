@@ -8,9 +8,11 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
+@TestPropertySource(locations = "classpath:/test.properties")
 public class KakaoInfoFetchServiceImpTest {
     private KakaoInfoFetchServiceImp kakaoInfoFetchServiceImp;
 
@@ -19,7 +21,8 @@ public class KakaoInfoFetchServiceImpTest {
     
     @Before
     public void setUp() throws Exception {
-        String access_token = "RACAf2Tb_kANC0xdBPkpG-5PZysAUt_jD8u3dQopdtYAAAFlQTDnZw";
+
+        String access_token = "VSdZw7peQczWMnLZVeKNUtUPIj7BNv3hyfcfTgopdgcAAAFlmzn_eA";
         String user_id = "899845285";
         kakaoInfoFetchServiceImp = new KakaoInfoFetchServiceImp();
         dto = new SocialLoginDto(SocialProviders.KAKAO, access_token, user_id);

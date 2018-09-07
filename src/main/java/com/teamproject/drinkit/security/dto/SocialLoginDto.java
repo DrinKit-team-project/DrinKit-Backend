@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.teamproject.drinkit.domain.SocialProviders;
 import lombok.Getter;
 
-@Getter
 public class SocialLoginDto {
 
     @JsonProperty(value = "provider")
@@ -26,5 +25,17 @@ public class SocialLoginDto {
 
     public boolean isFromFacebook(){
         return this.provider.equals(SocialProviders.FACEBOOK);
+    }
+
+    public SocialProviders getProvider() {
+        return provider;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public String getId() {
+        return id;
     }
 }

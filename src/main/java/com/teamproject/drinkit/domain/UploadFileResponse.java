@@ -13,8 +13,6 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 
-@Getter
-@Setter
 @Embeddable
 public class UploadFileResponse {
 
@@ -37,6 +35,39 @@ public class UploadFileResponse {
         return ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/download/")
                 .path(randomlyGeneratedFileName).toUriString();
+    }
+
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public void setFileDownloadUri(String fileDownloadUri) {
+        this.fileDownloadUri = fileDownloadUri;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
+    }
+
+    public void setSize(Long size) {
+        this.size = size;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public String getFileDownloadUri() {
+        return fileDownloadUri;
+    }
+
+    public String getFileType() {
+        return fileType;
+    }
+
+    public Long getSize() {
+        return size;
     }
 
 }

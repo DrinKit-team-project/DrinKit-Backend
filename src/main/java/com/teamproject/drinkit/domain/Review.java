@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.*;
 import java.util.Objects;
 
-@Getter
 @Entity
 @Table(name = "REVIEW")
 public class Review extends BaseEntity {
@@ -97,6 +96,38 @@ public class Review extends BaseEntity {
         }
         this.deleted = true;
         return this;
+    }
+
+    public static Logger getLog() {
+        return log;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public double getRatings() {
+        return ratings;
+    }
+
+    public String getContents() {
+        return contents;
+    }
+
+    public Account getWriter() {
+        return writer;
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public UploadFileResponse getUploadFileResponse() {
+        return uploadFileResponse;
     }
 
     private boolean isSameAccount(Account logined){

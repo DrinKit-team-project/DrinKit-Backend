@@ -30,8 +30,7 @@ public class CafeService {
         return cafeRepository.findById(cafeId).orElseThrow(() -> new NoSuchMenuException("no menu exist."));
     }
 
-    public Cafe addCafe(String name) {
-        Cafe newCafe = new Cafe(name);
-        return cafeRepository.save(newCafe);
+    public Cafe addCafe(Cafe cafe) {
+        return cafeRepository.save(cafe);
     }
 }

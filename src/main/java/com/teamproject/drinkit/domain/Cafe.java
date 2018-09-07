@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter
 public class Cafe extends BaseEntity {
     @Id @GeneratedValue
     private Long id;
@@ -58,6 +57,30 @@ public class Cafe extends BaseEntity {
 //            cafeDto.addCategoty(category);
 //        }
         return cafeDto;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public List<Menu> getMenus() {
+        return menus;
+    }
+
+    public List<String> getCategoryNames() {
+        return categoryNames;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
     }
 
     @Override

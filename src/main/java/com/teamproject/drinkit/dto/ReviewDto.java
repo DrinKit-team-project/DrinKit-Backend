@@ -8,7 +8,6 @@ import com.teamproject.drinkit.domain.*;
 import lombok.Getter;
 import lombok.ToString;
 
-@Getter
 @ToString
 public class ReviewDto {
 
@@ -91,5 +90,33 @@ public class ReviewDto {
 
     public void setContents(String contents) {
         this.contents = contents;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public double getRatings() {
+        return ratings;
+    }
+
+    public String getContents() {
+        return contents;
+    }
+
+    public Account getWriter() {
+        return writer;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public UploadFileResponse getUploadFileResponse() {
+        return uploadFileResponse;
     }
 }
