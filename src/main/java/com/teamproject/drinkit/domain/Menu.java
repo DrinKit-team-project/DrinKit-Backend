@@ -29,10 +29,12 @@ public class Menu extends BaseEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "cafe_id"))
     private Cafe cafe;
 
-    @OneToMany(mappedBy = "menu")
-    @Where(clause = "deleted = false")
+
+//    @Where(clause = "deleted = false")
     @OrderBy("id ASC")
     @JsonIgnore
+    @OneToMany(mappedBy = "menu"
+    )
     private List<Review> reviews = new ArrayList<>();
 
     private int reviewCount;

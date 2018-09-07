@@ -22,7 +22,7 @@ public class KakaoInfoFetchServiceImpTest {
     @Before
     public void setUp() throws Exception {
 
-        String access_token = "bfztvfcNzlAhfrF0Co3l6NnnMmMczLnC5p2Vbwo8BNgAAAFlswQfUw";
+        String access_token = "js8jJCWyGeBaKe1knzwfC-SmFmov9g0jAgecxQo8BJ4AAAFltGC5Hw";
         String user_id = "899845285";
         kakaoInfoFetchServiceImp = new KakaoInfoFetchServiceImp();
         dto = new SocialLoginDto(SocialProviders.KAKAO, access_token, user_id);

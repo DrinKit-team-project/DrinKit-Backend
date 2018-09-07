@@ -6,9 +6,11 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 @Service
+@Transactional
 public class KakaoInfoFetchServiceImp implements SocialInfoFetchService {
 
     private static final String HEADER_PREFIX = "Bearer ";

@@ -28,11 +28,11 @@ public class Review extends BaseEntity {
     @Column(name = "REVIEW_CONTENTS")
     private String contents;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id")
     private Account writer;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(foreignKey = @ForeignKey(name = "menu_id"))
     private Menu menu;
 
