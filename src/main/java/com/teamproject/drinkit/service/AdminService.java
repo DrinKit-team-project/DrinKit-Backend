@@ -6,6 +6,7 @@ import com.teamproject.drinkit.exception.NoSuchCategoryException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +14,7 @@ import java.util.InputMismatchException;
 
 @Service
 @Transactional
+@PreAuthorize("hasRole('ROLE_USER')")
 public class AdminService {
     private static final Logger log = LoggerFactory.getLogger(AdminService.class);
 

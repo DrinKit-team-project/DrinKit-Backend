@@ -33,4 +33,9 @@ public class CafeService {
     public Cafe addCafe(Cafe cafe) {
         return cafeRepository.save(cafe);
     }
+
+    public List<Cafe> findAll(){
+        return cafeRepository.findAll();
+    }
+
 }

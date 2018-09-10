@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/api/admin")
 public class AdminRestController {
     private static final Logger log = LoggerFactory.getLogger(AdminRestController.class);
 
@@ -50,11 +50,4 @@ public class AdminRestController {
         MenuDto menuDto = MenuDto.from(menu);
         return menuDto;
     }
-
-//    @PostMapping("/menus/{menuId}")
-//    public Menu addTag(@PathVariable Long menuId, @RequestBody String tagName) {
-//        log.debug("admin rest addtag in.");
-//        return adminService.addTag(menuId, tagName);
-//    }
-
 }

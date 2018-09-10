@@ -58,4 +58,8 @@ public class MenuService {
         menu.addTag(tag);
     }
 
+    public List<Menu> findAll(){
+        return menuRepository.findAll();
+    }
+
 }
