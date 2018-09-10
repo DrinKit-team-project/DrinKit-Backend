@@ -14,7 +14,7 @@ import java.util.InputMismatchException;
 
 @Service
 @Transactional
-@PreAuthorize("hasRole('ROLE_USER')")
+//@PreAuthorize("hasRole('ROLE_USER')")
 public class AdminService {
     private static final Logger log = LoggerFactory.getLogger(AdminService.class);
 

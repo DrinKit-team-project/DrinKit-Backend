@@ -13,29 +13,29 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/api/admin")
+@RequestMapping("/admin")
 public class AdminController {
 
     private static final Logger log = LoggerFactory.getLogger(AdminController.class);
 
     @Autowired
-    private CafeService cafeService;
+    private CafeRepository cafeRepository;
 
     @Autowired
-    private MenuService menuService;
+    private MenuRepository menuRepository;
 
     @GetMapping("/cafes")
     public String adminCafe(Model model) {
         log.debug("in!!!");
-        model.addAttribute("cafes", cafeService.findAll());
+        model.addAttribute("cafes", cafeRepository.findAll());
         return "adminPageCafe";
     }
 
     @GetMapping("/menus")
     public String adminMenu(Model model) {
         log.debug("in!!");
-        model.addAttribute("menus", menuService.findAll());
-        model.addAttribute("cafes", cafeService.findAll());
+        model.addAttribute("menus", menuRepository.findAll());
+        model.addAttribute("cafes", cafeRepository.findAll());
         return "adminPageMenu";
     }
 
