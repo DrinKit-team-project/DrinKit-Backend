@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Embeddable
 @Entity
+@Getter
 public class Tag {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,6 +18,7 @@ public class Tag {
     private String tagName;
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "tagList")
+    @JsonIgnore
     private List<Menu> menus = new ArrayList<>();
 
     private int searchCount = 0;
@@ -31,14 +32,8 @@ public class Tag {
         this.searchCount++;
     }
 
-    public Long getId() {
-        return id;
-    }
-    public String getTagName() {
-        return tagName;
-    }
-    public int getSearchCount() {
-        return searchCount;
+    public void registerMenu(Menu menu) {
+        this.menus.add(menu);
     }
 
     @Override

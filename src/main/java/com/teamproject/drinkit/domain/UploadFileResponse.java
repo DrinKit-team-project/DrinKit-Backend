@@ -31,6 +31,11 @@ public class UploadFileResponse {
         this.size = size;
     }
 
+    private String createDownloadUri(String randomlyGeneratedFileName){
+        return ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/download/")
+                .path(randomlyGeneratedFileName).toUriString();
+    }
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
@@ -61,11 +66,6 @@ public class UploadFileResponse {
 
     public Long getSize() {
         return size;
-    }
-    private String createDownloadUri(String randomlyGeneratedFileName){
-        return ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/download/")
-                .path(randomlyGeneratedFileName).toUriString();
     }
 
 }

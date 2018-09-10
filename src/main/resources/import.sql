@@ -26,3 +26,4 @@ INSERT INTO menu_and_tag(menu_id, tag_id) values (1, 1);
 INSERT INTO menu_and_tag(menu_id, tag_id) values (1, 2);
 INSERT INTO menu_and_tag(menu_id, tag_id) values (1, 3);
 INSERT INTO menu_and_tag(menu_id, tag_id) values (2, 4);
+
