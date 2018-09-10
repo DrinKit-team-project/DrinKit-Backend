@@ -2,7 +2,6 @@ package com.teamproject.drinkit.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.teamproject.drinkit.dto.CafeDto;
-import lombok.Getter;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;

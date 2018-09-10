@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 INSERT INTO cafe(id, created_date, modified_date, deleted, imageurl, name) values (1, 20180909081828, null, false, "test/test.html", "starbucks");
 INSERT INTO cafe(id, created_date, modified_date, deleted, imageurl, name) values (2, 20180909081828, null, false, "test/test2.html", "Ediya");
 INSERT INTO cafe(id, created_date, modified_date, deleted, imageurl, name) values (3, 20180909081828, null, false, "test/test3.html", "twoSomePlace");
@@ -27,5 +26,4 @@ INSERT INTO menu_and_tag(menu_id, tag_id) values (1, 1);
 INSERT INTO menu_and_tag(menu_id, tag_id) values (1, 2);
 INSERT INTO menu_and_tag(menu_id, tag_id) values (1, 3);
 INSERT INTO menu_and_tag(menu_id, tag_id) values (2, 4);
-=======
->>>>>>> feature/nogada
+

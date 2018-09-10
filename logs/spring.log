@@ -1,0 +1,4 @@
+2018-09-10 11:41:10.019 trace 85513 --- [Thread-35] ConfigServletWebServerApplicationContext : Closing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@641fb1b6: startup date [Sun Sep 09 22:57:35 KST 2018]; root of context hierarchy
+2018-09-10 11:41:10.571 trace 85513 --- [Thread-35] o.s.c.support.DefaultLifecycleProcessor  : Stopping beans in phase 2147483647
+2018-09-10 11:41:10.615 trace 85513 --- [Thread-35] o.s.j.e.a.AnnotationMBeanExporter        : Unregistering JMX-exposed beans on shutdown
+2018-09-10 11:41:10.649 trace 85513 --- [Thread-35] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
