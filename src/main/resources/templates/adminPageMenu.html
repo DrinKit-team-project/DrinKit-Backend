@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Page</title>
+    <link rel="stylesheet" href="/css/adminPage.css">
+</head>
+<body>
+
+<div class="menuTitleBar">Admin Page - Menu</div>
+<div class="body-wrapper">
+    <div class="content-body">
+        <div class="menu-add-form">
+
+            <div class="add-form-title">add menu</div>
+            <form class="add-menu-form">
+                <input class="add-text-area" id="menuKrName" type="text" placeholder="kr name">
+                <input class="add-text-area" id="menuEnName" type="text" placeholder="en name">
+                <input class="add-text-area" id="menuCalories" type="text" placeholder="calories">
+
+                <select id="parent-cafe">
+                    {{#cafes}}
+                    <option id="{{id}}">{{name}}</option>
+                    {{/cafes}}
+                </select>
+
+                <input class="add-text-area" id="menuCategory" type="text" placeholder="menu category">
+                <input class="add-text-area" id="menuDescription" type="text" placeholder="menu description">
+                <input class="add-text-area" id="menuAddTag" type="text" placeholder="menu Add Tags (ex) delicious/cold/bittersweet">
+                <input class="add-text-area" id="menuPricePerSize" type="text" placeholder="menu Price per size (ex) small:3500/tall:4000/large:5000">
+                <input class="add-text-area" id="menuImageUrls" type="text" placeholder="menu Image URLs. Use ',' to devide urls. (ex) www.test.com,www.test2.com">
+                <button class="registerButton menu-register-button" type="submit" value="/admin/menus">register</button>
+            </form>
+
+            <div class="exist-menu-list">
+                <div class="exist-menu-list-title">Menu List</div>
+                {{#menus}}
+                <div class="exist-menu-list-contents">
+                    <div class="exist-menu-list-content-info">Long id : {{id}}</div>
+                    <div class="exist-menu-list-content-info">kr name : {{krName}}</div>
+                    <div class="exist-menu-list-content-info">en name : {{enName}}</div>
+                    <div class="exist-menu-list-content-info">{{calories}} kcal</div>
+                    <div class="exist-menu-list-content-info">category : {{category}}</div>
+                    <div class="exist-menu-list-content-info-description">desc : {{description}}</div>
+                    {{#tagList}}
+                    <div class="exist-menu-list-content-info-tags">{{tagName}}</div>
+                    {{/tagList}}
+                    {{#pricePerSizes}}
+                    <div class="exist-menu-list-content-info-pricePerSizes">{{size}} : {{cost}}</div>
+                    {{/pricePerSizes}}
+                    {{#imageURLs}}
+                    <div class="exist-menu-list-content-info-imageURLS">{{this}}</div>
+                    {{/imageURLs}}
+                </div>
+                {{/menus}}
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/js/jquery.js"></script>
+<script type="text/javascript" src="/js/adminPage.js"></script>
+</body>
+
+</html>

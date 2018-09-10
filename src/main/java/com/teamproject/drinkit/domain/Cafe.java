@@ -11,10 +11,11 @@ import java.util.List;
 
 @Entity
 public class Cafe extends BaseEntity {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String name;
 
     @Lob
@@ -37,6 +38,10 @@ public class Cafe extends BaseEntity {
     public Cafe() {}
     public Cafe(String name) {
         this.name = name;
+    }
+    public Cafe(String name, String logoImgUrl) {
+        this.name = name;
+        this.imageURL = logoImgUrl;
     }
 
     public void registerImageURL(String imageURL) {
