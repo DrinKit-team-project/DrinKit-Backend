@@ -4,11 +4,11 @@ INSERT INTO cafe(id, created_date, modified_date, deleted, imageurl, name) value
 INSERT INTO cafe(id, created_date, modified_date, deleted, imageurl, name) values (4, 20180909081828, null, false, 'test/test4.html', 'codesquad');
 INSERT INTO cafe(id, created_date, modified_date, deleted, imageurl, name) values (5, 20180909081828, null, false, 'test/test5.html', 'koo’s coffee');
 
-INSERT INTO menu(id, created_date, modified_date, calories, category, deleted, description, en_name, kr_name, review_count, total_ratings, cafe_id) values (1, 20180809081828, null, 238, 'coffee', false, 'basic_coffee', 'americano', '아메리카노', 1, 0.0, 1);
-INSERT INTO menu(id, created_date, modified_date, calories, category, deleted, description, en_name, kr_name, review_count, total_ratings, cafe_id) values (2, 20180810081828, null, 238, 'coffee', false, 'basic_coffee', 'latte', '라떼', 2, 0.0, 1);
-INSERT INTO menu(id, created_date, modified_date, calories, category, deleted, description, en_name, kr_name, review_count, total_ratings, cafe_id) values (3, 20180813081828, null, 238, 'coffee', false, 'basic_coffee', 'cappuchino', '카푸치노', 3, 3.0, 1);
-INSERT INTO menu(id, created_date, modified_date, calories, category, deleted, description, en_name, kr_name, review_count, total_ratings, cafe_id) values (4, 20180730081828, null, 238, 'non-coffee', false, 'basic_coffee', 'chocolet', '초콜렛', 4, 4.0, 1);
-INSERT INTO menu(id, created_date, modified_date, calories, category, deleted, description, en_name, kr_name, review_count, total_ratings, cafe_id) values (5, 20180504081828, null, 238, 'non-coffee', false, 'basic_coffee', 'milk', '우유', 5, 5.0, 1);
+INSERT INTO menu(id, created_date, modified_date, calories, category, deleted, description, en_name, kr_name, review_count, total_ratings, cafe_id) values (1, 20180809081828, null, 0, 'coffee', false, '기본 아메리카노', 'americano', '아메리카노', 1, 0.0, 1);
+INSERT INTO menu(id, created_date, modified_date, calories, category, deleted, description, en_name, kr_name, review_count, total_ratings, cafe_id) values (2, 20180810081828, null, 238, 'coffee', false, '우유가 섞인 라떼', 'latte', '라떼', 2, 0.0, 1);
+INSERT INTO menu(id, created_date, modified_date, calories, category, deleted, description, en_name, kr_name, review_count, total_ratings, cafe_id) values (3, 20180813081828, null, 400, 'coffee', false, '달콤 쌉싸름한 카푸치노', 'cappuchino', '카푸치노', 3, 3.0, 1);
+INSERT INTO menu(id, created_date, modified_date, calories, category, deleted, description, en_name, kr_name, review_count, total_ratings, cafe_id) values (4, 20180730081828, null, 800, 'non-coffee', false, '달다못해 꿀맛이 나는 초콜릿', 'chocolet', '초콜렛', 4, 4.0, 1);
+INSERT INTO menu(id, created_date, modified_date, calories, category, deleted, description, en_name, kr_name, review_count, total_ratings, cafe_id) values (5, 20180504081828, null, 50, 'non-coffee', false, '기본 우유', 'milk', '우유', 5, 5.0, 1);
 
 INSERT INTO cafe_category_list(cafe_id, category_name) values (1, 'coffee');
 INSERT INTO cafe_category_list(cafe_id, category_name) values (1, 'non-coffee');
