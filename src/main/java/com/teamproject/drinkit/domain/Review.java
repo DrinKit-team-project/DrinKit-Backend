@@ -15,7 +15,8 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "REVIEW")
-public class Review extends BaseEntity {
+public class
+Review extends BaseEntity {
     private static final Logger log = LoggerFactory.getLogger(Review.class);
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
