@@ -1,5 +1,5 @@
--- INSERT INTO cafe(id, created_date, modified_date, deleted, imageurl, name) values (1, 20180909081828, null, false, "test/test.html", "starbucks");
--- INSERT INTO cafe(id, created_date, modified_date, deleted, imageurl, name) values (2, 20180909081828, null, false, "test/test2.html", "Ediya");
+INSERT INTO cafe(id, created_date, modified_date, deleted, imageurl, name) values (1, now(), now(), false, "test/test.html", "starbucks");
+INSERT INTO cafe(id, created_date, modified_date, deleted, imageurl, name) values (2, now(), now(), false, "test/test2.html", "Ediya");
 -- INSERT INTO cafe(id, created_date, modified_date, deleted, imageurl, name) values (3, 20180909081828, null, false, "test/test3.html", "twoSomePlace");
 -- INSERT INTO cafe(id, created_date, modified_date, deleted, imageurl, name) values (4, 20180909081828, null, false, "test/test4.html", "codesquad");
 -- INSERT INTO cafe(id, created_date, modified_date, deleted, imageurl, name) values (5, 20180909081828, null, false, "test/test5.html", "koo's coffee");
