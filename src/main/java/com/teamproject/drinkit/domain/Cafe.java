@@ -27,8 +27,8 @@ public class Cafe extends BaseEntity {
     private List<Menu> menus = new ArrayList<>();
 
     @ElementCollection
-    @CollectionTable(name = "CAFE_CATEGORY_LIST",
-            joinColumns = @JoinColumn(name = "CAFE_ID", foreignKey = @ForeignKey(name = "CAFE_ID")))
+    @CollectionTable(name = "cafe_category_list",
+            joinColumns = @JoinColumn(name = "cafe_id"))
     @Column(name = "CATEGORY_NAME")
     private List<String> categoryNames = new ArrayList<>();
 
