@@ -14,6 +14,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableConfigurationProperties({
         FileStorageProperties.class
 })
+@EnableAutoConfiguration
 public class DrinkitApplication {
     private static final String APPLICATION_LOCATIONS = "spring.config.location="
             + "classpath:application.properties,"
