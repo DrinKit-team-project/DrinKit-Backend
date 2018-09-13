@@ -1,9 +1,6 @@
 package com.teamproject.drinkit.domain;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import com.teamproject.drinkit.dto.ReviewDto;
 import com.teamproject.drinkit.exception.AuthorizationException;
 import com.teamproject.drinkit.security.AccountDetails;
@@ -15,6 +12,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "ACCOUNT")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Account extends BaseEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
