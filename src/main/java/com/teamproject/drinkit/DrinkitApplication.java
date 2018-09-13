@@ -8,6 +8,8 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -22,6 +24,8 @@ import java.nio.charset.Charset;
         FileStorageProperties.class
 })
 @EnableAutoConfiguration
+@Configuration
+@ComponentScan
 public class DrinkitApplication {
     private static final String APPLICATION_LOCATIONS = "spring.config.location="
             + "classpath:application.properties,"
