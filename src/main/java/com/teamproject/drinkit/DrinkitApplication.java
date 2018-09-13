@@ -24,8 +24,6 @@ import java.nio.charset.Charset;
         FileStorageProperties.class
 })
 @EnableAutoConfiguration
-@Configuration
-@ComponentScan
 public class DrinkitApplication {
     private static final String APPLICATION_LOCATIONS = "spring.config.location="
             + "classpath:application.properties,"
@@ -36,17 +34,5 @@ public class DrinkitApplication {
                 .properties(APPLICATION_LOCATIONS)
                 .run();
 
-    }
-    @Bean
-    public HttpMessageConverter<String> responseBodyConverter(){
-        return new StringHttpMessageConverter(Charset.forName("UTF-8"));
-    }
-
-    @Bean
-    public Filter characterEncodingFilter(){
-        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
-        characterEncodingFilter.setEncoding("UTF-8");
-        characterEncodingFilter.setForceEncoding(true);
-        return characterEncodingFilter;
     }
 }
