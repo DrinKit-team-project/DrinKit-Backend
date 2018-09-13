@@ -1,6 +1,7 @@
 package com.teamproject.drinkit.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.teamproject.drinkit.dto.ReviewDto;
 import com.teamproject.drinkit.exception.AuthorizationException;
@@ -15,6 +16,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "REVIEW")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Review extends BaseEntity {
     private static final Logger log = LoggerFactory.getLogger(Review.class);
 
