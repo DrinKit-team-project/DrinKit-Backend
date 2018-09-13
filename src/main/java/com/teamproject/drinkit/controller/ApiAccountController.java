@@ -28,9 +28,6 @@ public class ApiAccountController {
     @Autowired
     private AccountDetailsService accountDetailsService;
 
-    @Autowired
-    private MenuService menuService;
-
     @GetMapping("/{id}/reviews")
     public Iterable<Review> showReviews(@PathVariable Long id){
         return reviewService.findAllByWriter(id);

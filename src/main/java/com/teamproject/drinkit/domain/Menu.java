@@ -27,8 +27,6 @@ public class Menu extends BaseEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "cafe_id"))
     private Cafe cafe;
 
-
-//    @Where(clause = "deleted = false")
     @OrderBy("id ASC")
     @JsonIgnore
     @OneToMany(mappedBy = "menu"
@@ -52,7 +50,7 @@ public class Menu extends BaseEntity {
 
     @JsonIgnore
     @ManyToMany(mappedBy = "favoriteMenus")
-    private Set<Account> accounts = new HashSet<>();
+    private Set<Account> accounts = new LinkedHashSet<>();
 
     public Menu() {}
     public Menu(String krName, String enName, String description) {

@@ -1,5 +1,6 @@
 package com.teamproject.drinkit.domain;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.*;
 
+@JsonAutoDetect
 @Entity
 @Table(name = "ACCOUNT")
 public class Account extends BaseEntity {
@@ -23,23 +25,29 @@ public class Account extends BaseEntity {
     private String username;
 
     @Column(name = "ACCOUNT_LOGINID")
+    @JsonProperty
     private String userId;
 
     @Column(name = "ACCOUNT_PASSWORD")
+    @JsonProperty
     private String password;
 
     @Column(name = "ACCOUNT_USER_ROLE")
     @Enumerated(value = EnumType.STRING)
+    @JsonProperty("nickname")
     private UserRole userRole;
 
     @Column(name = "ACCOUNT_SOCIAL_ID")
+    @JsonProperty("nickname")
     private String socialId;
 
     @Column(name = "ACCOUNT_SOCIAL_PROVIDER")
     @Enumerated(value = EnumType.STRING)
+    @JsonProperty("nickname")
     private SocialProviders socialProvider;
 
     @Column(name = "ACCOUNT_SOCIAL_PROFILEPIC")
+    @JsonProperty("nickname")
     private String profileHref;
 
     @JsonIgnore
@@ -55,7 +63,8 @@ public class Account extends BaseEntity {
         joinColumns = @JoinColumn(name = "account_id"),
             inverseJoinColumns = @JoinColumn(name = "menu_id")
     )
-    private Set<Menu> favoriteMenus = new HashSet<>();
+    @JsonProperty
+    private Set<Menu> favoriteMenus = new LinkedHashSet<>();
 
     public Account(){}
     public Account(Long id, String username, String userId, String password, UserRole userRole, String socialId, SocialProviders socialProvider, String profileHref){
