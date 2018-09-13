@@ -16,7 +16,6 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "REVIEW")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Review extends BaseEntity {
     private static final Logger log = LoggerFactory.getLogger(Review.class);
 
@@ -30,11 +29,11 @@ public class Review extends BaseEntity {
     @Column(name = "REVIEW_CONTENTS")
     private String contents;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "account_id")
     private Account writer;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(foreignKey = @ForeignKey(name = "menu_id"))
     private Menu menu;
 
