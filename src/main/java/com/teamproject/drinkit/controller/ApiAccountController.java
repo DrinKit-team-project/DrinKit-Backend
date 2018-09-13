@@ -16,6 +16,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/accounts")
 @PreAuthorize("hasRole('ROLE_USER')")
@@ -29,7 +31,7 @@ public class ApiAccountController {
     private AccountDetailsService accountDetailsService;
 
     @GetMapping("/{id}/reviews")
-    public Iterable<Review> showReviews(@PathVariable Long id){
+    public List<Review> showReviews(@PathVariable Long id){
         return reviewService.findAllByWriter(id);
     }
 
