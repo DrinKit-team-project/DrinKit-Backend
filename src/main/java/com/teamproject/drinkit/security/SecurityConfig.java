@@ -22,6 +22,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 import java.util.Arrays;
 
@@ -51,16 +53,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public ObjectMapper getObjectMapper(){ return new ObjectMapper();}
 
-    public SocialLoginFilter socialLoginFilter() throws Exception {
+    private SocialLoginFilter socialLoginFilter() throws Exception {
         SocialLoginFilter filter = new SocialLoginFilter("/social", this.socialLoginSuccessHandler);
         filter.setAuthenticationManager(super.authenticationManagerBean());
         return filter;
     }
 
-    public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
+    private JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
         JwtAuthenticationFilter filter = new JwtAuthenticationFilter(suitableUrlMatcher,  jwtAuthenticationSuccessHandler, jwtAuthenticationFailuerHandler);
         filter.setAuthenticationManager(super.authenticationManagerBean());
         return filter;
+    }
+
+    private CharacterEncodingFilter characterEncodingFilter() throws  Exception{
+        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+        characterEncodingFilter.setEncoding("UTF-8");
+        characterEncodingFilter.setForceEncoding(true);
+        return characterEncodingFilter;
     }
 
     @Override
@@ -87,6 +96,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/h2-console**").permitAll();
         http
                 .addFilterBefore(socialLoginFilter(), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(characterEncodingFilter(), CsrfFilter.class);
     }
 }
