@@ -1,6 +1,6 @@
 POST http://localhost:8080/social
 Content-Type: application/json
 
-{"provider" : "KAKAO", "id": 889316482, "token" : "pHp2BCcv8MAuCiQyagwEHdzMPSsodRIF283KDQo8BJ4AAAFlsgWvtw"}
+{"provider" : "KAKAO", "id": 889316482, "token" : "fqz_ldRtcqj0a_Zb9TZFc5RQaBHvRZJhe6fTlAo8BJ4AAAFlzjWyuQ"}
 
 ###
