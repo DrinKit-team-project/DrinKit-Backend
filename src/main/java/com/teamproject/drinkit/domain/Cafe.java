@@ -6,6 +6,7 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -35,32 +36,29 @@ public class Cafe extends BaseEntity {
     private boolean deleted = false;
 
     public Cafe() {}
-    public Cafe(String name) {
-        this.name = name;
-    }
-    public Cafe(String name, String logoImgUrl) {
-        this.name = name;
-        this.imageURL = logoImgUrl;
-    }
 
-    public void registerImageURL(String imageURL) {
+    public Cafe(Long id, String name, String imageURL, String categories){
+        this.id = id;
+        this.name = name;
         this.imageURL = imageURL;
+        this.categoryNames.addAll(Arrays.asList(split(categories)));
     }
 
-    public void addCategoryName(String expectedCategoryName) {
-        this.categoryNames.add(expectedCategoryName);
+    public Cafe(String name, String imageURL, String categories) {
+        this(0L, name, imageURL, categories);
+    }
+
+    private String[] split(String categories) {
+        return categories.split("/");
     }
 
     public Cafe addMenu(Menu menu) {
         this.menus.add(menu);
         return this;
     }
+
     public CafeDto makeToDto() {
-        CafeDto cafeDto = new CafeDto(this.name, this.imageURL);
-//        for (String category : categoryList) {
-//            cafeDto.addCategoty(category);
-//        }
-        return cafeDto;
+        return new CafeDto(this.name, this.imageURL);
     }
 
     public Long getId() {

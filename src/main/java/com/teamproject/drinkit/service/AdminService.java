@@ -28,31 +28,7 @@ public class AdminService {
     private TagRepository tagRepository;
 
     public Cafe createCafe(String cafeName, String url, String categories) {
-        log.debug("createCafe service in.");
-        Cafe newCafe = makeNewCafe(cafeName, url);
-        newCafe = addCategory(newCafe, categories);
-        log.debug("cafe is : " + newCafe);
-        return newCafe;
-    }
-
-    private Cafe makeNewCafe(String cafeName, String url) {
-        Cafe newCafe = new Cafe(cafeName);
-        newCafe.registerImageURL(url);
-        return cafeRepository.save(newCafe);
-    }
-
-    private Cafe addCategory(Cafe targetCafe, String categories) {
-        String[] splitedCategories = splitCategories(categories);
-
-        for (String categoryName : splitedCategories) {
-            targetCafe.addCategoryName(categoryName);
-        }
-
-        return targetCafe;
-    }
-
-    private String[] splitCategories(String categories) {
-        return categories.split("/");
+        return cafeRepository.save(new Cafe(cafeName, url, categories));
     }
 
     public Menu createMenu(String krName, String enName, int calories, String category, String description, String cafeName, String tagListString, String pricePerSizeString, String imageUrls) {

@@ -50,7 +50,7 @@ public class MenuTest {
     @Test
     public void registerCafeTest() {
         Menu newMenu = makeMenu();
-        Cafe cafe = new Cafe("starbucks");
+        Cafe cafe = new Cafe("starbucks", "imageurl", "categories");
 
         newMenu.registerCafe(cafe);
         assertEquals(newMenu.getCafe(), cafe);
