@@ -28,7 +28,7 @@ public class ApiReviewController {
     @Autowired
     private FileStorageService fileStorageService;
 
-    @PostMapping("")
+    @PostMapping(value = "", produces = "application/json;charset=utf8")
     public ResponseEntity<ReviewDto> addReview(@RequestHeader("Authorization") String header, @PathVariable Long menuId, @RequestParam("ratings") double ratings,
                                @RequestParam("contents") String contents, @RequestParam(value = "file", required = false) MultipartFile file) {
         if(file != null) {
@@ -38,7 +38,7 @@ public class ApiReviewController {
         return ResponseEntity.status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON_UTF8).body(reviewService.addReview(header, menuId, new ReviewDto(ratings, contents)));
     }
 
-    @PostMapping("/{id}")
+    @PostMapping(value = "/{id}", produces = "application/json;charset=utf8")
     public ResponseEntity<ReviewDto> editReview(@RequestHeader("Authorization") String header, @PathVariable Long menuId, @PathVariable Long id, @RequestParam("ratings") double ratings,
                                 @RequestParam("contents") String contents, @RequestParam(value = "file", required = false) MultipartFile file) {
         if(file != null) {

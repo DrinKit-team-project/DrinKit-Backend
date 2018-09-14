@@ -27,7 +27,7 @@ public class ApiMenuController {
     @Autowired
     private ReviewService reviewService;
 
-    @GetMapping("")
+    @GetMapping(value = "", produces = "application/json;charset=utf8")
     public Iterable<Menu> seeMenuList(@PathVariable Long cafeId, @RequestParam("category") String categoryName) throws NoSuchMenuException {
         return menuService.findMenuList(cafeId, categoryName);
     }
