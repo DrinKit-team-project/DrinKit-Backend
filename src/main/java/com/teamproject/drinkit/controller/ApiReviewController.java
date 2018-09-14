@@ -28,16 +28,6 @@ public class ApiReviewController {
     @Autowired
     private FileStorageService fileStorageService;
 
-//    @PostMapping("")
-//    public ReviewDto addReview(@RequestHeader("Authorization") String header, @PathVariable Long menuId, @RequestParam("ratings") double ratings,
-//                               @RequestParam("contents") String contents, @RequestParam(value = "file", required = false) MultipartFile file) {
-//        if(file != null) {
-//            UploadFileResponse uploadFileResponse = fileStorageService.storeFile(file);
-//            return reviewService.addReview(header, menuId, new ReviewDto(ratings, contents, uploadFileResponse));
-//        }
-//        return reviewService.addReview(header, menuId, new ReviewDto(ratings, contents));
-//    }
-
     @PostMapping("")
     public ResponseEntity<ReviewDto> addReview(@RequestHeader("Authorization") String header, @PathVariable Long menuId, @RequestParam("ratings") double ratings,
                                @RequestParam("contents") String contents, @RequestParam(value = "file", required = false) MultipartFile file) {
@@ -49,13 +39,13 @@ public class ApiReviewController {
     }
 
     @PostMapping("/{id}")
-    public ReviewDto editReview(@RequestHeader("Authorization") String header, @PathVariable Long menuId, @PathVariable Long id, @RequestParam("ratings") double ratings,
+    public ResponseEntity<ReviewDto> editReview(@RequestHeader("Authorization") String header, @PathVariable Long menuId, @PathVariable Long id, @RequestParam("ratings") double ratings,
                                 @RequestParam("contents") String contents, @RequestParam(value = "file", required = false) MultipartFile file) {
         if(file != null) {
             UploadFileResponse uploadFileResponse = fileStorageService.storeFile(file);
-            return reviewService.edit(header, menuId, new ReviewDto(id, ratings, contents, uploadFileResponse));
+            return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON_UTF8).body(reviewService.edit(header, menuId, new ReviewDto(id, ratings, contents, uploadFileResponse)));
         }
-        return reviewService.edit(header, menuId, new ReviewDto(id, ratings, contents));
+        return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON_UTF8).body(reviewService.edit(header, menuId, new ReviewDto(id, ratings, contents)));
     }
 
     @DeleteMapping("/{id}")

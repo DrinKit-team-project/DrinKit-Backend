@@ -32,12 +32,6 @@ public class ApiMenuController {
         return menuService.findMenuList(cafeId, categoryName);
     }
 
-    @PostMapping("")
-    public void addMenu(@PathVariable Long cafeId, MenuDto menuDto) {
-        Menu newMenu = menuService.addMenu(cafeId, menuDto);
-        log.debug(newMenu.toString());
-    }
-
     @GetMapping("/{menuId}")
     public Menu seeMenuDetail(@PathVariable Long cafeId, @PathVariable Long menuId) {
         log.debug("cafeId is " + cafeId + ", menuId is " + menuId);
