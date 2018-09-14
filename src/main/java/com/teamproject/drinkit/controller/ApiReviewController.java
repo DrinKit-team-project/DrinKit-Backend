@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,14 +28,24 @@ public class ApiReviewController {
     @Autowired
     private FileStorageService fileStorageService;
 
+//    @PostMapping("")
+//    public ReviewDto addReview(@RequestHeader("Authorization") String header, @PathVariable Long menuId, @RequestParam("ratings") double ratings,
+//                               @RequestParam("contents") String contents, @RequestParam(value = "file", required = false) MultipartFile file) {
+//        if(file != null) {
+//            UploadFileResponse uploadFileResponse = fileStorageService.storeFile(file);
+//            return reviewService.addReview(header, menuId, new ReviewDto(ratings, contents, uploadFileResponse));
+//        }
+//        return reviewService.addReview(header, menuId, new ReviewDto(ratings, contents));
+//    }
+
     @PostMapping("")
-    public ReviewDto addReview(@RequestHeader("Authorization") String header, @PathVariable Long menuId, @RequestParam("ratings") double ratings,
+    public ResponseEntity<ReviewDto> addReview(@RequestHeader("Authorization") String header, @PathVariable Long menuId, @RequestParam("ratings") double ratings,
                                @RequestParam("contents") String contents, @RequestParam(value = "file", required = false) MultipartFile file) {
         if(file != null) {
             UploadFileResponse uploadFileResponse = fileStorageService.storeFile(file);
-            return reviewService.addReview(header, menuId, new ReviewDto(ratings, contents, uploadFileResponse));
+            return ResponseEntity.status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON_UTF8).body(reviewService.addReview(header, menuId, new ReviewDto(ratings, contents, uploadFileResponse)));
         }
-        return reviewService.addReview(header, menuId, new ReviewDto(ratings, contents));
+        return ResponseEntity.status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON_UTF8).body(reviewService.addReview(header, menuId, new ReviewDto(ratings, contents)));
     }
 
     @PostMapping("/{id}")
