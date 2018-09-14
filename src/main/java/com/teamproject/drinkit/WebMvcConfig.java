@@ -15,7 +15,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public FilterRegistrationBean<CharacterEncodingFilter> registerCharacterEncodingFilterBean() throws Exception {
         FilterRegistrationBean<CharacterEncodingFilter> filterRegistrationBean = new FilterRegistrationBean<>(characterEncodingFilter());
         filterRegistrationBean.setName("CharacterEncodingFilter");
-        filterRegistrationBean.addUrlPatterns("/**");
+        filterRegistrationBean.addUrlPatterns("/api/**");
         filterRegistrationBean.setOrder(1);
         return filterRegistrationBean;
     }
