@@ -65,6 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         JwtAuthenticationFilter filter = new JwtAuthenticationFilter(suitableUrlMatcher,  jwtAuthenticationSuccessHandler, jwtAuthenticationFailuerHandler);
         filter.setAuthenticationManager(super.authenticationManagerBean());
         return filter;
+
     }
 
     @Override
