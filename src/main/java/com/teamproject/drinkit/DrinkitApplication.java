@@ -18,6 +18,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import javax.servlet.Filter;
 import java.nio.charset.Charset;
 
+@Configuration
 @SpringBootApplication
 @EnableJpaAuditing
 @EnableConfigurationProperties({
@@ -25,13 +26,18 @@ import java.nio.charset.Charset;
 })
 public class DrinkitApplication {
     private static final String APPLICATION_LOCATIONS = "spring.config.location="
-            + "classpath:application.properties,"
-            + "/app/config/drinkit/application-realdb.properties";
+            + "classpath:application.properties";
+//            + "/app/config/drinkit/application-realdb.properties";
 
     public static void main(String[] args) {
         new SpringApplicationBuilder(DrinkitApplication.class)
                 .properties(APPLICATION_LOCATIONS)
                 .run();
 
+    }
+
+    @Bean
+    public HttpMessageConverter<String> responseBodyConverter() {
+        return new StringHttpMessageConverter(Charset.forName("UTF-8"));
     }
 }
