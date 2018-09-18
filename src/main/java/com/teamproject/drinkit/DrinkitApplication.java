@@ -26,8 +26,8 @@ import java.nio.charset.Charset;
 })
 public class DrinkitApplication {
     private static final String APPLICATION_LOCATIONS = "spring.config.location="
-            + "classpath:application.properties";
-//            + "/app/config/drinkit/application-realdb.properties";
+            + "classpath:application.properties,"
+            + "/app/config/drinkit/application-realdb.properties";
 
     public static void main(String[] args) {
         new SpringApplicationBuilder(DrinkitApplication.class)
