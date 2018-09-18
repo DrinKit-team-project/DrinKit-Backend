@@ -3,9 +3,13 @@ package com.teamproject.drinkit.controller;
 import com.teamproject.drinkit.domain.Cafe;
 import com.teamproject.drinkit.domain.Menu;
 import com.teamproject.drinkit.dto.MenuDto;
+import com.teamproject.drinkit.dto.ReviewDto;
 import com.teamproject.drinkit.service.AdminService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -19,7 +23,7 @@ public class AdminRestController {
     private AdminService adminService;
 
     @PostMapping("/cafes")
-    public Cafe createCafe(@RequestBody String nameAndUrl) {
+    public ResponseEntity<Cafe> createCafe(@RequestBody String nameAndUrl) {
         log.debug("admin rest create cafe in");
         String[] nameAndUrlList = nameAndUrl.split("&");
         String cafeName = nameAndUrlList[0];
@@ -29,11 +33,11 @@ public class AdminRestController {
         if (cafeName.equals("")) {
             throw new NullPointerException();
         }
-        return adminService.createCafe(cafeName, cafeImgUrl, categories);
+        return ResponseEntity.status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON_UTF8).body(adminService.createCafe(cafeName, cafeImgUrl, categories));
     }
 
     @PostMapping("/menus")
-    public MenuDto createMenu(@RequestBody String menuTotalInfo) {
+    public ResponseEntity<MenuDto> createMenu(@RequestBody String menuTotalInfo) {
         log.debug("admin rest create menu in.");
         String[] menuInfoList = menuTotalInfo.split("&");
         String krName = menuInfoList[0];
@@ -46,8 +50,7 @@ public class AdminRestController {
         String pricePerSizeString = menuInfoList[7];
         String imageUrls = menuInfoList[8];
 
-        Menu menu = adminService.createMenu(krName, enName, calories, category, description, cafeName, tagListString, pricePerSizeString, imageUrls);
-        MenuDto menuDto = MenuDto.from(menu);
-        return menuDto;
+        return ResponseEntity.status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON_UTF8).body(MenuDto.from(adminService.createMenu(krName, enName, calories, category, description, cafeName, tagListString, pricePerSizeString, imageUrls)));
+
     }
 }
