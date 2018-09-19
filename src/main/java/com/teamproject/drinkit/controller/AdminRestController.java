@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
+import static org.springframework.http.MediaType.*;
+
 @RestController
 @RequestMapping("/admin")
 public class AdminRestController {
@@ -22,7 +24,7 @@ public class AdminRestController {
     @Resource(name = "adminService")
     private AdminService adminService;
 
-    @PostMapping("/cafes")
+    @PostMapping(value = "/cafes")
     public ResponseEntity<Cafe> createCafe(@RequestBody String nameAndUrl) {
         log.debug("admin rest create cafe in");
         String[] nameAndUrlList = nameAndUrl.split("&");
@@ -33,7 +35,7 @@ public class AdminRestController {
         if (cafeName.equals("")) {
             throw new NullPointerException();
         }
-        return ResponseEntity.status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON_UTF8).body(adminService.createCafe(cafeName, cafeImgUrl, categories));
+        return ResponseEntity.status(HttpStatus.CREATED).contentType(APPLICATION_JSON_UTF8).body(adminService.createCafe(cafeName, cafeImgUrl, categories));
     }
 
     @PostMapping("/menus")
@@ -50,7 +52,7 @@ public class AdminRestController {
         String pricePerSizeString = menuInfoList[7];
         String imageUrls = menuInfoList[8];
 
-        return ResponseEntity.status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON_UTF8).body(MenuDto.from(adminService.createMenu(krName, enName, calories, category, description, cafeName, tagListString, pricePerSizeString, imageUrls)));
+        return ResponseEntity.status(HttpStatus.CREATED).contentType(APPLICATION_JSON_UTF8).body(MenuDto.from(adminService.createMenu(krName, enName, calories, category, description, cafeName, tagListString, pricePerSizeString, imageUrls)));
 
     }
 }

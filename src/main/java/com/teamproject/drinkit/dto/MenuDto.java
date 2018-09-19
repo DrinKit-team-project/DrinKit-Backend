@@ -24,6 +24,8 @@ public class MenuDto {
     private List<Tag> tagList = new ArrayList<>();
     private List<String> imageURLs = new ArrayList<>();
 
+    public MenuDto(){}
+
     private MenuDto(String krName, String enName, int calories, String description, double totalRating, String category) {
         this.krName = krName;
         this.enName = enName;
