@@ -24,7 +24,7 @@ public class AdminRestController {
     @Resource(name = "adminService")
     private AdminService adminService;
 
-    @PostMapping(value = "/cafes")
+    @PostMapping(value = "/cafes", produces = "application/json;charset=UTF-8")
     public ResponseEntity<Cafe> createCafe(@RequestBody String nameAndUrl) {
         log.debug("admin rest create cafe in");
         String[] nameAndUrlList = nameAndUrl.split("&");
@@ -38,7 +38,7 @@ public class AdminRestController {
         return ResponseEntity.status(HttpStatus.CREATED).contentType(APPLICATION_JSON_UTF8).body(adminService.createCafe(cafeName, cafeImgUrl, categories));
     }
 
-    @PostMapping("/menus")
+    @PostMapping(value = "/menus", produces = "application/json;charset=UTF-8")
     public ResponseEntity<MenuDto> createMenu(@RequestBody String menuTotalInfo) {
         log.debug("admin rest create menu in.");
         String[] menuInfoList = menuTotalInfo.split("&");
