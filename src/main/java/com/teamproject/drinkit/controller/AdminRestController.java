@@ -43,7 +43,7 @@ public class AdminRestController {
         log.debug("admin rest create menu in.");
         String[] menuInfoList = menuTotalInfo.split("&");
         String krName = menuInfoList[0];
-        log.debug("cafe krname:{}", krName);
+        log.info("cafe krname:{}", krName);
         String enName = menuInfoList[1];
         int calories = Integer.parseInt(menuInfoList[2]);
         String category = menuInfoList[3];
