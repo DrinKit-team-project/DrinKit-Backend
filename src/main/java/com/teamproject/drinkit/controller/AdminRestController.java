@@ -52,8 +52,9 @@ public class AdminRestController {
         String tagListString = menuInfoList[6];
         String pricePerSizeString = menuInfoList[7];
         String imageUrls = menuInfoList[8];
-
-        return ResponseEntity.status(HttpStatus.CREATED).contentType(APPLICATION_JSON_UTF8).body(MenuDto.from(adminService.createMenu(krName, enName, calories, category, description, cafeName, tagListString, pricePerSizeString, imageUrls)));
+        MenuDto menuDto = MenuDto.from(adminService.createMenu(krName, enName, calories, category, description, cafeName, tagListString, pricePerSizeString, imageUrls));
+        log.info("메뉴 한글이름: {}", menuDto.getKrName());
+        return ResponseEntity.status(HttpStatus.CREATED).contentType(APPLICATION_JSON_UTF8).body(menuDto);
 
     }
 }
