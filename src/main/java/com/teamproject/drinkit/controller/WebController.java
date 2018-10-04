@@ -11,11 +11,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
-@RequiredArgsConstructor
+
 @Controller
 public class WebController {
 
     private final S3Uploader s3Uploader;
+
+    public WebController(S3Uploader s3Uploader) {
+        this.s3Uploader = s3Uploader;
+    }
 
     @GetMapping("/")
     public String index(){

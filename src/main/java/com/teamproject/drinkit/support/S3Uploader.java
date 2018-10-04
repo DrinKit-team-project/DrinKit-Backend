@@ -19,8 +19,12 @@ import java.util.Optional;
 public class S3Uploader {
     private static final Logger log = LoggerFactory.getLogger(S3Uploader.class);
 
-    @Autowired
-    private AmazonS3Client amazonS3Client;
+
+    private final AmazonS3Client amazonS3Client;
+
+    public S3Uploader(AmazonS3Client amazonS3Client) {
+        this.amazonS3Client = amazonS3Client;
+    }
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
