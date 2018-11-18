@@ -28,7 +28,7 @@ import java.nio.charset.Charset;
         FileStorageProperties.class
 })
 public class DrinkitApplication {
-    private static final String APPLICATION_LOCATIONS = "spring.config.location:"
+    private static final String APPLICATION_LOCATIONS = "spring.config.location="
             + "classpath:application.properties,"
             + "/app/config/application-realdb.properties";
 
